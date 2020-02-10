@@ -23,6 +23,7 @@ import com.facebook.imagepipeline.image.*
 import com.facebook.imagepipeline.request.*
 import com.google.android.flexbox.*
 import com.google.android.material.tabs.*
+import io.nichijou.oops.ext.tint
 import io.nichijou.tujian.R
 import io.nichijou.tujian.base.*
 import io.nichijou.tujian.common.entity.Picture
@@ -96,6 +97,11 @@ class TodayFragment : BaseFragment() {
       val string = SpannableString(result)
       string.setSpan(RelativeSizeSpan(0.7f), dat.length, result.length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
       date.text = string
+      when (it.user) {
+        "Galentwww" -> name_tag.text = "运营"
+        "Createlite" -> name_tag.text = "运营"
+      }
+//      name_tag.background.tint(Color.parseColor("#123456"))
     }
   }
 
@@ -153,6 +159,7 @@ class TodayFragment : BaseFragment() {
   private var isHidePanel = false
   private val dp32 by lazy(LazyThreadSafetyMode.NONE) { target().dp2px(32f) }
 
+  //今日图片信息面板
   private fun switchPanel() {
     if (isHidePanel) {
       isHidePanel = false
@@ -181,6 +188,7 @@ class TodayFragment : BaseFragment() {
     }
   }
 
+  //fab点击弹出来的
   private fun showPop(view: View) {
     val menu = arrayOf(getString(R.string.share), getString(R.string.download), getString(R.string.set_wallpaper))
     val adapter = ArrayAdapter(target(), android.R.layout.simple_list_item_1, menu)

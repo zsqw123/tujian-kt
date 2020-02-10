@@ -68,9 +68,12 @@ class MainActivity : BaseActivity() {
         disableAutoNavBarColor<MainActivity>(true)
       }
     }
-    askForPermissions(Permission.CAMERA, Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE) {
-
+    if (Settings.enableFaceDetection) {
+      askForPermissions(Permission.CAMERA) {}
     }
+    askForPermissions(
+      Permission.READ_EXTERNAL_STORAGE,
+      Permission.WRITE_EXTERNAL_STORAGE) {}
     if (savedInstanceState == null) {
       replaceFragmentInActivity(TodayFragment.newInstance())
       val newFragment = BooFragment.newInstance(Oops.immed().isDark, isIntro = true, enableFace = enableFaceDetection, enableFuckBoo = enableFuckBoo)
