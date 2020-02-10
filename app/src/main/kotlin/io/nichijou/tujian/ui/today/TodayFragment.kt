@@ -97,9 +97,14 @@ class TodayFragment : BaseFragment() {
       val string = SpannableString(result)
       string.setSpan(RelativeSizeSpan(0.7f), dat.length, result.length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
       date.text = string
-      when (it.user) {
-        "Galentwww" -> name_tag.text = "运营"
-        "Createlite" -> name_tag.text = "运营"
+      name_tag.makeVisible()
+      if (it.from != Picture.FROM_BING) {
+        when (it.user) {
+          "Galentwww", "Chimon89", "Createlite", "Night" -> name_tag.text = "运营"
+          else -> name_tag.makeGone()
+        }
+      } else {
+        name_tag.makeGone()
       }
 //      name_tag.background.tint(Color.parseColor("#123456"))
     }
