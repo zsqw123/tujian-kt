@@ -1,5 +1,6 @@
 package io.nichijou.tujian.ui
 
+import android.content.res.Configuration
 import android.graphics.*
 import android.os.*
 import android.view.*
@@ -27,6 +28,7 @@ import io.nichijou.tujian.ui.today.*
 import io.nichijou.tujian.ui.upload.*
 import io.nichijou.utils.*
 import kotlinx.android.synthetic.main.menu_left_drawer.*
+import org.jetbrains.anko.configuration
 import org.jetbrains.anko.toast
 import org.koin.android.ext.android.*
 import kotlin.system.exitProcess
@@ -37,6 +39,14 @@ class MainActivity : BaseActivity() {
   override fun getContentViewId(): Int = R.layout.activity_main
 
   override fun handleOnCreate(savedInstanceState: Bundle?) {
+    when (configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+      Configuration.UI_MODE_NIGHT_NO -> {
+        Settings.darkMode = false
+      } // Night mode is not active, we're using the light theme
+      Configuration.UI_MODE_NIGHT_YES -> {
+        Settings.darkMode = true
+      } // Night mode is active, we're using dark theme
+    }
     translucentStatusBar(true)
     if (Oops.immed().isFirstTime) {
       val def = ContextCompat.getColor(this@MainActivity, R.color.def)
@@ -76,6 +86,7 @@ class MainActivity : BaseActivity() {
 
   private var enableFaceDetection: Boolean = Settings.enableFaceDetection
   private var enableFuckBoo: Boolean = Settings.fuckBoo
+  private var darkMode: Boolean = Settings.darkMode
   private var screenSaverInterval: Long = Settings.screenSaverInterval
 
   private val mainViewModel by lazy {
@@ -126,6 +137,10 @@ class MainActivity : BaseActivity() {
     Settings.asLiveData(Settings::creatureNum).observe(this, Observer {
       creatureNum = it / 100
       resetScreenSaverTimer()
+    })
+    Settings.asLiveData(Settings::darkMode).observe(this, Observer {
+      darkMode = it
+      SettingsFragment.switchTheme(darkMode)
     })
     applyOopsThemeStore {
       mediateLiveDataNonNull(

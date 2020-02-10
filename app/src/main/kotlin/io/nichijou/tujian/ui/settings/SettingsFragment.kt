@@ -16,6 +16,8 @@ import io.nichijou.tujian.ext.*
 import io.nichijou.tujian.ui.*
 import kotlinx.android.synthetic.main.fragment_settings.*
 import kotlinx.coroutines.*
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 
 class SettingsFragment : BaseFragment(), View.OnClickListener, SeekBar.OnSeekBarChangeListener {
 
@@ -30,6 +32,35 @@ class SettingsFragment : BaseFragment(), View.OnClickListener, SeekBar.OnSeekBar
 
   companion object {
     fun newInstance() = SettingsFragment()
+    fun switchTheme(dark: Boolean) {
+      doAsync {
+        uiThread {
+          if (dark) {
+            Oops.bulk {
+              theme = R.style.AppThemeDark
+              isDark = true
+              windowBackground = Color.BLACK
+              statusBarColor = Color.BLACK
+              textColorPrimary = Color.WHITE
+              textColorSecondary = Color.LTGRAY
+              bottomNavigationViewNormalColor = Color.WHITE
+              swipeRefreshLayoutBackgroundColor = Color.BLACK
+            }
+          } else {
+            Oops.bulk {
+              theme = R.style.AppTheme
+              isDark = false
+              windowBackground = Color.WHITE
+              statusBarColor = Color.WHITE
+              textColorPrimary = Color.BLACK
+              textColorSecondary = Color.DKGRAY
+              bottomNavigationViewNormalColor = Color.BLACK
+              swipeRefreshLayoutBackgroundColor = Color.WHITE
+            }
+          }
+        }
+      }
+    }
   }
 
   override fun getFragmentViewId(): Int = R.layout.fragment_settings
@@ -112,34 +143,6 @@ class SettingsFragment : BaseFragment(), View.OnClickListener, SeekBar.OnSeekBar
     view_wallpaper_settings.setOnClickListener(this)
     view_appwidget_settings.setOnClickListener(this)
     view_muzei_settings.setOnClickListener(this)
-  }
-
-  private fun switchTheme(dark: Boolean) {
-    lifecycleScope.launch {
-      if (dark) {
-        Oops.bulk {
-          theme = R.style.AppThemeDark
-          isDark = true
-          windowBackground = Color.BLACK
-          statusBarColor = Color.BLACK
-          textColorPrimary = Color.WHITE
-          textColorSecondary = Color.LTGRAY
-          bottomNavigationViewNormalColor = Color.WHITE
-          swipeRefreshLayoutBackgroundColor = Color.BLACK
-        }
-      } else {
-        Oops.bulk {
-          theme = R.style.AppTheme
-          isDark = false
-          windowBackground = Color.WHITE
-          statusBarColor = Color.WHITE
-          textColorPrimary = Color.BLACK
-          textColorSecondary = Color.DKGRAY
-          bottomNavigationViewNormalColor = Color.BLACK
-          swipeRefreshLayoutBackgroundColor = Color.WHITE
-        }
-      }
-    }
   }
 
   override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) = Unit

@@ -12,4 +12,5 @@ object Settings : KotprefModel() {
   var cardElevation: Int by intPref(1200)
   var cardSpace: Int by intPref(400)
   var creatureNum: Int by intPref(1000)
+  var darkMode: Boolean by booleanPref(false)
 }
