@@ -17,8 +17,8 @@ android {
     applicationId "cn.dailypics.tujian.r"
     minSdkVersion rootProject.versions.minsdk
     targetSdkVersion rootProject.versions.targetsdk
-    versionCode 2
-    versionName "shit-1.0"
+    versionCode 3
+    versionName "1.2.10"
     vectorDrawables.useSupportLibrary = true
     resConfigs "zh"
     def documentsProviderAuthority = "io.nichijou.tujian.localstorage.documents"
