@@ -1,0 +1,34 @@
+<resources>
+
+  <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <item name="colorPrimary">@android:color/transparent</item>
+    <item name="colorPrimaryDark">@android:color/transparent</item>
+    <item name="colorOnPrimary">@android:color/transparent</item>
+    <item name="colorSecondary">@android:color/transparent</item>
+  </style>
+
+  <style name="AppThemeDark" parent="Theme.MaterialComponents.NoActionBar">
+    <item name="colorPrimary">@android:color/transparent</item>
+    <item name="colorPrimaryDark">@android:color/transparent</item>
+    <item name="colorOnPrimary">@android:color/transparent</item>
+    <item name="colorSecondary">@android:color/transparent</item>
+  </style>
+
+  <style name="FabShapeAppearance" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+    <item name="cornerFamily">cut</item>
+  </style>
+
+  <style name="FabShapeComponent" parent="Widget.MaterialComponents.FloatingActionButton">
+    <item name="shapeAppearance">@style/FabShapeAppearance</item>
+  </style>
+
+  <style name="TodayTabTextStyle">
+    <item name="android:textSize">12sp</item>
+    <item name="android:textStyle">bold</item>
+  </style>
+
+  <style name="ToolbarTitleTextAppearance">
+    <item name="android:textStyle">bold</item>
+    <item name="android:textSize">18sp</item>
+  </style>
+</resources>

@@ -1,0 +1,53 @@
+<resources>
+  <string name="get_tujian_category_error">获取图鉴分类错误</string>
+  <string name="appwidget_can_not_match_category_id">切换微件时指定分类无法匹配，加载随机图片</string>
+  <string name="next_appwidget">下一微件图片</string>
+  <string name="enable_appwidget">请先应用图鉴微件</string>
+  <string name="enable_tujian_appwidget_to_home_screen">请先应用图鉴微件到主屏幕</string>
+  <string name="enable_bing_appwidget_to_home_screen">请先应用必应微件到主屏幕</string>
+  <string name="enable_hitokoto_appwidget_to_home_screen">请先应用一言微件到主屏幕</string>
+
+  <string name="muzei_can_not_match_category_id">图鉴加载Muzei指定分类图片与数据库不匹配，加载随机图片</string>
+  <string name="open_tujian">打开图鉴</string>
+  <string name="launch_tujian_error">启动图鉴失败</string>
+  <string name="tujian_muzei_desc">图鉴的Muzei插件</string>
+
+  <string name="enable_wallpaper_switch">启用壁纸切换</string>
+  <string name="next_wallpaper">下一壁纸</string>
+  <string name="wallpaper_can_not_match_category_id">图鉴切换壁纸指定分类无法匹配，加载随机图片</string>
+  <string name="not_supported_wallpaper">不支持壁纸设置，关闭换图功能</string>
+  <string name="not_allowed_wallpaper">系统不允许设置壁纸，关闭换图功能</string>
+
+  <string name="tujian">图鉴</string>
+  <string name="bing">必应</string>
+  <string name="hitokoto">一言</string>
+  <string name="wallpaper_updated">壁纸更新啦</string>
+  <string name="notification_wallpaper_channel_name">壁纸切换通知</string>
+  <string name="already_switched_wallpaper">已切换壁纸内容</string>
+  <string name="already_switched_tujian_appwidget">已切换图鉴微件内容</string>
+  <string name="already_switched_bing_appwidget">已切换必应微件内用</string>
+  <string name="already_switched_hitokoto_appwidget">已切换一言微件内容</string>
+  <string name="following_switched_wallpaper">以下为已切换壁纸</string>
+  <string name="following_switched_tujian_appwidget">以下为已切换图鉴微件图片</string>
+  <string name="following_switched_bing_appwidget">以下为已切换必应微件图片</string>
+  <string name="following_switched_hitokoto_appwidget">以下为已切换一言微件内容</string>
+  <string name="notification_tujian_channel_name">图鉴微件切换通知</string>
+  <string name="notification_bing_channel_name">必应微件切换通知</string>
+  <string name="notification_hitokoto_channel_name">一言微件切换通知</string>
+  <string name="notification_controller">通知控制器</string>
+  <string name="copy">复制信息</string>
+  <string name="download_wallaper">下载壁纸</string>
+  <string name="no_picture_info_available">没有获得图片信息</string>
+  <string name="tujian_appwidget_updated">图鉴微件更新啦</string>
+  <string name="download">下载</string>
+  <string name="copy_hitokoto">复制一言</string>
+  <string name="no_hitokoto_available">没有获得一言信息</string>
+  <string name="bing_appwidget_updated">必应微件更新啦</string>
+  <string name="hitokoto_appwidget_updated">一言微件更新啦</string>
+  <string name="next">下一个</string>
+  <string name="parse_uri_error">解析Uri错误</string>
+  <string name="wallpaper_param_error">壁纸参数不正确</string>
+  <string name="wallpaper_loading">壁纸加载中</string>
+  <string name="picture_not_found">没有找到图片</string>
+
+</resources>

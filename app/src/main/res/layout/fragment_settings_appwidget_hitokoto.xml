@@ -1,0 +1,499 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+  <!--ViewPager2 直接ScrollView无法滚动，加一个父容器正常滚动-->
+  <ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:ignore="UselessParent">
+
+    <LinearLayout
+      android:id="@+id/menu_wrapper"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      android:paddingTop="72dp"
+      android:paddingBottom="12dp">
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_normal_click_feedback"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:paddingStart="32dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="12dp">
+
+        <io.nichijou.tujian.widget.TintIcon
+          android:id="@+id/icon_enable_notification"
+          android:layout_width="24dp"
+          android:layout_height="24dp"
+          app:layout_constraintBottom_toBottomOf="@id/view_enable_notification"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="@id/label_enable_notification" />
+
+        <TextView
+          android:id="@+id/label_enable_notification"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="34dp"
+          android:text="@string/enable_notification"
+          android:textColor="?android:textColorPrimary"
+          android:textSize="16sp"
+          app:layout_constraintEnd_toStartOf="@id/view_enable_notification"
+          app:layout_constraintStart_toEndOf="@id/icon_enable_notification"
+          app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+          android:id="@+id/sub_enable_notification"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:text="@string/enable_notification_desc"
+          android:textColor="?android:textColorSecondary"
+          app:layout_constraintEnd_toStartOf="@id/view_enable_notification"
+          app:layout_constraintStart_toStartOf="@id/label_enable_notification"
+          app:layout_constraintTop_toBottomOf="@id/label_enable_notification" />
+
+        <androidx.appcompat.widget.SwitchCompat
+          android:id="@+id/view_enable_notification"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          app:layout_constraintBottom_toBottomOf="@id/sub_enable_notification"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="@id/label_enable_notification" />
+      </androidx.constraintlayout.widget.ConstraintLayout>
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_normal_click_feedback"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:paddingStart="32dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="12dp">
+
+        <io.nichijou.tujian.widget.TintIcon
+          android:id="@+id/icon_interval"
+          android:layout_width="24dp"
+          android:layout_height="24dp"
+          app:layout_constraintBottom_toBottomOf="@id/view_interval"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="@id/label_interval"
+          app:srcCompat="@drawable/ic_twotone_alarm" />
+
+        <TextView
+          android:id="@+id/label_interval"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="34dp"
+          android:text="@string/switch_interval"
+          android:textColor="?android:textColorPrimary"
+          android:textSize="16sp"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toEndOf="@id/icon_interval"
+          app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+          android:id="@+id/sub_interval"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:text="@string/switch_interval_desc"
+          android:textColor="?android:textColorSecondary"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="@id/label_interval"
+          app:layout_constraintTop_toBottomOf="@id/label_interval" />
+
+        <SeekBar
+          android:id="@+id/view_interval"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="20dp"
+          android:layout_marginTop="8dp"
+          android:max="85500000"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toEndOf="@id/icon_interval"
+          app:layout_constraintTop_toBottomOf="@id/sub_interval" />
+      </androidx.constraintlayout.widget.ConstraintLayout>
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_normal_click_feedback"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:paddingStart="32dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="12dp">
+
+        <io.nichijou.tujian.widget.TintIcon
+          android:id="@+id/icon_hitokoto_text_size"
+          android:layout_width="24dp"
+          android:layout_height="24dp"
+          app:layout_constraintBottom_toBottomOf="@id/view_hitokoto_text_size"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="@id/label_hitokoto_text_size"
+          app:srcCompat="@drawable/ic_twotone_notes" />
+
+        <TextView
+          android:id="@+id/label_hitokoto_text_size"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="34dp"
+          android:text="@string/hitokoto_text_size"
+          android:textColor="?android:textColorPrimary"
+          android:textSize="16sp"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toEndOf="@id/icon_hitokoto_text_size"
+          app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+          android:id="@+id/sub_hitokoto_text_size"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:text="@string/hitokoto_text_size_desc"
+          android:textColor="?android:textColorSecondary"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="@id/label_hitokoto_text_size"
+          app:layout_constraintTop_toBottomOf="@id/label_hitokoto_text_size" />
+
+        <SeekBar
+          android:id="@+id/view_hitokoto_text_size"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="20dp"
+          android:layout_marginTop="8dp"
+          android:max="2400"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toEndOf="@id/icon_hitokoto_text_size"
+          app:layout_constraintTop_toBottomOf="@id/sub_hitokoto_text_size" />
+      </androidx.constraintlayout.widget.ConstraintLayout>
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_normal_click_feedback"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:paddingStart="32dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="12dp">
+
+        <io.nichijou.tujian.widget.TintIcon
+          android:id="@+id/icon_hitokoto_lines"
+          android:layout_width="24dp"
+          android:layout_height="24dp"
+          app:layout_constraintBottom_toBottomOf="@id/view_hitokoto_lines"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="@id/label_hitokoto_lines"
+          app:srcCompat="@drawable/ic_twotone_wrap_text" />
+
+        <TextView
+          android:id="@+id/label_hitokoto_lines"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="34dp"
+          android:text="@string/hitokoto_lines"
+          android:textColor="?android:textColorPrimary"
+          android:textSize="16sp"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toEndOf="@id/icon_hitokoto_lines"
+          app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+          android:id="@+id/sub_hitokoto_lines"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:text="@string/hitokoto_lines_desc"
+          android:textColor="?android:textColorSecondary"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="@id/label_hitokoto_lines"
+          app:layout_constraintTop_toBottomOf="@id/label_hitokoto_lines" />
+
+        <SeekBar
+          android:id="@+id/view_hitokoto_lines"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="20dp"
+          android:layout_marginTop="8dp"
+          android:max="800"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toEndOf="@id/icon_hitokoto_lines"
+          app:layout_constraintTop_toBottomOf="@id/sub_hitokoto_lines" />
+      </androidx.constraintlayout.widget.ConstraintLayout>
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_normal_click_feedback"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:paddingStart="32dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="12dp">
+
+        <io.nichijou.tujian.widget.TintIcon
+          android:id="@+id/icon_source_text_size"
+          android:layout_width="24dp"
+          android:layout_height="24dp"
+          app:layout_constraintBottom_toBottomOf="@id/view_source_text_size"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="@id/label_source_text_size"
+          app:srcCompat="@drawable/ic_twotone_short_text" />
+
+        <TextView
+          android:id="@+id/label_source_text_size"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="34dp"
+          android:text="@string/source_text_size"
+          android:textColor="?android:textColorPrimary"
+          android:textSize="16sp"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toEndOf="@id/icon_source_text_size"
+          app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+          android:id="@+id/sub_source_text_size"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:text="@string/source_text_size_desc"
+          android:textColor="?android:textColorSecondary"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="@id/label_source_text_size"
+          app:layout_constraintTop_toBottomOf="@id/label_source_text_size" />
+
+        <SeekBar
+          android:id="@+id/view_source_text_size"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="20dp"
+          android:layout_marginTop="8dp"
+          android:max="2400"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toEndOf="@id/icon_source_text_size"
+          app:layout_constraintTop_toBottomOf="@id/sub_source_text_size" />
+      </androidx.constraintlayout.widget.ConstraintLayout>
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_normal_click_feedback"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:paddingStart="32dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="12dp">
+
+        <io.nichijou.tujian.widget.TintIcon
+          android:id="@+id/icon_auto_text_color"
+          android:layout_width="24dp"
+          android:layout_height="24dp"
+          app:layout_constraintBottom_toBottomOf="@id/view_auto_text_color"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="@id/label_auto_text_color" />
+
+        <TextView
+          android:id="@+id/label_auto_text_color"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="34dp"
+          android:text="@string/auto_text_color"
+          android:textColor="?android:textColorPrimary"
+          android:textSize="16sp"
+          app:layout_constraintEnd_toStartOf="@id/view_auto_text_color"
+          app:layout_constraintStart_toEndOf="@id/icon_auto_text_color"
+          app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+          android:id="@+id/sub_auto_text_color"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:text="@string/auto_text_color_desc"
+          android:textColor="?android:textColorSecondary"
+          app:layout_constraintEnd_toStartOf="@id/view_auto_text_color"
+          app:layout_constraintStart_toStartOf="@id/label_auto_text_color"
+          app:layout_constraintTop_toBottomOf="@id/label_auto_text_color" />
+
+        <androidx.appcompat.widget.SwitchCompat
+          android:id="@+id/view_auto_text_color"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          app:layout_constraintBottom_toBottomOf="@id/sub_auto_text_color"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="@id/label_auto_text_color" />
+      </androidx.constraintlayout.widget.ConstraintLayout>
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_normal_click_feedback"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:paddingStart="32dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="12dp">
+
+        <io.nichijou.tujian.widget.TintIcon
+          android:id="@+id/icon_requires_battery_not_low"
+          android:layout_width="24dp"
+          android:layout_height="24dp"
+          app:layout_constraintBottom_toBottomOf="@id/view_requires_battery_not_low"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="@id/label_requires_battery_not_low" />
+
+        <TextView
+          android:id="@+id/label_requires_battery_not_low"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="34dp"
+          android:text="@string/requires_battery_not_low"
+          android:textColor="?android:textColorPrimary"
+          android:textSize="16sp"
+          app:layout_constraintEnd_toStartOf="@id/view_requires_battery_not_low"
+          app:layout_constraintStart_toEndOf="@id/icon_requires_battery_not_low"
+          app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+          android:id="@+id/sub_requires_battery_not_low"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:text="@string/requires_battery_not_low_desc"
+          android:textColor="?android:textColorSecondary"
+          app:layout_constraintEnd_toStartOf="@id/view_requires_battery_not_low"
+          app:layout_constraintStart_toStartOf="@id/label_requires_battery_not_low"
+          app:layout_constraintTop_toBottomOf="@id/label_requires_battery_not_low" />
+
+        <androidx.appcompat.widget.SwitchCompat
+          android:id="@+id/view_requires_battery_not_low"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          app:layout_constraintBottom_toBottomOf="@id/sub_requires_battery_not_low"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="@id/label_requires_battery_not_low" />
+      </androidx.constraintlayout.widget.ConstraintLayout>
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_normal_click_feedback"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:paddingStart="32dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="12dp">
+
+        <io.nichijou.tujian.widget.TintIcon
+          android:id="@+id/icon_requires_charging"
+          android:layout_width="24dp"
+          android:layout_height="24dp"
+          app:layout_constraintBottom_toBottomOf="@id/view_requires_charging"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="@id/label_requires_charging" />
+
+        <TextView
+          android:id="@+id/label_requires_charging"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="34dp"
+          android:text="@string/requires_charging"
+          android:textColor="?android:textColorPrimary"
+          android:textSize="16sp"
+          app:layout_constraintEnd_toStartOf="@id/view_requires_charging"
+          app:layout_constraintStart_toEndOf="@id/icon_requires_charging"
+          app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+          android:id="@+id/sub_requires_charging"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:text="@string/requires_charging_desc"
+          android:textColor="?android:textColorSecondary"
+          app:layout_constraintEnd_toStartOf="@id/view_requires_charging"
+          app:layout_constraintStart_toStartOf="@id/label_requires_charging"
+          app:layout_constraintTop_toBottomOf="@id/label_requires_charging" />
+
+        <androidx.appcompat.widget.SwitchCompat
+          android:id="@+id/view_requires_charging"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          app:layout_constraintBottom_toBottomOf="@id/sub_requires_charging"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="@id/label_requires_charging" />
+      </androidx.constraintlayout.widget.ConstraintLayout>
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_normal_click_feedback"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:paddingStart="32dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="12dp">
+
+        <io.nichijou.tujian.widget.TintIcon
+          android:id="@+id/icon_requires_device_idle"
+          android:layout_width="24dp"
+          android:layout_height="24dp"
+          app:layout_constraintBottom_toBottomOf="@id/view_requires_device_idle"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="@id/label_requires_device_idle" />
+
+        <TextView
+          android:id="@+id/label_requires_device_idle"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="34dp"
+          android:text="@string/requires_device_idle"
+          android:textColor="?android:textColorPrimary"
+          android:textSize="16sp"
+          app:layout_constraintEnd_toStartOf="@id/view_requires_device_idle"
+          app:layout_constraintStart_toEndOf="@id/icon_requires_device_idle"
+          app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+          android:id="@+id/sub_requires_device_idle"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:text="@string/requires_device_idle_desc"
+          android:textColor="?android:textColorSecondary"
+          app:layout_constraintEnd_toStartOf="@id/view_requires_device_idle"
+          app:layout_constraintStart_toStartOf="@id/label_requires_device_idle"
+          app:layout_constraintTop_toBottomOf="@id/label_requires_device_idle" />
+
+        <androidx.appcompat.widget.SwitchCompat
+          android:id="@+id/view_requires_device_idle"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          app:layout_constraintBottom_toBottomOf="@id/sub_requires_device_idle"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="@id/label_requires_device_idle" />
+      </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+  </ScrollView>
+</LinearLayout>

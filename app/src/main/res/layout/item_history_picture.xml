@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<io.nichijou.tujian.widget.Card xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  style="@style/Widget.MaterialComponents.CardView"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:clickable="true"
+  android:focusable="true"
+  android:stateListAnimator="@animator/touch_float_anim">
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+      android:id="@+id/drawee_history_bing"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="#36000000"
+      app:viewAspectRatio="1" />
+
+    <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/colors"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:visibility="invisible" />
+
+    <TextView
+      android:id="@+id/title"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="8dp"
+      android:textColor="?android:textColorPrimary"
+      android:textSize="15sp"
+      android:textStyle="bold" />
+
+    <TextView
+      android:id="@+id/desc"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="8dp"
+      android:layout_marginEnd="8dp"
+      android:paddingBottom="8dp"
+      android:textColor="?android:textColorSecondary"
+      android:textSize="13sp"
+      android:textStyle="bold" />
+
+  </LinearLayout>
+</io.nichijou.tujian.widget.Card>

@@ -1,0 +1,107 @@
+[
+  {
+    "name": "Android Open Source Project",
+    "desc": "Android is an open source operating system for mobile devices and a corresponding open source project led by Google. ",
+    "license": "Apache-2.0",
+    "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0",
+    "website": "https://github.com/aosp-mirror"
+  },
+  {
+    "name": "Kotlin",
+    "desc": "The Kotlin Programming Language",
+    "license": "Apache-2.0",
+    "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0",
+    "website": "https://github.com/JetBrains/kotlin"
+  },
+  {
+    "name": "Kotlinx.coroutines",
+    "desc": "Library support for Kotlin coroutines",
+    "license": "Apache-2.0",
+    "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0",
+    "website": "https://github.com/Kotlin/kotlinx.coroutines"
+  },
+  {
+    "name": "Oops",
+    "desc": "A dynamic theme engine. Powered by LiveData & ViewModel.",
+    "license": "Apache-2.0",
+    "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0",
+    "website": "https://github.com/iota9star/oops-android-kt"
+  },
+  {
+    "name": "Okhttp4",
+    "desc": "An HTTP client for Android, Kotlin, and Java.",
+    "license": "Apache-2.0",
+    "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0",
+    "website": "https://github.com/square/okhttp"
+  },
+  {
+    "name": "Retrofit",
+    "desc": "Type-safe HTTP client for Android and Java by Square, Inc.",
+    "license": "Apache-2.0",
+    "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0",
+    "website": "https://github.com/square/retrofit"
+  },
+  {
+    "name": "Fresco",
+    "desc": "An Android library for managing images and the memory they use.",
+    "license": "Apache-2.0",
+    "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0",
+    "website": "https://github.com/facebook/fresco"
+  },
+  {
+    "name": "Moshi",
+    "desc": "A modern JSON library for Kotlin and Java.",
+    "license": "Apache-2.0",
+    "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0",
+    "website": "https://github.com/square/moshi"
+  },
+  {
+    "name": "Kotpref",
+    "desc": "Kotpref - Android SharedPreferences delegation library for Kotlin.",
+    "license": "Apache-2.0",
+    "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0",
+    "website": "https://github.com/chibatching/Kotpref"
+  },
+  {
+    "name": "Koin",
+    "desc": "KOIN - a pragmatic lightweight dependency injection framework for Kotlin.",
+    "license": "Apache-2.0",
+    "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0",
+    "website": "https://github.com/InsertKoinIO/koin"
+  },
+  {
+    "name": "Subsampling-scale-image-view",
+    "desc": "Android library (AAR). Highly configurable, easily extendable deep zoom view for displaying huge images without loss of detail. Perfect for photo galleries, maps, building plans etc.",
+    "license": "Apache-2.0",
+    "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0",
+    "website": "https://github.com/davemorrissey/subsampling-scale-image-view"
+  },
+  {
+    "name": "Assent",
+    "desc": "\uD83D\uDE4FAndroid Runtime Permissions made easy and compact, for Kotlin and AndroidX.",
+    "license": "Apache-2.0",
+    "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0",
+    "website": "https://github.com/afollestad/assent"
+  },
+  {
+    "name": "Muzei-api",
+    "desc": "Muzei Live Wallpaper for Android.",
+    "license": "Apache-2.0",
+    "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0",
+    "website": "https://github.com/romannurik/muzei"
+  },
+  {
+    "name": "Fresco-processors",
+    "desc": "An Android image processor library providing a variety of image transformations for Fresco.",
+    "license": "Apache-2.0",
+    "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0",
+    "website": "https://github.com/wasabeef/fresco-processors"
+  },
+  {
+    "name": "Recyclerview-animators",
+    "desc": "An Android Animation library which easily add itemanimator to RecyclerView items.",
+    "license": "Apache-2.0",
+    "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0",
+    "website": "https://github.com/wasabeef/recyclerview-animators"
+  }
+]

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:id="@+id/content_wrapper"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:alpha="0"
+  android:background="?android:windowBackground"
+  android:orientation="vertical">
+
+  <io.nichijou.tujian.widget.List
+    android:id="@+id/recycler_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:paddingTop="1dp" />
+
+  <io.nichijou.tujian.widget.TopBar
+    android:id="@+id/top_bar"
+    style="@style/Widget.MaterialComponents.CardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="16dp"
+    app:cardBackgroundColor="?android:windowBackground">
+
+    <androidx.appcompat.widget.Toolbar
+      android:id="@+id/toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="50dp"
+      android:background="?android:windowBackground"
+      app:contentInsetStartWithNavigation="0dp"
+      app:navigationIcon="?android:attr/homeAsUpIndicator"
+      app:title="@string/history"
+      app:titleTextAppearance="@style/ToolbarTitleTextAppearance" />
+  </io.nichijou.tujian.widget.TopBar>
+</FrameLayout>

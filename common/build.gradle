@@ -1,0 +1,118 @@
+apply plugin: 'com.android.library'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
+
+android {
+  compileSdkVersion rootProject.versions.compilesdk
+  buildToolsVersion rootProject.versions.buildtools
+  defaultConfig {
+    minSdkVersion rootProject.versions.minsdk
+    targetSdkVersion rootProject.versions.targetsdk
+    buildConfigField("String", "API_BASE", "\"${project['API_BASE']}\"")
+    buildConfigField("String", "API_PREFIX", "\"${project['API_PREFIX']}\"")
+    buildConfigField("String", "API_TODAY", "\"${project['API_TODAY']}\"")
+    buildConfigField("String", "API_SEARCH", "\"${project['API_SEARCH']}\"")
+    buildConfigField("String", "API_CATEGORY", "\"${project['API_CATEGORY']}\"")
+    buildConfigField("String", "API_LIST", "\"${project['API_LIST']}\"")
+    buildConfigField("String", "API_MEMBER", "\"${project['API_MEMBER']}\"")
+    buildConfigField("String", "API_RANDOM", "\"${project['API_RANDOM']}\"")
+    buildConfigField("String", "API_TG", "\"${project['API_TG']}\"")
+    buildConfigField("String", "API_UPLOAD", "\"${project['API_UPLOAD']}\"")
+    buildConfigField("String", "API_BING", "\"${project['API_BING']}\"")
+    buildConfigField("String", "API_HITOKOTO", "\"${project['API_HITOKOTO']}\"")
+  }
+  buildTypes {
+    debug {
+    }
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+  }
+  compileOptions {
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+  }
+  kotlinOptions {
+    jvmTarget = '1.8'
+  }
+  sourceSets {
+    main.java.srcDirs += 'src/main/kotlin'
+  }
+  lintOptions {
+    check 'Interoperability'
+  }
+  packagingOptions {
+    exclude 'META-INF/DEPENDENCIES'
+    exclude 'META-INF/LICENSE'
+    exclude 'META-INF/LICENSE.txt'
+    exclude 'META-INF/license.txt'
+    exclude 'META-INF/NOTICE'
+    exclude 'META-INF/NOTICE.txt'
+    exclude 'META-INF/notice.txt'
+    exclude 'META-INF/ASL2.0'
+    exclude 'META-INF/library_release.kotlin_module'
+  }
+  androidExtensions {
+    experimental = true
+  }
+  productFlavors {
+  }
+  dexOptions {
+    preDexLibraries true
+    maxProcessCount 8
+  }
+}
+kapt {
+  useBuildCache = true
+  correctErrorTypes = true
+  javacOptions {
+    option("-Xmaxerrs", 500)
+  }
+}
+
+dependencies {
+
+  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+  implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+  implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.0'
+  implementation "androidx.appcompat:appcompat:${rootProject.versions.appcompat}"
+  implementation 'com.google.android.material:material:1.2.0-alpha04'
+  implementation 'androidx.palette:palette:1.0.0'
+  implementation 'androidx.exifinterface:exifinterface:1.2.0-beta01'
+  implementation 'androidx.core:core-ktx:1.3.0-alpha01'
+  implementation "androidx.lifecycle:lifecycle-common-java8:${rootProject.versions.lifecycle}"
+  implementation "androidx.lifecycle:lifecycle-extensions:${rootProject.versions.lifecycle}"
+  implementation "androidx.paging:paging-runtime-ktx:2.1.1"
+  implementation 'androidx.work:work-runtime-ktx:2.3.1'
+  implementation "androidx.room:room-runtime:${rootProject.versions.room}"
+  kapt "androidx.room:room-compiler:${rootProject.versions.room}"
+  implementation "androidx.room:room-ktx:${rootProject.versions.room}"
+  implementation 'com.squareup.okio:okio:2.3.0'
+  implementation 'com.squareup.okhttp3:okhttp:4.1.0'
+  implementation 'com.squareup.okhttp3:logging-interceptor:4.1.0'
+  implementation 'com.squareup.retrofit2:retrofit:2.6.1'
+  implementation 'com.squareup.retrofit2:converter-moshi:2.6.1'
+  implementation "com.squareup.moshi:moshi-kotlin:${rootProject.versions.moshi}"
+  kapt "com.squareup.moshi:moshi-kotlin-codegen:${rootProject.versions.moshi}"
+  implementation 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2'
+  implementation 'com.chibatching.kotpref:kotpref:2.8.0'
+  implementation "org.koin:koin-androidx-scope:${rootProject.versions.koin}"
+  implementation "org.koin:koin-androidx-viewmodel:${rootProject.versions.koin}"
+  implementation "com.facebook.fresco:fresco:${rootProject.versions.fresco}"
+  implementation "com.facebook.fresco:animated-gif:${rootProject.versions.fresco}"
+  implementation "com.facebook.fresco:animated-webp:${rootProject.versions.fresco}"
+  implementation "com.facebook.fresco:webpsupport:${rootProject.versions.fresco}"
+  implementation 'com.google.android.apps.muzei:muzei-api:3.1.0'
+  implementation 'com.afollestad:assent:2.3.0'
+  implementation 'io.nichijou:oops:1.0.0-rc01'
+  implementation 'io.nichijou.utils:color:0.0.1'
+  implementation 'jp.wasabeef:fresco-processors:2.1.0'
+  implementation 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.3.0'
+  implementation "org.jetbrains.anko:anko:${rootProject.versions.anko}"
+}

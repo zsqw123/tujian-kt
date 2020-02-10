@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="start_download">开始下载</string>
+  <string name="no_permission_for_download">没有获得存储权限，无法下载</string>
+</resources>

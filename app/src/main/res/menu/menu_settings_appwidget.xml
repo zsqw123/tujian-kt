@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+  <item
+    android:id="@+id/action_tujian"
+    android:icon="@drawable/ic_tujian"
+    android:title="@string/tujian" />
+  <item
+    android:id="@+id/action_bing"
+    android:icon="@drawable/ic_bing"
+    android:title="@string/bing" />
+  <item
+    android:id="@+id/action_hitokoto"
+    android:icon="@drawable/ic_twotone_notes"
+    android:title="@string/hitokoto" />
+</menu>

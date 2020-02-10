@@ -1,0 +1,4 @@
+<resources>
+  <string name="app_name">Boo!</string>
+  <string name="boo_tag">boo_fragment_tag</string>
+</resources>

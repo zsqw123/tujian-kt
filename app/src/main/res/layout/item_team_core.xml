@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:layout_marginTop="24dp"
+  android:background="@drawable/bg_normal_click_feedback"
+  android:gravity="center"
+  android:orientation="vertical"
+  android:paddingTop="12dp"
+  android:paddingBottom="12dp">
+
+  <com.facebook.drawee.view.SimpleDraweeView
+    android:id="@+id/avatar"
+    android:layout_width="72dp"
+    android:layout_height="72dp"
+    tools:background="@android:color/darker_gray" />
+
+  <TextView
+    android:id="@+id/name"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:ellipsize="end"
+    android:gravity="center"
+    android:maxLines="1"
+    android:singleLine="true"
+    android:textColor="?android:textColorPrimary"
+    android:textSize="18sp"
+    android:textStyle="bold"
+    tools:text="尽管如此世界依然美丽" />
+
+  <TextView
+    android:id="@+id/job"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:ellipsize="end"
+    android:gravity="center"
+    android:maxLines="1"
+    android:singleLine="true"
+    android:textColor="?android:textColorSecondary"
+    tools:text="首席开发者" />
+</LinearLayout>

@@ -1,0 +1,47 @@
+apply plugin: 'com.android.library'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+android {
+  compileSdkVersion rootProject.versions.compilesdk
+  buildToolsVersion rootProject.versions.buildtools
+  defaultConfig {
+    minSdkVersion rootProject.versions.minsdk
+    targetSdkVersion rootProject.versions.targetsdk
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+  }
+  compileOptions {
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+  }
+  kotlinOptions {
+    jvmTarget = '1.8'
+  }
+  lintOptions {
+    check 'Interoperability'
+  }
+  sourceSets {
+    main.java.srcDirs += 'src/main/kotlin'
+  }
+  productFlavors {
+  }
+}
+dependencies {
+  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+  implementation "androidx.appcompat:appcompat:${rootProject.versions.appcompat}"
+  implementation "androidx.core:core-ktx:${rootProject.versions.corektx}"
+  implementation "androidx.transition:transition:${rootProject.versions.transition}"
+  implementation "com.facebook.fresco:fresco:${rootProject.versions.fresco}"
+  implementation "com.facebook.fresco:animated-gif:${rootProject.versions.fresco}"
+  implementation "com.facebook.fresco:animated-webp:${rootProject.versions.fresco}"
+  implementation "com.facebook.fresco:webpsupport:${rootProject.versions.fresco}"
+  implementation "com.davemorrissey.labs:subsampling-scale-image-view:${rootProject.versions.scaleimageview}"
+  implementation "org.jetbrains.anko:anko:${rootProject.versions.anko}"
+}

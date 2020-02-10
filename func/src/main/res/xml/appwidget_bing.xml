@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+  android:initialKeyguardLayout="@layout/widget_bing"
+  android:initialLayout="@layout/widget_bing"
+  android:minWidth="@dimen/widget_min_width"
+  android:minHeight="@dimen/widget_min_height"
+  android:minResizeWidth="@dimen/widget_min_size"
+  android:minResizeHeight="@dimen/widget_min_size"
+  android:previewImage="@drawable/preview_bing"
+  android:resizeMode="horizontal|vertical"
+  android:updatePeriodMillis="0"
+  android:widgetCategory="home_screen|keyguard" />

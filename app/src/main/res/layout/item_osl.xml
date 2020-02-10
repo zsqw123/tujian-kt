@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:background="@drawable/bg_normal_click_feedback"
+  android:paddingStart="16dp"
+  android:paddingTop="12dp"
+  android:paddingEnd="16dp"
+  android:paddingBottom="12dp">
+
+  <TextView
+    android:id="@+id/name"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:ellipsize="end"
+    android:maxLines="1"
+    android:singleLine="true"
+    android:textColor="?android:textColorPrimary"
+    android:textSize="18sp"
+    android:textStyle="bold"
+    app:layout_constraintEnd_toStartOf="@id/license"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    tools:text="FlexBox Layout" />
+
+  <TextView
+    android:id="@+id/license"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:ellipsize="end"
+    android:gravity="end"
+    android:maxLines="1"
+    android:singleLine="true"
+    android:textColor="?colorAccent"
+    android:textStyle="bold"
+    android:typeface="monospace"
+    app:layout_constraintBottom_toBottomOf="@id/name"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toTopOf="@id/name"
+    tools:text="apache license 2.0" />
+
+  <TextView
+    android:id="@+id/desc"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:textColor="?android:textColorSecondary"
+    app:layout_constraintTop_toBottomOf="@id/name"
+    tools:text="《女神异闻录》系列是ATLUS制作并发行的系列游戏，最初起源于同社的RPG《真·女神转生》系列的衍生作品《真·女神转生if...》。系列第一部作品《女神异闻 ..." />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+  <com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
+    android:id="@+id/actual_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
+
+  <FrameLayout
+    android:id="@+id/progress_wrapper"
+    android:layout_width="56dp"
+    android:layout_height="56dp"
+    android:layout_gravity="center"
+    android:background="@drawable/bg_white_circle">
+
+    <TextView
+      android:id="@+id/progress"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:textColor="#000000"
+      android:textStyle="bold"
+      tools:text="56" />
+
+    <ProgressBar
+      android:layout_width="match_parent"
+      android:layout_height="match_parent" />
+  </FrameLayout>
+</merge>

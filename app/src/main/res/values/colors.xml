@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <color name="def">#009b3b</color>
+  <color name="divider">#3D7F7F7F</color>
+  <color name="background">#3D7F7F7F</color>
+  <color name="focused_background">#80c6c5c5</color>
+</resources>

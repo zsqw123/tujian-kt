@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:id="@+id/wrapper"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:animateLayoutChanges="true"
+  android:background="?android:windowBackground">
+
+  <androidx.viewpager2.widget.ViewPager2
+    android:id="@+id/view_pager"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
+
+  <io.nichijou.tujian.widget.Fab
+    android:id="@+id/fab"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="32dp"
+    android:visibility="gone"
+    app:elevation="16dp"
+    app:fabSize="mini"
+    app:layout_anchor="@id/content"
+    app:layout_anchorGravity="end"
+    app:srcCompat="@drawable/ic_twotone_add" />
+
+  <FrameLayout
+    android:id="@+id/content_overlay"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <io.nichijou.tujian.widget.TopBar
+      android:id="@+id/content"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="bottom"
+      android:layout_margin="16dp"
+      android:clickable="true"
+      android:focusable="true"
+      android:stateListAnimator="@animator/touch_float_anim"
+      android:visibility="gone"
+      app:cardBackgroundColor="?android:windowBackground">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+          android:id="@+id/toolbar"
+          android:layout_width="match_parent"
+          android:layout_height="50dp"
+          android:background="?android:windowBackground"
+          app:contentInsetStartWithNavigation="0dp"
+          app:navigationIcon="?android:attr/homeAsUpIndicator"
+          app:titleTextAppearance="@style/ToolbarTitleTextAppearance" />
+
+        <TextView
+          android:id="@+id/date"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="16dp"
+          android:layout_marginEnd="16dp"
+          android:textColor="?android:textColorPrimary"
+          android:textSize="20sp"
+          android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+          android:id="@+id/recycler_view"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="16dp"
+          android:layout_marginTop="8dp"
+          android:layout_marginEnd="16dp"
+          android:textIsSelectable="true"
+          android:visibility="gone" />
+
+        <TextView
+          android:id="@+id/desc"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="16dp"
+          android:layout_marginTop="8dp"
+          android:layout_marginEnd="16dp"
+          android:layout_marginBottom="8dp"
+          android:textColor="?android:textColorSecondary"
+          android:textIsSelectable="true"
+          android:textSize="14sp"
+          android:textStyle="bold" />
+
+        <com.google.android.material.tabs.TabLayout
+          android:id="@+id/tab"
+          android:layout_width="wrap_content"
+          android:layout_height="28dp"
+          android:layout_gravity="end"
+          android:layout_marginStart="16dp"
+          android:layout_marginEnd="16dp"
+          android:layout_marginBottom="16dp"
+          android:background="?android:windowBackground"
+          app:tabIndicatorColor="?colorAccent"
+          app:tabIndicatorFullWidth="false"
+          app:tabMode="scrollable"
+          app:tabSelectedTextColor="?colorAccent"
+          app:tabTextAppearance="@style/TodayTabTextStyle"
+          app:tabTextColor="?android:textColorPrimary" />
+      </LinearLayout>
+    </io.nichijou.tujian.widget.TopBar>
+  </FrameLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
