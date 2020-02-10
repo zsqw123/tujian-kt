@@ -18,6 +18,7 @@
 
       <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:id="@+id/layout_dark_setting"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_normal_click_feedback"
         android:clickable="true"
@@ -32,7 +33,7 @@
           android:id="@+id/icon_dark"
           android:layout_width="24dp"
           android:layout_height="24dp"
-          app:layout_constraintBottom_toBottomOf="@id/view_dark"
+          app:layout_constraintBottom_toBottomOf="@id/sub_dark"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="@id/label_dark" />
 
@@ -44,7 +45,6 @@
           android:text="@string/dark_theme"
           android:textColor="?android:textColorPrimary"
           android:textSize="16sp"
-          app:layout_constraintEnd_toStartOf="@id/view_dark"
           app:layout_constraintStart_toEndOf="@id/icon_dark"
           app:layout_constraintTop_toTopOf="parent" />
 
@@ -54,17 +54,9 @@
           android:layout_height="wrap_content"
           android:text="@string/dark_theme_desc"
           android:textColor="?android:textColorSecondary"
-          app:layout_constraintEnd_toStartOf="@id/view_dark"
           app:layout_constraintStart_toStartOf="@id/label_dark"
           app:layout_constraintTop_toBottomOf="@id/label_dark" />
 
-        <androidx.appcompat.widget.SwitchCompat
-          android:id="@+id/view_dark"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          app:layout_constraintBottom_toBottomOf="@id/sub_dark"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintTop_toTopOf="@id/label_dark" />
       </androidx.constraintlayout.widget.ConstraintLayout>
 
       <View

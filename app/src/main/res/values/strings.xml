@@ -25,7 +25,7 @@
   <string name="download_allowed_network_type_mobile_or_wifi">总是允许下载</string>
   <string name="advance_settings">高级设置</string>
   <string name="dark_theme">暗色主题</string>
-  <string name="dark_theme_desc">应用暗色主题</string>
+  <string name="dark_theme_desc">当前配置暗色主题: </string>
   <string name="wallpaper_settings">壁纸设置</string>
   <string name="wallpaper_settings_desc">启用壁纸切换以及相关设置</string>
   <string name="appwidget_settings">微件设置</string>

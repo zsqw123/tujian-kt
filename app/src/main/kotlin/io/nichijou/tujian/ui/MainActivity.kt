@@ -1,36 +1,43 @@
 package io.nichijou.tujian.ui
 
-import android.content.res.Configuration
-import android.graphics.*
-import android.os.*
-import android.view.*
-import androidx.annotation.*
-import androidx.core.content.*
-import androidx.drawerlayout.widget.*
-import androidx.lifecycle.*
-import androidx.recyclerview.widget.*
-import com.afollestad.assent.*
-import com.larvalabs.boo.*
-import com.yarolegovich.slidingrootnav.*
+import android.graphics.Color
+import android.os.Bundle
+import android.os.CountDownTimer
+import android.os.SystemClock
+import android.view.MotionEvent
+import android.view.View
+import androidx.annotation.ColorInt
+import androidx.core.content.ContextCompat
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.afollestad.assent.Permission
+import com.afollestad.assent.askForPermissions
+import com.larvalabs.boo.BooFragment
+import com.yarolegovich.slidingrootnav.SlidingDrawer
 import com.yarolegovich.slidingrootnav.menu.*
-import io.nichijou.oops.*
+import io.nichijou.oops.Oops
 import io.nichijou.oops.ext.*
-import io.nichijou.tujian.*
 import io.nichijou.tujian.R
-import io.nichijou.tujian.base.*
-import io.nichijou.tujian.common.db.*
-import io.nichijou.tujian.common.ext.*
-import io.nichijou.tujian.ext.*
-import io.nichijou.tujian.ui.about.*
-import io.nichijou.tujian.ui.archive.*
-import io.nichijou.tujian.ui.settings.*
-import io.nichijou.tujian.ui.today.*
-import io.nichijou.tujian.ui.upload.*
-import io.nichijou.utils.*
+import io.nichijou.tujian.Settings
+import io.nichijou.tujian.base.BaseActivity
+import io.nichijou.tujian.common.db.TujianStore
+import io.nichijou.tujian.common.ext.asLiveData
+import io.nichijou.tujian.ext.addFragmentToActivity
+import io.nichijou.tujian.ext.handleBackPress
+import io.nichijou.tujian.ext.replaceFragmentInActivity
+import io.nichijou.tujian.ui.about.AboutFragment
+import io.nichijou.tujian.ui.archive.ArchiveFragment
+import io.nichijou.tujian.ui.settings.SettingsFragment
+import io.nichijou.tujian.ui.today.TodayFragment
+import io.nichijou.tujian.ui.upload.UploadFragment
+import io.nichijou.utils.bodyColor
+import io.nichijou.utils.isColorLight
+import io.nichijou.utils.titleColor
 import kotlinx.android.synthetic.main.menu_left_drawer.*
-import org.jetbrains.anko.configuration
 import org.jetbrains.anko.toast
-import org.koin.android.ext.android.*
+import org.koin.android.ext.android.inject
 import kotlin.system.exitProcess
 
 
@@ -39,14 +46,6 @@ class MainActivity : BaseActivity() {
   override fun getContentViewId(): Int = R.layout.activity_main
 
   override fun handleOnCreate(savedInstanceState: Bundle?) {
-    when (configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
-      Configuration.UI_MODE_NIGHT_NO -> {
-        Settings.darkMode = false
-      } // Night mode is not active, we're using the light theme
-      Configuration.UI_MODE_NIGHT_YES -> {
-        Settings.darkMode = true
-      } // Night mode is active, we're using dark theme
-    }
     translucentStatusBar(true)
     if (Oops.immed().isFirstTime) {
       val def = ContextCompat.getColor(this@MainActivity, R.color.def)
@@ -86,7 +85,7 @@ class MainActivity : BaseActivity() {
 
   private var enableFaceDetection: Boolean = Settings.enableFaceDetection
   private var enableFuckBoo: Boolean = Settings.fuckBoo
-  private var darkMode: Boolean = Settings.darkMode
+  private var darkMode: Int = Settings.darkModeInt
   private var screenSaverInterval: Long = Settings.screenSaverInterval
 
   private val mainViewModel by lazy {
@@ -138,7 +137,7 @@ class MainActivity : BaseActivity() {
       creatureNum = it / 100
       resetScreenSaverTimer()
     })
-    Settings.asLiveData(Settings::darkMode).observe(this, Observer {
+    Settings.asLiveData(Settings::darkModeInt).observe(this, Observer {
       darkMode = it
       SettingsFragment.switchTheme(darkMode)
     })

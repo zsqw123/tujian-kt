@@ -1,5 +1,7 @@
 package io.nichijou.tujian.ui.settings
 
+import android.annotation.SuppressLint
+import android.content.res.Configuration
 import android.graphics.*
 import android.view.*
 import android.widget.*
@@ -16,7 +18,9 @@ import io.nichijou.tujian.ext.*
 import io.nichijou.tujian.ui.*
 import kotlinx.android.synthetic.main.fragment_settings.*
 import kotlinx.coroutines.*
+import org.jetbrains.anko.configuration
 import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.support.v4.selector
 import org.jetbrains.anko.uiThread
 
 class SettingsFragment : BaseFragment(), View.OnClickListener, SeekBar.OnSeekBarChangeListener {
@@ -32,7 +36,23 @@ class SettingsFragment : BaseFragment(), View.OnClickListener, SeekBar.OnSeekBar
 
   companion object {
     fun newInstance() = SettingsFragment()
-    fun switchTheme(dark: Boolean) {
+    fun switchTheme(darkInt: Int) {
+      var dark = false
+      when (darkInt) {
+        0 -> dark = true
+        1 -> dark = false
+        else -> {
+          val context = GetContext.getContext()
+          when (context.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_NO -> {
+              dark = false
+            } // Night mode is not active, we're using the light theme
+            Configuration.UI_MODE_NIGHT_YES -> {
+              dark = true
+            } // Night mode is active, we're using dark theme
+          }
+        }
+      }
       doAsync {
         uiThread {
           if (dark) {
@@ -73,17 +93,21 @@ class SettingsFragment : BaseFragment(), View.OnClickListener, SeekBar.OnSeekBar
   }
 
   private val mainViewModel by activityViewModels<MainViewModel>()
+  @SuppressLint("SetTextI18n")
   private fun initView() {
     applyOopsThemeStore {
       isDark.observe(this@SettingsFragment, Observer {
         mainViewModel.barColor.postValue(if (it) Color.BLACK else Color.WHITE)
-        view_dark?.isChecked = it
         icon_dark?.setImageDrawable(if (!it) target().drawableRes(R.drawable.ic_twotone_brightness_5) else target().drawableRes(R.drawable.ic_twotone_brightness_2))
       })
     }
-    view_dark?.setOnCheckedChangeListener { _, isChecked ->
-      if (isChecked != Oops.immed().isDark) {
-        switchTheme(isChecked)
+    layout_dark_setting.setOnClickListener {
+      selector("选择暗色模式配置", listOf("暗色", "亮色", "跟随系统")) { _, i ->
+        when (i) {
+          0 -> Settings.darkModeInt = 0
+          1 -> Settings.darkModeInt = 1
+          2 -> Settings.darkModeInt = 2
+        }
       }
     }
     lifecycleScope.launch(Dispatchers.IO) {
@@ -143,6 +167,14 @@ class SettingsFragment : BaseFragment(), View.OnClickListener, SeekBar.OnSeekBar
     view_wallpaper_settings.setOnClickListener(this)
     view_appwidget_settings.setOnClickListener(this)
     view_muzei_settings.setOnClickListener(this)
+    //暗黑模式设置标题
+    val darkTextEx = when (Settings.darkModeInt) {
+      0 -> "暗色"
+      1 -> "亮色"
+      else -> "跟随系统"
+    }
+    val darkTextBefore = getString(R.string.dark_theme_desc)
+    sub_dark.text = darkTextBefore + darkTextEx
   }
 
   override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) = Unit
