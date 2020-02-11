@@ -10,6 +10,14 @@ import io.nichijou.tujian.common.entity.*
 import io.nichijou.tujian.common.ext.*
 import kotlinx.coroutines.*
 import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import java.io.IOException
+import okhttp3.OkHttpClient
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONObject
+import java.io.File
 import java.net.*
 import java.util.regex.*
 
@@ -18,6 +26,8 @@ class UploadViewModel(application: Application, private val tujianService: Tujia
   val msg = MutableLiveData<String>()
   val url = MutableLiveData<String>()
   val result = MutableLiveData<Post>()
+
+  private val okHttpClient = OkHttpClient()
 
   fun upload(uri: Uri) {
     viewModelScope.launch(Dispatchers.IO) {
@@ -53,21 +63,32 @@ class UploadViewModel(application: Application, private val tujianService: Tujia
     }
   }
 
-  fun post(upload: Upload) {
-    viewModelScope.launch(Dispatchers.IO) {
-      val builder = FormBody.Builder()
-      val clazz = upload::class.java
-      for (field in clazz.declaredFields) {
-        field.isAccessible = true
-        builder.add(field.name, field.get(upload).toString())
+  fun post(upload: Upload, success: (Call, Response) -> Unit, error: (Call, IOException) -> Unit = { _, _ -> }) {
+    val url = BuildConfig.API_TG
+    val json = "application/json; charset=utf-8".toMediaTypeOrNull()
+    val map = mapOf(
+      "title" to upload.title,
+      "content" to upload.content,
+      "url" to upload.url,
+      "user" to upload.user,
+      "sort" to upload.sort,
+      "hz" to upload.sort
+    )
+    val requestBody = JSONObject(map).toString().toRequestBody(json)
+    val request = Request.Builder()
+      .url(url)
+      .post(requestBody)
+      .build()
+    val call = okHttpClient.newCall(request)
+    call.enqueue(object : Callback {
+      override fun onFailure(call: Call, e: IOException) {
+        error(call, e)
       }
-      val response = tujianService.post(formBody = builder.build())
-      val body = response.body()
-      if (response.isSuccessful && body != null) {
-        result.postValue(body.data)
-      } else {
-        msg.postValue(getApplication<Application>().getString(R.string.post_error))
+
+      @Throws(IOException::class)
+      override fun onResponse(call: Call, response: Response) {
+        success(call, response)
       }
-    }
+    })
   }
 }

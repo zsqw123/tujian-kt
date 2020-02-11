@@ -20,6 +20,7 @@ buildscript {
     'moshi'           : '1.8.0',
     'okhttp3'         : '4.1.0',
     'oops'            : '1.0.0-rc01',//io.nichijou:oops
+    'richtext'        : '3.0.8',//TextView markDown and Html
     "room"            : '2.2.3',
     'retrofit'        : '2.6.1',
     'stetho'          : '1.5.1',

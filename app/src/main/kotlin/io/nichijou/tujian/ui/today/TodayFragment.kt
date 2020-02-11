@@ -23,6 +23,7 @@ import com.facebook.imagepipeline.image.*
 import com.facebook.imagepipeline.request.*
 import com.google.android.flexbox.*
 import com.google.android.material.tabs.*
+import com.zzhoujay.richtext.RichText
 import io.nichijou.oops.ext.tint
 import io.nichijou.tujian.R
 import io.nichijou.tujian.base.*
@@ -90,7 +91,11 @@ class TodayFragment : BaseFragment() {
   private fun bindInfo() {
     currentPicture?.let {
       toolbar.title = it.title
-      desc.text = it.desc
+//      desc.text = it.desc
+      val t = """
+
+      """
+      RichText.fromMarkdown(it.desc).into(desc)
       val dat = if (it.from == Picture.FROM_BING) it.date else it.date.substring(5)
       val user = " via ${it.user}"
       val result = dat + user

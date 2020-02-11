@@ -35,7 +35,6 @@ class App : Application() {
     super.onCreate()
     GetContext.init(this)
     Stetho.initializeWithDefaults(this)
-    Fabric.with(this, Crashlytics())
     Kotpref.init(this)
     startKoin {
       if (BuildConfig.DEBUG) {

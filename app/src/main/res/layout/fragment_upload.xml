@@ -34,6 +34,15 @@
         app:srcCompat="@drawable/ic_twotone_add"
         app:tint="?colorAccent" />
 
+      <ProgressBar
+        android:id="@+id/overlay_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="50dp"
+        android:visibility="gone"
+        android:scaleType="centerInside"
+        app:tint="?colorAccent" />
+
       <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"

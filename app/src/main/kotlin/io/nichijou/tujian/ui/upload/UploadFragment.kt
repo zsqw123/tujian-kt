@@ -5,6 +5,7 @@ import android.content.*
 import android.graphics.*
 import androidx.fragment.app.*
 import androidx.lifecycle.*
+import com.afollestad.assent.rationale.createDialogRationale
 import io.nichijou.oops.*
 import io.nichijou.oops.ext.*
 import io.nichijou.tujian.R
@@ -16,6 +17,10 @@ import io.nichijou.tujian.ext.*
 import io.nichijou.tujian.ui.*
 import kotlinx.android.synthetic.main.fragment_upload.*
 import kotlinx.coroutines.*
+import org.jetbrains.anko.customView
+import org.jetbrains.anko.support.v4.alert
+import org.jetbrains.anko.support.v4.indeterminateProgressDialog
+import org.jetbrains.anko.support.v4.progressDialog
 import org.koin.androidx.viewmodel.ext.android.*
 
 
@@ -39,6 +44,7 @@ class UploadFragment : BaseFragment() {
       }
     }
     setupDrawerWithToolbar(toolbar)
+    //上传图片按钮
     overlay.setOnClickListener {
       val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
       intent.type = "image/*"
@@ -52,6 +58,8 @@ class UploadFragment : BaseFragment() {
       } else {
         field_url_wrapper?.makeVisible()
         field_url?.setText(it)
+        toast("图片已上传 请填写信息")
+        overlay_progress.makeGone()
       }
     })
     uploadViewModel.result.observe(this, Observer {
@@ -80,7 +88,7 @@ class UploadFragment : BaseFragment() {
       }
       val posterEmail = field_poster_email?.text
       val upload = Upload(title, desc, url, poster, "4ac1c07f-a9f7-11e8-a8ea-0202761b0892", posterEmail)
-      uploadViewModel.post(upload)
+      uploadViewModel.post(upload, { _, _ -> toast("投稿成功") })
     }
   }
 
@@ -92,6 +100,8 @@ class UploadFragment : BaseFragment() {
           banner?.load(uri)
           field_url_wrapper?.makeGone()
           field_url?.text = null
+          toast("正在上传图片")
+          overlay_progress.makeVisible()
           uploadViewModel.upload(uri)
         }
         Activity.RESULT_CANCELED -> {
