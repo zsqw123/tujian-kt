@@ -54,12 +54,12 @@ class HistoryAdapter(private val items: List<BaseEntity>) : RecyclerView.Adapter
       is BingViewHolder -> {
         val view = holder.itemView as Card
         val item = items[position] as Bing
-        view.setDataBing(item, cacheColors, view)
+        view.setDataBing(item, cacheColors)
       }
       is PictureViewHolder -> {
         val view = holder.itemView as Card
         val item = items[position] as Picture
-        view.setDataPicture(item, cacheColors, view)
+        view.setDataPicture(item, cacheColors)
       }
     }
   }

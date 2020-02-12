@@ -46,7 +46,7 @@ class Card(context: Context, attrs: AttributeSet) : MaterialCardView(context, at
     })
   }
 
-  fun setDataBing(item: Bing, cacheColors: WeakHashMap<String, List<Palette.Swatch>>, view: Card) {
+  fun setDataBing(item: Bing, cacheColors: WeakHashMap<String, List<Palette.Swatch>>) {
     val cColors = cacheColors[item.url]
     if (cColors.isNullOrEmpty()) {
       colors.makeGone()
@@ -72,7 +72,7 @@ class Card(context: Context, attrs: AttributeSet) : MaterialCardView(context, at
     }
   }
 
-  fun setDataPicture(item: Picture, cacheColors: WeakHashMap<String, List<Palette.Swatch>>, view: Card) {
+  fun setDataPicture(item: Picture, cacheColors: WeakHashMap<String, List<Palette.Swatch>>) {
     val cColors = cacheColors[item.local]
     if (cColors.isNullOrEmpty()) {
       colors.makeGone()
