@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+  <FrameLayout
+    android:id="@+id/wallpaper_wrapper"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
+      android:id="@+id/bg_layer"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent" />
+
+    <com.github.florent37.shapeofview.shapes.PolygonView
+      android:id="@+id/top_wrapper"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="24dp"
+      android:layout_marginTop="80dp"
+      android:layout_marginEnd="24dp"
+      android:elevation="8dp"
+      app:shape_polygon_noOfSides="20">
+
+      <com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
+        android:id="@+id/top_layer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    </com.github.florent37.shapeofview.shapes.PolygonView>
+
+  </FrameLayout>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+  </LinearLayout>
+</FrameLayout>
