@@ -12,7 +12,7 @@ import org.koin.dsl.*
 
 val normalModule = module {
   viewModel { TodayViewModel(androidApplication(), get(), get()) }
-  viewModel { UploadViewModel(get(), get()) }
+  viewModel { UploadViewModel(get()) }
   viewModel { HistoryViewModel(get()) }
   viewModel { AboutViewModel(androidApplication(), get()) }
   viewModel { ArchiveViewModel(get(), get()) }

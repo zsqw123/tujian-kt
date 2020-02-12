@@ -8,8 +8,8 @@ import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import io.nichijou.tujian.common.ext.toClipboard
-import io.nichijou.tujian.common.ext.toast
 import kotlinx.android.parcel.Parcelize
+import org.jetbrains.anko.toast
 
 @Entity(tableName = "tb_hitokoto", indices = [Index(value = ["hitokoto", "source"], unique = true)])
 @JsonClass(generateAdapter = true)

@@ -1,11 +1,12 @@
 package io.nichijou.tujian.func.link
 
-import android.content.*
-import androidx.appcompat.app.*
-import androidx.lifecycle.*
-import io.nichijou.tujian.common.ext.*
+import android.content.ComponentName
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import io.nichijou.tujian.func.R
-import io.nichijou.tujian.func.wallpaper.*
+import io.nichijou.tujian.func.wallpaper.WallpaperWorker
+import org.jetbrains.anko.toast
 
 
 class LinkController : AppCompatActivity() {

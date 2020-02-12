@@ -13,8 +13,8 @@ import com.squareup.moshi.*
 import io.nichijou.tujian.common.R
 import io.nichijou.tujian.common.ext.basePath
 import io.nichijou.tujian.common.ext.toClipboard
-import io.nichijou.tujian.common.ext.toast
 import kotlinx.android.parcel.Parcelize
+import org.jetbrains.anko.toast
 import java.io.File
 
 

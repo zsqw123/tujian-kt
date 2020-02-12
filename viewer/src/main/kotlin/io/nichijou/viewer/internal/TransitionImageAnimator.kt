@@ -52,27 +52,34 @@ internal class TransitionImageAnimator(
     isAnimating = true
     prepareTransitionLayout()
 
-    internalRoot.postApply {
-      //ain't nothing but a kludge to prevent blinking when transition is starting
-      externalImage?.postDelayed(50) { visibility = View.INVISIBLE }
+    internalRoot.post {
+      apply {
+        //防止闪烁
+//      externalImage?.postDelayed(100) { visibility = View.INVISIBLE }
 
-      TransitionManager.beginDelayedTransition(internalRoot, createTransition {
-        if (!isClosing) {
-          isAnimating = false
-          onTransitionEnd()
+        TransitionManager.beginDelayedTransition(internalRoot, createTransition {
+          if (!isClosing) {
+            isAnimating = false
+            onTransitionEnd()
+          }
+        })
+
+        internalImageContainer.apply {
+          applyMargin(0, 0, 0, 0)
+          requestNewSize(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT)
         }
-      })
+//      if ((internalImage.width.toFloat() / internalImage.height.toFloat()) >= (context.getScreenWidth().toFloat() / context.getScreenHeight().toFloat())) {
+//        internalImage.makeViewWidthMatchParent()
+//      } else {
+//        internalImage.makeViewHeightMatchParent()
+//      }
 
-      internalImageContainer.makeViewMatchParent()
-      if ((internalImage.width.toFloat() / internalImage.height.toFloat()) >= (context.getScreenWidth().toFloat() / context.getScreenHeight().toFloat())) {
-        internalImage.makeViewWidthMatchParent()
-      } else {
-        internalImage.makeViewHeightMatchParent()
+        internalRoot.applyMargin(containerPadding[0], containerPadding[1], containerPadding[2], containerPadding[3])
+
+        internalImageContainer.requestLayout()
       }
-
-      internalRoot.applyMargin(containerPadding[0], containerPadding[1], containerPadding[2], containerPadding[3])
-
-      internalImageContainer.requestLayout()
     }
   }
 
@@ -80,7 +87,8 @@ internal class TransitionImageAnimator(
     isAnimating = true
     isClosing = true
 
-    TransitionManager.beginDelayedTransition(internalRoot, createTransition { handleCloseTransitionEnd(onTransitionEnd) })
+    TransitionManager.beginDelayedTransition(internalRoot,
+      createTransition { handleCloseTransitionEnd(onTransitionEnd) })
 
     prepareTransitionLayout()
     internalImageContainer.requestLayout()
@@ -109,11 +117,11 @@ internal class TransitionImageAnimator(
   }
 
   private fun resetRootTranslation() {
-    internalRoot
-      .animate()
-      .translationY(0f)
-      .setDuration(transitionDuration)
-      .start()
+//    internalRoot
+//      .animate()
+//      .translationY(0f)
+//      .setDuration(transitionDuration)
+//      .start()
   }
 
   private fun createTransition(onTransitionEnd: (() -> Unit)? = null): Transition =
@@ -123,7 +131,7 @@ internal class TransitionImageAnimator(
       .addListener(onTransitionEnd = { onTransitionEnd?.invoke() })
 
   companion object {
-    private const val TRANSITION_DURATION_OPEN = 2500L
-    private const val TRANSITION_DURATION_CLOSE = 3000L
+    private const val TRANSITION_DURATION_OPEN = 250L
+    private const val TRANSITION_DURATION_CLOSE = 300L
   }
 }

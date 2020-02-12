@@ -14,6 +14,7 @@ import io.nichijou.tujian.paging.Status
 import io.nichijou.viewer.Viewer
 import jp.wasabeef.recyclerview.animators.LandingAnimator
 import kotlinx.android.synthetic.main.fragment_list.*
+import org.jetbrains.anko.support.v4.toast
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ListFragment : BaseFragment() {

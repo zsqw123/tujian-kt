@@ -8,13 +8,6 @@ import retrofit2.http.*
 import kotlin.random.Random
 
 interface TujianService {
-  @POST
-  @Multipart
-  suspend fun upload(@Url url: String = BuildConfig.API_UPLOAD, @Part body: MultipartBody.Part): Response<UploadResult>
-
-  @POST
-  suspend fun post(@Url url: String = BuildConfig.API_TG, @Body formBody: FormBody): Response<PostResp>
-
   @GET(BuildConfig.API_TODAY)
   suspend fun today(@Query("sort") tid: String? = null): Response<List<Picture>>
 

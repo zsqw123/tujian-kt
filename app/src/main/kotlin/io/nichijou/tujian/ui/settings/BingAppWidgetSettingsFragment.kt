@@ -10,6 +10,7 @@ import io.nichijou.tujian.ext.*
 import io.nichijou.tujian.func.appwidget.*
 import kotlinx.android.synthetic.main.fragment_settings_appwidget_bing.*
 import kotlinx.coroutines.*
+import org.jetbrains.anko.support.v4.toast
 
 
 class BingAppWidgetSettingsFragment : BaseFragment(), CompoundButton.OnCheckedChangeListener, SeekBar.OnSeekBarChangeListener {

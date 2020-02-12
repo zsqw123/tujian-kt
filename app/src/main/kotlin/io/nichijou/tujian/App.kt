@@ -1,32 +1,34 @@
 package io.nichijou.tujian
 
-import android.app.*
-import android.content.*
-import android.graphics.*
-import android.os.*
-import com.chibatching.kotpref.*
-import com.crashlytics.android.*
-import com.facebook.cache.disk.*
-import com.facebook.common.disk.*
-import com.facebook.common.internal.*
-import com.facebook.common.memory.*
-import com.facebook.common.util.*
-import com.facebook.drawee.backends.pipeline.*
-import com.facebook.imagepipeline.cache.*
-import com.facebook.imagepipeline.core.*
-import com.facebook.imagepipeline.decoder.*
-import com.facebook.imagepipeline.image.*
-import com.facebook.stetho.*
-import io.fabric.sdk.android.*
-import io.nichijou.oops.*
-import io.nichijou.tujian.common.*
-import io.nichijou.tujian.common.fresco.*
-import io.nichijou.tujian.func.shortcuts.*
-import okhttp3.*
-import org.koin.android.ext.android.*
-import org.koin.android.ext.koin.*
-import org.koin.core.context.*
-import java.io.*
+import android.app.ActivityManager
+import android.app.Application
+import android.content.ComponentCallbacks2
+import android.content.Context
+import android.graphics.Bitmap
+import android.os.Environment
+import com.chibatching.kotpref.Kotpref
+import com.facebook.cache.disk.DiskCacheConfig
+import com.facebook.common.disk.NoOpDiskTrimmableRegistry
+import com.facebook.common.internal.Supplier
+import com.facebook.common.memory.MemoryTrimType
+import com.facebook.common.memory.NoOpMemoryTrimmableRegistry
+import com.facebook.common.util.ByteConstants
+import com.facebook.drawee.backends.pipeline.Fresco
+import com.facebook.imagepipeline.cache.MemoryCacheParams
+import com.facebook.imagepipeline.core.ImagePipelineConfig
+import com.facebook.imagepipeline.decoder.ProgressiveJpegConfig
+import com.facebook.imagepipeline.image.ImmutableQualityInfo
+import com.facebook.imagepipeline.image.QualityInfo
+import com.facebook.stetho.Stetho
+import io.nichijou.oops.Oops
+import io.nichijou.tujian.common.commonModule
+import io.nichijou.tujian.common.fresco.OkHttpNetworkFetcher
+import io.nichijou.tujian.func.shortcuts.ShortcutsController
+import okhttp3.OkHttpClient
+import org.koin.android.ext.android.inject
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
+import java.io.File
 
 class App : Application() {
   private val okHttpClient: OkHttpClient by inject()
@@ -122,7 +124,7 @@ class App : Application() {
 
   private fun getMaxCacheSize(): Int {
     val activityManager = getSystemService(ACTIVITY_SERVICE) as ActivityManager
-    val maxMemory = Math.min(activityManager.memoryClass * ByteConstants.MB, Integer.MAX_VALUE)
+    val maxMemory = (activityManager.memoryClass * ByteConstants.MB).coerceAtMost(Integer.MAX_VALUE)
     return when {
       maxMemory < 32 * ByteConstants.MB -> 4 * ByteConstants.MB
       maxMemory < 64 * ByteConstants.MB -> 8 * ByteConstants.MB

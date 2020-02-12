@@ -1,47 +1,59 @@
 package io.nichijou.tujian.ui.today
 
-import android.app.*
-import android.graphics.*
-import android.net.*
-import android.text.*
-import android.text.style.*
-import android.view.*
-import android.view.animation.*
-import android.widget.*
-import androidx.fragment.app.*
-import androidx.lifecycle.*
+import android.app.WallpaperManager
+import android.graphics.Bitmap
+import android.graphics.Color
+import android.net.Uri
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.RelativeSizeSpan
+import android.view.GestureDetector
+import android.view.MotionEvent
+import android.view.View
+import android.view.animation.OvershootInterpolator
+import android.widget.ArrayAdapter
+import android.widget.ListPopupWindow
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.palette.graphics.*
-import androidx.viewpager2.widget.*
-import com.facebook.common.executors.*
-import com.facebook.common.references.*
-import com.facebook.datasource.*
-import com.facebook.drawee.backends.pipeline.*
-import com.facebook.imagepipeline.common.*
-import com.facebook.imagepipeline.datasource.*
-import com.facebook.imagepipeline.image.*
-import com.facebook.imagepipeline.request.*
-import com.google.android.flexbox.*
-import com.google.android.material.tabs.*
+import androidx.lifecycle.lifecycleScope
+import androidx.palette.graphics.Palette
+import androidx.viewpager2.widget.ViewPager2
+import com.facebook.common.executors.UiThreadImmediateExecutorService
+import com.facebook.common.references.CloseableReference
+import com.facebook.datasource.DataSource
+import com.facebook.drawee.backends.pipeline.Fresco
+import com.facebook.imagepipeline.common.ImageDecodeOptions
+import com.facebook.imagepipeline.common.Priority
+import com.facebook.imagepipeline.common.RotationOptions
+import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber
+import com.facebook.imagepipeline.image.CloseableImage
+import com.facebook.imagepipeline.request.ImageRequest
+import com.facebook.imagepipeline.request.ImageRequestBuilder
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexWrap
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.material.tabs.TabLayoutMediator
 import com.zzhoujay.richtext.RichText
-import io.nichijou.oops.ext.tint
 import io.nichijou.tujian.R
-import io.nichijou.tujian.base.*
+import io.nichijou.tujian.base.BaseFragment
 import io.nichijou.tujian.common.entity.Picture
 import io.nichijou.tujian.common.ext.*
-import io.nichijou.tujian.common.fresco.*
-import io.nichijou.tujian.ext.*
-import io.nichijou.tujian.func.wallpaper.*
-import io.nichijou.tujian.ui.*
-import jp.wasabeef.fresco.processors.*
-import jp.wasabeef.fresco.processors.gpu.*
-import jp.wasabeef.recyclerview.animators.*
+import io.nichijou.tujian.common.fresco.getPalette
+import io.nichijou.tujian.ext.target
+import io.nichijou.tujian.func.wallpaper.WallpaperConfig
+import io.nichijou.tujian.ui.ColorAdapter
+import io.nichijou.tujian.ui.MainViewModel
+import jp.wasabeef.fresco.processors.BlurPostprocessor
+import jp.wasabeef.fresco.processors.CombinePostProcessors
+import jp.wasabeef.fresco.processors.gpu.PixelationFilterPostprocessor
+import jp.wasabeef.recyclerview.animators.LandingAnimator
 import kotlinx.android.synthetic.main.fragment_today.*
 import kotlinx.android.synthetic.main.view_today_item.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.launch
 import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.uiThread
-import org.koin.androidx.viewmodel.ext.android.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 import kotlin.collections.set
 
@@ -92,9 +104,6 @@ class TodayFragment : BaseFragment() {
     currentPicture?.let {
       toolbar.title = it.title
 //      desc.text = it.desc
-      val t = """
-
-      """
       RichText.fromMarkdown(it.desc).into(desc)
       val dat = if (it.from == Picture.FROM_BING) it.date else it.date.substring(5)
       val user = " via ${it.user}"

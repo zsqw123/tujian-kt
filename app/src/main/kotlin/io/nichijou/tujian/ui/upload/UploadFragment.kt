@@ -1,27 +1,28 @@
 package io.nichijou.tujian.ui.upload
 
-import android.app.*
-import android.content.*
-import android.graphics.*
-import androidx.fragment.app.*
-import androidx.lifecycle.*
-import com.afollestad.assent.rationale.createDialogRationale
-import io.nichijou.oops.*
-import io.nichijou.oops.ext.*
+import android.app.Activity
+import android.content.Intent
+import android.graphics.Color
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
+import io.nichijou.oops.Oops
+import io.nichijou.oops.ext.setMarginTopPlusStatusBarHeight
 import io.nichijou.tujian.R
-import io.nichijou.tujian.base.*
-import io.nichijou.tujian.common.entity.*
-import io.nichijou.tujian.common.ext.*
-import io.nichijou.tujian.common.fresco.*
-import io.nichijou.tujian.ext.*
-import io.nichijou.tujian.ui.*
+import io.nichijou.tujian.base.BaseFragment
+import io.nichijou.tujian.common.entity.Upload
+import io.nichijou.tujian.common.ext.makeGone
+import io.nichijou.tujian.common.ext.makeVisible
+import io.nichijou.tujian.common.fresco.load
+import io.nichijou.tujian.ext.target
+import io.nichijou.tujian.ui.MainViewModel
 import kotlinx.android.synthetic.main.fragment_upload.*
-import kotlinx.coroutines.*
-import org.jetbrains.anko.customView
-import org.jetbrains.anko.support.v4.alert
-import org.jetbrains.anko.support.v4.indeterminateProgressDialog
-import org.jetbrains.anko.support.v4.progressDialog
-import org.koin.androidx.viewmodel.ext.android.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import org.jetbrains.anko.support.v4.toast
+import org.jetbrains.anko.toast
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class UploadFragment : BaseFragment() {

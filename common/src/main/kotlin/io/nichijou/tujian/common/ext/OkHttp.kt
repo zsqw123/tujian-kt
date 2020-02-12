@@ -39,35 +39,6 @@ suspend fun Call.await(): Response {
   }
 }
 
-class ProgressResponseBody(private val responseBody: ResponseBody, private val upload: UploadProgress) : ResponseBody() {
-
-  private var bufferedSource: BufferedSource? = null
-
-  override fun contentType(): MediaType? = responseBody.contentType()
-
-
-  override fun contentLength(): Long = responseBody.contentLength()
-
-
-  override fun source(): BufferedSource = bufferedSource
-    ?: source(responseBody.source()).buffer().also {
-      bufferedSource = it
-    }
-
-  private fun source(source: Source): Source = object : ForwardingSource(source) {
-    private var totalBytesRead = 0L
-    override fun read(sink: Buffer, byteCount: Long): Long {
-      val bytesRead = super.read(sink, byteCount)
-      // read() returns the number of bytes read, or -1 if this source is exhausted.
-      totalBytesRead += if (bytesRead != -1L) bytesRead else 0
-      upload.invoke(totalBytesRead, responseBody.contentLength(), bytesRead == -1L)
-      return bytesRead
-    }
-  }
-}
-
-typealias UploadProgress = (bytesRead: Long, contentLength: Long, done: Boolean) -> Unit
-
 class UriRequestBody(private val context: Context, private val uri: Uri) : RequestBody() {
 
   override fun contentType(): MediaType? = (context.contentResolver.getType(uri)

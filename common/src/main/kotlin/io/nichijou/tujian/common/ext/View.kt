@@ -12,9 +12,9 @@ import android.widget.ListAdapter
 import androidx.core.view.drawToBitmap
 import androidx.core.view.setMargins
 import com.google.android.material.snackbar.Snackbar
+import org.jetbrains.anko.*
 import java.io.OutputStream
 import kotlin.math.hypot
-import org.jetbrains.anko.*
 import kotlin.math.max
 
 fun View.setMargin(size: Int) {

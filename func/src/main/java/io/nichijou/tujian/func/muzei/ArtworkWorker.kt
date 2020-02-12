@@ -1,19 +1,23 @@
 package io.nichijou.tujian.func.muzei
 
-import android.content.*
-import android.net.*
-import android.os.*
+import android.content.Context
+import android.net.Uri
+import android.os.Build
 import androidx.work.*
-import com.google.android.apps.muzei.api.provider.*
-import io.nichijou.tujian.common.*
-import io.nichijou.tujian.common.db.*
-import io.nichijou.tujian.common.entity.*
-import io.nichijou.tujian.common.ext.*
+import com.google.android.apps.muzei.api.provider.Artwork
+import com.google.android.apps.muzei.api.provider.ProviderContract
+import io.nichijou.tujian.common.TujianService
+import io.nichijou.tujian.common.db.TujianStore
+import io.nichijou.tujian.common.entity.Category
+import io.nichijou.tujian.common.entity.Picture
 import io.nichijou.tujian.func.BuildConfig
 import io.nichijou.tujian.func.R
-import kotlinx.coroutines.*
-import org.koin.core.*
-import kotlin.random.*
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import org.jetbrains.anko.toast
+import org.koin.core.KoinComponent
+import org.koin.core.inject
+import kotlin.random.Random
 
 
 class ArtworkWorker(context: Context, workerParams: WorkerParameters) : CoroutineWorker(context, workerParams), KoinComponent {

@@ -27,6 +27,7 @@ class StyleViewModel : ViewModel() {
   }
 
   companion object {
-    fun live(activity: AppCompatActivity): StyleViewModel = ViewModelProviders.of(activity).get(StyleViewModel::class.java)
+    fun live(activity: AppCompatActivity): StyleViewModel =
+      ViewModelProvider(activity).get(StyleViewModel::class.java)
   }
 }

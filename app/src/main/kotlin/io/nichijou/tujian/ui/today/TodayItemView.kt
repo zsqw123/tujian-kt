@@ -13,6 +13,7 @@ import io.nichijou.tujian.R
 import io.nichijou.tujian.common.ext.*
 import io.nichijou.tujian.common.fresco.*
 import kotlinx.android.synthetic.main.view_today_item.view.*
+import org.jetbrains.anko.toast
 
 class TodayItemView(context: Context) : FrameLayout(context), SubsamplingScaleImageView.OnImageEventListener {
 
@@ -134,7 +135,7 @@ class TodayItemView(context: Context) : FrameLayout(context), SubsamplingScaleIm
   }
 
   private fun showMsg(msg: String?) {
-    context.toast(msg)
+    context.toast(msg ?: "")
   }
 
   override fun onAttachedToWindow() {

@@ -8,6 +8,7 @@ import com.google.android.apps.muzei.api.provider.Artwork
 import io.nichijou.tujian.common.ext.*
 import io.nichijou.tujian.func.BuildConfig
 import io.nichijou.tujian.func.R
+import org.jetbrains.anko.toast
 
 
 class ArtworkProvider : MuzeiArtProvider() {

@@ -6,10 +6,10 @@ import android.os.*
 import androidx.work.*
 import io.nichijou.tujian.common.*
 import io.nichijou.tujian.common.db.*
-import io.nichijou.tujian.common.ext.*
 import io.nichijou.tujian.func.R
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
+import org.jetbrains.anko.toast
 import org.koin.core.*
 import java.util.concurrent.*
 

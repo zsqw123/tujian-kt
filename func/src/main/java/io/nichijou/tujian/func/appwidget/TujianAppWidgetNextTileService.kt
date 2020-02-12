@@ -8,6 +8,7 @@ import androidx.lifecycle.*
 import io.nichijou.tujian.common.ext.*
 import io.nichijou.tujian.func.R
 import io.nichijou.tujian.func.ServiceLifecycleDispatcher
+import org.jetbrains.anko.toast
 
 @RequiresApi(Build.VERSION_CODES.N)
 class TujianAppWidgetNextTileService : TileService(), LifecycleOwner {

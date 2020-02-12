@@ -12,6 +12,7 @@ import io.nichijou.tujian.func.*
 import io.nichijou.tujian.func.appwidget.*
 import io.nichijou.tujian.func.wallpaper.*
 import kotlinx.coroutines.*
+import org.jetbrains.anko.toast
 
 class NotificationController : BroadcastReceiver() {
 

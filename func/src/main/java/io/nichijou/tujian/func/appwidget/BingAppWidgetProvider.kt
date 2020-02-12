@@ -42,10 +42,10 @@ class BingAppWidgetProvider : AppWidgetProvider() {
 
   override fun onReceive(context: Context, intent: Intent?) {
     super.onReceive(context, intent)
-    when {
-      intent?.action == ACTION_NEXT -> BingAppWidgetWorker.enqueueLoad()
-      intent?.action == ACTION_SAVE -> bing?.download(context)
-      intent?.action == ACTION_COPY -> bing?.copy(context)
+    when (intent?.action) {
+        ACTION_NEXT -> BingAppWidgetWorker.enqueueLoad()
+        ACTION_SAVE -> bing?.download(context)
+        ACTION_COPY -> bing?.copy(context)
     }
   }
 

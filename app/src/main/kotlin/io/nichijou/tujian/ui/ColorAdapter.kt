@@ -1,14 +1,18 @@
 package io.nichijou.tujian.ui
 
-import android.view.*
-import androidx.palette.graphics.*
-import androidx.recyclerview.widget.*
-import com.google.android.flexbox.*
-import io.nichijou.oops.*
+import android.view.View
+import android.view.ViewGroup
+import androidx.palette.graphics.Palette
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.flexbox.FlexboxLayoutManager
+import io.nichijou.oops.Oops
 import io.nichijou.tujian.R
-import io.nichijou.tujian.common.ext.*
-import io.nichijou.utils.*
-import kotlinx.coroutines.*
+import io.nichijou.utils.bodyColor
+import io.nichijou.utils.titleColor
+import io.nichijou.utils.toHexColor
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import org.jetbrains.anko.toast
 
 class ColorAdapter(private val colors: List<Palette.Swatch>, private val width: Int, private val height: Int) : RecyclerView.Adapter<ColorAdapter.ViewHolder>() {
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(View(parent.context).apply {

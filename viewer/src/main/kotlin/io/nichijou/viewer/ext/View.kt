@@ -27,14 +27,6 @@ internal fun View.makeGone() {
   visibility = View.GONE
 }
 
-internal inline fun <T : View> T.postApply(crossinline block: T.() -> Unit) {
-  post { apply(block) }
-}
-
-internal inline fun <T : View> T.postDelayed(delayMillis: Long, crossinline block: T.() -> Unit) {
-  postDelayed({ block() }, delayMillis)
-}
-
 internal fun View.applyMargin(
   start: Int? = null,
   top: Int? = null,
@@ -55,27 +47,6 @@ internal fun View.requestNewSize(width: Int, height: Int) {
   layoutParams.width = width
   layoutParams.height = height
   layoutParams = layoutParams
-}
-
-internal fun View.makeViewMatchParent() {
-  applyMargin(0, 0, 0, 0)
-  requestNewSize(
-    ViewGroup.LayoutParams.MATCH_PARENT,
-    ViewGroup.LayoutParams.MATCH_PARENT)
-}
-
-internal fun View.makeViewWidthMatchParent() {
-  applyMargin(0, 0, 0, 0)
-  requestNewSize(
-    ViewGroup.LayoutParams.MATCH_PARENT,
-    ViewGroup.LayoutParams.WRAP_CONTENT)
-}
-
-internal fun View.makeViewHeightMatchParent() {
-  applyMargin(0, 0, 0, 0)
-  requestNewSize(
-    ViewGroup.LayoutParams.WRAP_CONTENT,
-    ViewGroup.LayoutParams.MATCH_PARENT)
 }
 
 internal fun View.animateAlpha(from: Float?, to: Float?, duration: Long) {

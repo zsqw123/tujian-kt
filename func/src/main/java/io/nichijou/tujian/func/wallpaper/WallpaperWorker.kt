@@ -1,35 +1,40 @@
 package io.nichijou.tujian.func.wallpaper
 
 
-import android.app.*
-import android.content.*
-import android.graphics.*
-import android.net.*
-import android.os.*
+import android.app.WallpaperManager
+import android.content.Context
+import android.graphics.Bitmap
+import android.net.Uri
+import android.os.Build
 import androidx.work.*
-import com.facebook.common.executors.*
-import com.facebook.common.references.*
-import com.facebook.datasource.*
-import com.facebook.drawee.backends.pipeline.*
-import com.facebook.imagepipeline.common.*
-import com.facebook.imagepipeline.datasource.*
-import com.facebook.imagepipeline.image.*
-import com.facebook.imagepipeline.request.*
-import io.nichijou.tujian.common.*
-import io.nichijou.tujian.common.db.*
-import io.nichijou.tujian.common.entity.*
+import com.facebook.common.executors.UiThreadImmediateExecutorService
+import com.facebook.common.references.CloseableReference
+import com.facebook.datasource.DataSource
+import com.facebook.drawee.backends.pipeline.Fresco
+import com.facebook.imagepipeline.common.ImageDecodeOptions
+import com.facebook.imagepipeline.common.Priority
+import com.facebook.imagepipeline.common.RotationOptions
+import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber
+import com.facebook.imagepipeline.image.CloseableImage
+import com.facebook.imagepipeline.request.ImageRequestBuilder
+import io.nichijou.tujian.common.TujianService
+import io.nichijou.tujian.common.db.TujianStore
+import io.nichijou.tujian.common.entity.Category
 import io.nichijou.tujian.common.entity.Picture
-import io.nichijou.tujian.common.ext.*
 import io.nichijou.tujian.func.R
-import io.nichijou.tujian.func.notification.*
-import jp.wasabeef.fresco.processors.*
-import jp.wasabeef.fresco.processors.gpu.*
-import kotlinx.coroutines.*
+import io.nichijou.tujian.func.notification.NotificationController
+import jp.wasabeef.fresco.processors.BlurPostprocessor
+import jp.wasabeef.fresco.processors.CombinePostProcessors
+import jp.wasabeef.fresco.processors.gpu.PixelationFilterPostprocessor
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
-import org.koin.core.*
-import java.util.concurrent.*
-import kotlin.random.*
+import kotlinx.coroutines.withContext
+import org.jetbrains.anko.toast
+import org.koin.core.KoinComponent
+import org.koin.core.inject
+import java.util.concurrent.TimeUnit
+import kotlin.random.Random
 
 class WallpaperWorker(context: Context, workerParams: WorkerParameters) : CoroutineWorker(context, workerParams), KoinComponent {
 

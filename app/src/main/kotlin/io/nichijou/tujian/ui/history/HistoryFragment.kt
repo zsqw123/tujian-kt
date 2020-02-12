@@ -1,23 +1,25 @@
 package io.nichijou.tujian.ui.history
 
-import android.graphics.*
-import android.view.*
-import android.view.animation.*
-import android.widget.AdapterView
-import androidx.core.animation.*
-import androidx.core.os.*
-import androidx.fragment.app.*
-import androidx.lifecycle.*
-import androidx.recyclerview.widget.*
-import io.nichijou.oops.*
+import android.graphics.Color
+import android.graphics.Point
+import android.view.ViewAnimationUtils
+import android.view.animation.AccelerateDecelerateInterpolator
+import androidx.core.animation.addListener
+import androidx.core.os.bundleOf
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import io.nichijou.oops.Oops
 import io.nichijou.tujian.R
-import io.nichijou.tujian.base.*
-import io.nichijou.tujian.common.ext.*
-import io.nichijou.tujian.ui.*
-import jp.wasabeef.recyclerview.animators.*
+import io.nichijou.tujian.base.BaseFragment
+import io.nichijou.tujian.base.TopBarOnScrollListener
+import io.nichijou.tujian.common.ext.getRadiusByCenterPoint
+import io.nichijou.tujian.common.ext.postApply
+import io.nichijou.tujian.common.ext.setMarginTopPlusStatusBarHeight
+import io.nichijou.tujian.ui.MainViewModel
+import jp.wasabeef.recyclerview.animators.LandingAnimator
 import kotlinx.android.synthetic.main.fragment_history.*
-import kotlinx.android.synthetic.main.item_history_picture.*
-import org.koin.androidx.viewmodel.ext.android.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HistoryFragment : BaseFragment() {
   companion object {

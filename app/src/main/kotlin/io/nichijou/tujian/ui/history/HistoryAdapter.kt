@@ -14,8 +14,8 @@ import io.nichijou.tujian.common.entity.Picture
 import io.nichijou.tujian.common.ext.makeGone
 import io.nichijou.tujian.common.ext.makeVisible
 import io.nichijou.tujian.common.ext.toClipboard
-import io.nichijou.tujian.common.ext.toast
 import io.nichijou.tujian.widget.Card
+import org.jetbrains.anko.toast
 import java.util.*
 
 class HistoryAdapter(private val items: List<BaseEntity>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {

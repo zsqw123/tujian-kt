@@ -21,6 +21,7 @@ import kotlinx.coroutines.*
 import org.jetbrains.anko.configuration
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.support.v4.selector
+import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.uiThread
 
 class SettingsFragment : BaseFragment(), View.OnClickListener, SeekBar.OnSeekBarChangeListener {

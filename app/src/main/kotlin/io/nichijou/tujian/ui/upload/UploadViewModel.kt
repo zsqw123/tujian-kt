@@ -1,28 +1,29 @@
 package io.nichijou.tujian.ui.upload
 
-import android.app.*
-import android.net.*
-import androidx.lifecycle.*
+import android.app.Application
+import android.net.Uri
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import io.nichijou.tujian.R
-import io.nichijou.tujian.common.*
 import io.nichijou.tujian.common.BuildConfig
-import io.nichijou.tujian.common.entity.*
-import io.nichijou.tujian.common.ext.*
-import kotlinx.coroutines.*
+import io.nichijou.tujian.common.entity.Post
+import io.nichijou.tujian.common.entity.Upload
+import io.nichijou.tujian.common.ext.SimpleUpload
+import io.nichijou.tujian.common.ext.UriRequestBody
+import io.nichijou.tujian.common.ext.logd
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import java.io.IOException
-import okhttp3.OkHttpClient
-import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
-import java.io.File
-import java.net.*
-import java.util.regex.*
+import java.io.IOException
+import java.net.URL
+import java.util.regex.Pattern
 
 
-class UploadViewModel(application: Application, private val tujianService: TujianService) : AndroidViewModel(application) {
+class UploadViewModel(application: Application) : AndroidViewModel(application) {
   val msg = MutableLiveData<String>()
   val url = MutableLiveData<String>()
   val result = MutableLiveData<Post>()

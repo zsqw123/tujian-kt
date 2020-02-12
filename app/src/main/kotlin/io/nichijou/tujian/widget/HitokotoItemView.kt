@@ -28,14 +28,4 @@ class HitokotoItemView(context: Context, attrs: AttributeSet) : MaterialCardView
       })
     }
   }
-
-  fun setHitokoto(hi: Hitokoto) {
-    hitokoto.text = hi.hitokoto
-    if (hi.source.isBlank()) {
-      source.makeGone()
-    } else {
-      source.makeVisible()
-    }
-    source.text = hi.source
-  }
 }

@@ -101,7 +101,12 @@ class Viewer<T> private constructor(context: Context, private val viewerConfig: 
     }
   }
 
-  class Builder<T>(private val context: Context, images: List<T>?, pagerLoader: (view: ViewerItemView, data: T) -> Unit, bgLoader: (view: SimpleDraweeView, data: T) -> Unit) {
+  class Builder<T>(
+    private val context: Context,
+    images: List<T>?,
+    pagerLoader: (view: ViewerItemView, data: T) -> Unit,
+    bgLoader: (view: SimpleDraweeView, data: T) -> Unit
+  ) {
     private val data: ViewerConfig<T> = ViewerConfig(images ?: emptyList(), pagerLoader, bgLoader)
 
     fun withStartPosition(position: Int): Builder<T> {
@@ -146,7 +151,7 @@ class Viewer<T> private constructor(context: Context, private val viewerConfig: 
     }
 
     fun withImagesMargin(@DimenRes dimen: Int): Builder<T> {
-      this.data.imageMarginPixels = Math.round(context.resources.getDimension(dimen))
+      this.data.imageMarginPixels = context.resources.getDimension(dimen).roundToInt()
       return this
     }
 

@@ -12,6 +12,7 @@ import io.nichijou.tujian.ext.*
 import io.nichijou.tujian.func.wallpaper.*
 import kotlinx.android.synthetic.main.fragment_settings_wallpaper.*
 import kotlinx.coroutines.*
+import org.jetbrains.anko.support.v4.toast
 import java.util.concurrent.*
 
 
