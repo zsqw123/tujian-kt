@@ -3,17 +3,22 @@ package io.nichijou.tujian.ui.archive
 import android.content.Context
 import android.graphics.Point
 import android.graphics.Typeface
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.viewpager.widget.PagerAdapter
+import androidx.viewpager2.widget.ViewPager2
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
+import com.afollestad.materialdialogs.list.customListAdapter
 import com.bm.library.PhotoView
 import com.bumptech.glide.Glide
 import com.facebook.drawee.view.SimpleDraweeView
@@ -34,6 +39,7 @@ import kotlinx.android.synthetic.main.fragment_list.*
 import kotlinx.android.synthetic.main.photo_item_layout.view.*
 import kotlinx.android.synthetic.main.photo_item_viewpager_layout.*
 import org.jetbrains.anko.*
+import org.jetbrains.anko.support.v4.alert
 import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.support.v4.viewPager
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -104,14 +110,12 @@ class ListFragment : BaseFragment() {
       val screenX = point.x
 
       val dialog = MaterialDialog(context!!)
-        .customView(R.layout.photo_item_viewpager_layout)
-        .title(text = "作者:" + list[pos].user)
+        .customView(R.layout.photo_item_viewpager_layout, scrollable = true, noVerticalPadding = true)
+//        .title(text = "作者:" + list[pos].user)
       dialog.show {
         photo_item_viewpager.adapter = Viewpager2Adapter(list)
-        photo_item_viewpager.layoutParams = LinearLayout.LayoutParams(screenX * 9 / 10, wrapContent)
-        photo_item_viewpager.currentItem = pos
+        photo_item_viewpager.layoutParams = CoordinatorLayout.LayoutParams(matchParent, wrapContent)
       }.cornerRadius((Settings.cardRadius / 100).toFloat())
-
 
 //      viewer = Viewer.Builder(v.context, list, { itemView, dat ->
 //        itemView.update(dat.local)

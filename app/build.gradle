@@ -142,6 +142,8 @@ dependencies {
   implementation 'com.tencent.bugly:nativecrashreport:3.7.1'
   //material-dialogs
   implementation 'com.afollestad.material-dialogs:core:3.2.1'
+  //  自定义View shape
+  implementation 'com.github.florent37:shapeofview:1.4.7'
   //debug by chrome
   //  implementation "com.facebook.stetho:stetho:${rootProject.versions.stetho}"
   //  implementation "com.facebook.stetho:stetho-okhttp3:${rootProject.versions.stetho}"
@@ -149,8 +151,6 @@ dependencies {
   //  implementation "com.facebook.fresco:animated-gif:${rootProject.versions.fresco}"
   //  implementation "com.facebook.fresco:animated-webp:${rootProject.versions.fresco}"
   //  implementation "com.facebook.fresco:webpsupport:${rootProject.versions.fresco}"
-  //自定义View shape
-  //  implementation 'com.github.florent37:shapeofview:1.4.7'
 }
 
 andResGuard {

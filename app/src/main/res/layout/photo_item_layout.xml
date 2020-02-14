@@ -1,24 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   android:id="@+id/photo_item_layout"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   android:layout_marginTop="0dp"
+  android:layout_marginBottom="0dp"
   android:orientation="vertical">
-
 
   <com.bm.library.PhotoView
     android:id="@+id/photo_item"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+    android:layout_height="0dp"
+    app:layout_constraintBottom_toTopOf="@+id/photo_item_desc_container"
+    app:layout_constraintTop_toTopOf="parent" />
 
-  <TextView
-    android:id="@+id/photo_item_desc"
+  <com.github.florent37.shapeofview.shapes.RoundRectView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_below="@+id/photo_item"
-    android:layout_alignParentBottom="true"
-    android:layout_marginTop="0dp"
-    android:layout_marginBottom="0dp"
-    android:text="5555" />
-</RelativeLayout>
+    android:id="@+id/photo_item_desc_container"
+    app:shape_roundRect_topLeftRadius="10dp"
+    app:shape_roundRect_topRightRadius="10dp"
+    android:elevation="20dp"
+    app:layout_constraintBottom_toBottomOf="parent">
+    <TextView
+      android:id="@+id/photo_item_desc"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="5555"
+      android:background="#FFFFFF" />
+  </com.github.florent37.shapeofview.shapes.RoundRectView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
