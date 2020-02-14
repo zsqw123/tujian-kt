@@ -6,13 +6,18 @@ import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.RecyclerView
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.customview.customView
 import com.facebook.drawee.drawable.ProgressBarDrawable
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
+import io.nichijou.tujian.GetContext
 import io.nichijou.tujian.R
 import io.nichijou.tujian.common.entity.Picture
-import io.nichijou.tujian.common.ext.*
+import io.nichijou.tujian.common.ext.dp2px
+import io.nichijou.tujian.common.ext.makeGone
+import io.nichijou.tujian.common.ext.makeVisible
 import io.nichijou.tujian.common.fresco.getPaletteSwatches
 import io.nichijou.tujian.common.fresco.load
 import io.nichijou.tujian.diff.PictureDiffCallback
@@ -20,9 +25,16 @@ import io.nichijou.tujian.ui.ColorAdapter
 import io.nichijou.utils.randomColor
 import jp.wasabeef.recyclerview.animators.LandingAnimator
 import kotlinx.android.synthetic.main.item_picture.view.*
+import kotlinx.android.synthetic.main.photo_item_viewpager_layout.*
 import java.util.*
 
-class ListAdapter(private val draweeClicked: (view: View, adapter: PagedListAdapter<Picture, ViewHolder>, pos: Int) -> Unit) : PagedListAdapter<Picture, ListAdapter.ViewHolder>(PictureDiffCallback()) {
+class ListAdapter(
+  private val draweeClicked: (
+    view: View,
+    adapter: PagedListAdapter<Picture, ViewHolder>,
+    pos: Int
+  ) -> Unit
+) : PagedListAdapter<Picture, ListAdapter.ViewHolder>(PictureDiffCallback()) {
 
   private val cacheColors = WeakHashMap<String, List<Palette.Swatch>>()
 

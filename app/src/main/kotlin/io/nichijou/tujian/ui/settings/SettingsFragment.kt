@@ -2,22 +2,30 @@ package io.nichijou.tujian.ui.settings
 
 import android.annotation.SuppressLint
 import android.content.res.Configuration
-import android.graphics.*
-import android.view.*
-import android.widget.*
-import androidx.fragment.app.*
-import androidx.lifecycle.*
-import io.nichijou.oops.*
-import io.nichijou.oops.ext.*
-import io.nichijou.tujian.*
+import android.graphics.Color
+import android.view.View
+import android.widget.SeekBar
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
+import io.nichijou.oops.Oops
+import io.nichijou.oops.ext.applyOopsThemeStore
+import io.nichijou.oops.ext.drawableRes
+import io.nichijou.oops.ext.setPaddingTopPlusStatusBarHeight
+import io.nichijou.tujian.GetContext
 import io.nichijou.tujian.R
-import io.nichijou.tujian.base.*
-import io.nichijou.tujian.common.ext.*
+import io.nichijou.tujian.Settings
+import io.nichijou.tujian.base.BaseFragment
+import io.nichijou.tujian.common.ext.animateTo
+import io.nichijou.tujian.common.ext.dp2px
 import io.nichijou.tujian.common.ext.setMarginTopPlusStatusBarHeight
-import io.nichijou.tujian.ext.*
-import io.nichijou.tujian.ui.*
+import io.nichijou.tujian.ext.addFragmentToActivity
+import io.nichijou.tujian.ext.target
+import io.nichijou.tujian.ui.MainViewModel
 import kotlinx.android.synthetic.main.fragment_settings.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.jetbrains.anko.configuration
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.support.v4.selector
@@ -195,6 +203,7 @@ class SettingsFragment : BaseFragment(), View.OnClickListener, SeekBar.OnSeekBar
         R.id.view_card_space -> Settings.cardSpace = progress
         R.id.view_creature_num -> {
           Settings.creatureNum = progress
+          if (progress / 100 == 0) Settings.fuckBoo = true
           toast(getString(R.string.creature_num_format).format(progress / 100))
         }
       }

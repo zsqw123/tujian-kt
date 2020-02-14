@@ -103,8 +103,7 @@ class TodayFragment : BaseFragment() {
   private fun bindInfo() {
     currentPicture?.let {
       toolbar.title = it.title
-//      desc.text = it.desc
-      RichText.fromMarkdown(it.desc).into(desc)
+      RichText.fromMarkdown(it.desc.replace("\n","  \n")).into(desc)
       val dat = if (it.from == Picture.FROM_BING) it.date else it.date.substring(5)
       val user = " via ${it.user}"
       val result = dat + user

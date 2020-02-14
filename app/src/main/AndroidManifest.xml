@@ -26,8 +26,9 @@
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
+      <activity android:name=".ui.archive.PhotoAct" />
 
-    <provider
+      <provider
       android:name="io.nichijou.tujian.provider.TujianDocumentsProvider"
       android:authorities="${documentsProviderAuthority}"
       android:exported="true"

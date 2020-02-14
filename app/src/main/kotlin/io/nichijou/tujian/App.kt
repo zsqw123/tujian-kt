@@ -19,7 +19,8 @@ import com.facebook.imagepipeline.core.ImagePipelineConfig
 import com.facebook.imagepipeline.decoder.ProgressiveJpegConfig
 import com.facebook.imagepipeline.image.ImmutableQualityInfo
 import com.facebook.imagepipeline.image.QualityInfo
-import com.facebook.stetho.Stetho
+import com.tencent.bugly.crashreport.CrashReport
+//import com.facebook.stetho.Stetho
 import io.nichijou.oops.Oops
 import io.nichijou.tujian.common.commonModule
 import io.nichijou.tujian.common.fresco.OkHttpNetworkFetcher
@@ -36,8 +37,9 @@ class App : Application() {
   override fun onCreate() {
     super.onCreate()
     GetContext.init(this)
-    Stetho.initializeWithDefaults(this)
     Kotpref.init(this)
+    //bugly
+    CrashReport.initCrashReport(applicationContext, BuildConfig.API_BUG, false)
     startKoin {
       if (BuildConfig.DEBUG) {
         printLogger()

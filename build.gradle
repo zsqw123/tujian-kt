@@ -14,12 +14,14 @@ buildscript {
     'corektx'         : '1.3.0-alpha01',
     'fresco'          : '2.0.0',
     'fragment'        : '1.2.1',
+    'glide'           : '4.9.0',
     'koin'            : '2.0.0',
     "lifecycle"       : "2.2.0",
     'material'        : '1.2.0-alpha04',//google.android.material
     'moshi'           : '1.8.0',
     'okhttp3'         : '4.1.0',
     'oops'            : '1.0.0-rc01',//io.nichijou:oops
+    'photoview'       : '1.4.1',
     'richtext'        : '3.0.8',//TextView markDown and Html
     "room"            : '2.2.3',
     'retrofit'        : '2.6.1',
@@ -61,6 +63,7 @@ def readApiProperties() {
     ext.API_UPLOAD = properties.getProperty("api.upload")
     ext.API_BING = properties.getProperty("api.bing")
     ext.API_HITOKOTO = properties.getProperty("api.hitokoto")
+    ext.API_BUG = properties.getProperty("api.bugly")
   }
 }
 

@@ -52,7 +52,7 @@ class AboutFragment : BaseFragment() {
           if (p != null) {
             val dominant = p.dominantSwatch?.rgb ?: p.darkVibrantSwatch?.rgb
             ?: p.darkMutedSwatch?.rgb ?: 0
-            addFragment(BooFragment.newInstance(dominant.isColorDark(), isIntro = false, enableFace = false,enableFuckBoo = true, enableBackground = false, creatureNum = 6), R.id.boo_wrapper)
+            addFragment(BooFragment.newInstance(dominant.isColorDark(), isIntro = false, enableFace = false, enableFuckBoo = true, enableBackground = false, creatureNum = 6), R.id.boo_wrapper)
             Oops.immed().collapsingToolbarDominantColorSet(getString(R.string.tag_about_collapsingtoolbarlayout), dominant)
           }
         }
@@ -76,7 +76,8 @@ class AboutFragment : BaseFragment() {
     team_recycler_view.layoutManager = FlexboxLayoutManager(target(), FlexDirection.ROW, FlexWrap.WRAP).apply {
       justifyContent = JustifyContent.SPACE_AROUND
     }
-    team_recycler_view.with<Team>(layoutRes = R.layout.item_team_leader, viewTypeMatching = { b, _ -> b.type == 0 }) { b, _ ->
+    team_recycler_view.with<Team>(layoutRes = R.layout.item_team_leader,
+      viewTypeMatching = { b, _ -> b.type == 0 }) { b, _ ->
       layoutParams = (layoutParams as FlexboxLayoutManager.LayoutParams).apply {
         flexGrow = 3f
       }

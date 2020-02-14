@@ -80,7 +80,6 @@
 
       <!--标题栏圆角-->
       <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/setting_title_corner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_normal_click_feedback"
@@ -135,7 +134,6 @@
       </androidx.constraintlayout.widget.ConstraintLayout>
       <!--标题栏阴影-->
       <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/setting_title_shadow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_normal_click_feedback"
@@ -188,7 +186,6 @@
           app:layout_constraintStart_toEndOf="@id/icon_top_bar_elevation"
           app:layout_constraintTop_toBottomOf="@id/sub_top_bar_elevation" />
       </androidx.constraintlayout.widget.ConstraintLayout>
-
       <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

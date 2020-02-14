@@ -1,20 +1,41 @@
 package io.nichijou.tujian.ui.archive
 
+import android.content.Context
+import android.graphics.Point
+import android.graphics.Typeface
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.viewpager.widget.PagerAdapter
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.customview.customView
+import com.bm.library.PhotoView
+import com.bumptech.glide.Glide
 import com.facebook.drawee.view.SimpleDraweeView
+import com.zzhoujay.richtext.RichText
 import io.nichijou.tujian.R
+import io.nichijou.tujian.Settings
 import io.nichijou.tujian.base.BaseFragment
 import io.nichijou.tujian.common.entity.Picture
-import io.nichijou.tujian.common.ext.*
+import io.nichijou.tujian.common.ext.dp2px
+import io.nichijou.tujian.common.ext.logd
+import io.nichijou.tujian.common.ext.sbl
 import io.nichijou.tujian.common.fresco.load
 import io.nichijou.tujian.paging.LoadState
 import io.nichijou.tujian.paging.Status
 import io.nichijou.viewer.Viewer
 import jp.wasabeef.recyclerview.animators.LandingAnimator
 import kotlinx.android.synthetic.main.fragment_list.*
+import kotlinx.android.synthetic.main.photo_item_layout.view.*
+import kotlinx.android.synthetic.main.photo_item_viewpager_layout.*
+import org.jetbrains.anko.*
 import org.jetbrains.anko.support.v4.toast
+import org.jetbrains.anko.support.v4.viewPager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ListFragment : BaseFragment() {
@@ -71,31 +92,48 @@ class ListFragment : BaseFragment() {
   private var viewer: Viewer<Picture>? = null
 
   private val adapter by lazy(LazyThreadSafetyMode.NONE) {
-    ListAdapter { v, a, position ->
+    ListAdapter { v, a, pos ->
       val images = a.currentList ?: emptyList<Picture>()
+//      val list = arrayListOf<Picture>()
+//      list.addAll(images)
+//      val images = this.currentList ?: emptyList<Picture>()
       val list = arrayListOf<Picture>()
       list.addAll(images)
-      viewer = Viewer.Builder(v.context, list, { itemView, dat ->
-        itemView.update(dat.local)
-      },
-        { drawee, dat ->
-          drawee.load(dat.local)
-        })
-        .withStartPosition(position)
-        .withImageMarginPixels(v.context.dp2px(16f).toInt())
-        .withImageChangeListener {
-          logd("withImageChangeListener: $it")
-          recycler_view?.scrollToPosition(it)
-          val view = recycler_view?.layoutManager?.findViewByPosition(it)
-            ?.findViewById<SimpleDraweeView>(v.id)
-          if (view != null) {
-            viewer?.updateTransitionImage(view)
-          }
-        }
-        .withOnSingleTap{
-        }
-        .withTransitionFrom(v)
-        .show()
+      val point = Point()
+      context!!.windowManager.defaultDisplay.getRealSize(point)
+      val screenX = point.x
+
+      val dialog = MaterialDialog(context!!)
+        .customView(R.layout.photo_item_viewpager_layout)
+        .title(text = "作者:" + list[pos].user)
+      dialog.show {
+        photo_item_viewpager.adapter = Viewpager2Adapter(list)
+        photo_item_viewpager.layoutParams = LinearLayout.LayoutParams(screenX * 9 / 10, wrapContent)
+        photo_item_viewpager.currentItem = pos
+      }.cornerRadius((Settings.cardRadius / 100).toFloat())
+
+
+//      viewer = Viewer.Builder(v.context, list, { itemView, dat ->
+//        itemView.update(dat.local)
+//      },
+//        { drawee, dat ->
+//          drawee.load(dat.local)
+//        })
+//        .withStartPosition(pos)
+//        .withImageMarginPixels(v.context.dp2px(16f).toInt())
+//        .withImageChangeListener {
+//          logd("withImageChangeListener: $it")
+//          recycler_view?.scrollToPosition(it)
+//          val view = recycler_view?.layoutManager?.findViewByPosition(it)
+//            ?.findViewById<SimpleDraweeView>(v.id)
+//          if (view != null) {
+//            viewer?.updateTransitionImage(view)
+//          }
+//        }
+//        .withOnSingleTap {
+//        }
+//        .withTransitionFrom(v)
+//        .show()
     }
   }
 
@@ -108,7 +146,6 @@ class ListFragment : BaseFragment() {
     recycler_view.itemAnimator = LandingAnimator()
   }
 }
-
 
 
 
