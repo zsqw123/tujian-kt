@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import io.nichijou.tujian.R
 import io.nichijou.tujian.common.BuildConfig
+import io.nichijou.tujian.common.C
 import io.nichijou.tujian.common.entity.Post
 import io.nichijou.tujian.common.entity.Upload
 import io.nichijou.tujian.common.ext.SimpleUpload
@@ -39,7 +40,7 @@ class UploadViewModel(application: Application) : AndroidViewModel(application) 
         msg.postValue(getApplication<Application>().getString(R.string.cant_resolve_selected_picture))
         return@launch
       }
-      SimpleUpload(URL(BuildConfig.API_UPLOAD))
+      SimpleUpload(URL(C.API_UPLOAD))
         .addFilePart("file", inputStream, "upload.$contentType", contentType)
         .upload(object : SimpleUpload.OnFileUploadedListener {
           override fun onFileUploadingSuccess(response: String) {
@@ -50,7 +51,7 @@ class UploadViewModel(application: Application) : AndroidViewModel(application) 
               if (md5.isNullOrBlank()) {
                 msg.postValue(getApplication<Application>().getString(R.string.resolve_upload_result_is_null))
               } else {
-                url.postValue(BuildConfig.API_PREFIX + md5)
+                url.postValue(C.API_PREFIX + md5)
               }
             } else {
               msg.postValue(getApplication<Application>().getString(R.string.resolve_upload_result_is_null))
@@ -65,7 +66,6 @@ class UploadViewModel(application: Application) : AndroidViewModel(application) 
   }
 
   fun post(upload: Upload, success: (Call, Response) -> Unit, error: (Call, IOException) -> Unit = { _, _ -> }) {
-    val url = BuildConfig.API_TG
     val json = "application/json; charset=utf-8".toMediaTypeOrNull()
     val map = mapOf(
       "title" to upload.title,
@@ -77,7 +77,7 @@ class UploadViewModel(application: Application) : AndroidViewModel(application) 
     )
     val requestBody = JSONObject(map).toString().toRequestBody(json)
     val request = Request.Builder()
-      .url(url)
+      .url(C.API_TG)
       .post(requestBody)
       .build()
     val call = okHttpClient.newCall(request)
