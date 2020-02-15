@@ -1,31 +1,31 @@
 package io.nichijou.tujian.common
 
 import io.nichijou.tujian.common.entity.*
-import okhttp3.FormBody
-import okhttp3.MultipartBody
 import retrofit2.Response
-import retrofit2.http.*
+import retrofit2.http.GET
+import retrofit2.http.Query
+import retrofit2.http.Url
 import kotlin.random.Random
 
 interface TujianService {
-  @GET(BuildConfig.API_TODAY)
+  @GET(C.API_TODAY)
   suspend fun today(@Query("sort") tid: String? = null): Response<List<Picture>>
 
-  @GET(BuildConfig.API_MEMBER)
+  @GET(C.API_MEMBER)
   suspend fun member(@Query("id") id: String): Response<Picture>
 
-  @GET(BuildConfig.API_CATEGORY)
+  @GET(C.API_CATEGORY)
   suspend fun category(): Response<CategoryResp>
 
-  @GET(BuildConfig.API_LIST)
+  @GET(C.API_LIST)
   suspend fun list(@Query("sort") tid: String, @Query("page") page: Int, @Query("size") size: Int): Response<ListResp>
 
-  @GET(BuildConfig.API_RANDOM)
+  @GET(C.API_RANDOM)
   suspend fun random(@Query("op") tid: String = if (Random.nextBoolean()) "pc" else "mobile"): Response<Picture>
 
   @GET
-  suspend fun hitokoto(@Url url: String = BuildConfig.API_HITOKOTO.split(",")[Random.nextInt(BuildConfig.API_HITOKOTO.split(",").size)]): Response<Hitokoto>
+  suspend fun hitokoto(@Url url: String = C.API_HITOKOTO.split(",")[Random.nextInt(C.API_HITOKOTO.split(",").size)]): Response<Hitokoto>
 
   @GET
-  suspend fun bing(@Url url: String = BuildConfig.API_BING): Response<BingResp>
+  suspend fun bing(@Url url: String = C.API_BING): Response<BingResp>
 }

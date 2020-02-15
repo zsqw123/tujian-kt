@@ -1,11 +1,7 @@
 apply plugin: 'com.android.library'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
-
 apply plugin: 'kotlin-kapt'
-
 
 android {
   compileSdkVersion rootProject.versions.compilesdk
@@ -13,19 +9,6 @@ android {
   defaultConfig {
     minSdkVersion rootProject.versions.minsdk
     targetSdkVersion rootProject.versions.targetsdk
-    buildConfigField("String", "API_BASE", "\"${project['API_BASE']}\"")
-    buildConfigField("String", "API_PREFIX", "\"${project['API_PREFIX']}\"")
-    buildConfigField("String", "API_TODAY", "\"${project['API_TODAY']}\"")
-    buildConfigField("String", "API_SEARCH", "\"${project['API_SEARCH']}\"")
-    buildConfigField("String", "API_CATEGORY", "\"${project['API_CATEGORY']}\"")
-    buildConfigField("String", "API_LIST", "\"${project['API_LIST']}\"")
-    buildConfigField("String", "API_MEMBER", "\"${project['API_MEMBER']}\"")
-    buildConfigField("String", "API_RANDOM", "\"${project['API_RANDOM']}\"")
-    buildConfigField("String", "API_TG", "\"${project['API_TG']}\"")
-    buildConfigField("String", "API_UPLOAD", "\"${project['API_UPLOAD']}\"")
-    buildConfigField("String", "API_BING", "\"${project['API_BING']}\"")
-    buildConfigField("String", "API_HITOKOTO", "\"${project['API_HITOKOTO']}\"")
-    buildConfigField("String", "API_SS", "\"${project['API_SS']}\"")
   }
   buildTypes {
     debug {

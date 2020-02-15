@@ -10,7 +10,7 @@ import com.facebook.drawee.drawable.ProgressBarDrawable
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
-import io.nichijou.tujian.BuildConfig
+import io.nichijou.tujian.common.C
 import io.nichijou.tujian.R
 import io.nichijou.tujian.common.entity.Picture
 import io.nichijou.tujian.common.ext.dp2px
@@ -71,7 +71,7 @@ class ListAdapter(
       if (picture == null) return
       itemView.title.text = picture.title
       itemView.date.text = picture.date
-      val newUrl = getNewUrl(picture)+"!w360"
+      val newUrl = getNewUrl(picture) + "!w360"
       itemView.drawee_history_bing.aspectRatio = picture.width.toFloat() / picture.height.toFloat()
       itemView.drawee_history_bing.load(newUrl, progressDrawable = ProgressBarDrawable().apply {
         barWidth = itemView.context.dp2px(8f).toInt()
@@ -82,4 +82,6 @@ class ListAdapter(
   }
 }
 
-fun getNewUrl(picture: Picture?): String? = if (picture?.nativePath == picture?.local) picture?.local else BuildConfig.API_SS + picture?.nativePath
+fun getNewUrl(picture: Picture?): String? {
+  return if (picture?.nativePath == picture?.local) picture?.local else C.API_SS + picture?.nativePath
+}
