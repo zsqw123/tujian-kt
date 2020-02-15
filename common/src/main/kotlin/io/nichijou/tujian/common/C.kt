@@ -11,7 +11,7 @@ class C {
     const val API_MEMBER = "/member"
     const val API_PREFIX = "https://img.dpic.dev/"
     const val API_RANDOM = "/random"
-    const val API_SEARCH = "null"
+    const val API_SEARCH = "/search"
     const val API_TG = "https://dpic.dev/tg/index/post/"
     const val API_TODAY = "/today"
     const val API_UPLOAD = "https://img.dpic.dev/upload"
