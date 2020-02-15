@@ -56,9 +56,9 @@ class Viewpager2Adapter(private val data: ArrayList<Picture>) :
     }
     item.photo_item_desc.typeface = Typeface.DEFAULT_BOLD
     RichText.fromMarkdown(items[position].desc.replace("\n", "  \n")).into(item.photo_item_desc)
-    Glide.with(item.context).load(items[position].local).into(photoView)
+    Glide.with(item.context).load(getNewUrl(items[position])).into(photoView)
 
-    ProgressManager.getInstance().addResponseListener(items[position].local, object : ProgressListener {
+    ProgressManager.getInstance().addResponseListener(getNewUrl(items[position]), object : ProgressListener {
       override fun onProgress(progressInfo: ProgressInfo?) {
         val progress = progressInfo?.percent
         item.photo_item_progress.progress = progress ?: 0

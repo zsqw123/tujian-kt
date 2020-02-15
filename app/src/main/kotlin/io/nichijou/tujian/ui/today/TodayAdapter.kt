@@ -2,8 +2,8 @@ package io.nichijou.tujian.ui.today
 
 import android.view.*
 import androidx.recyclerview.widget.*
-import io.nichijou.tujian.BuildConfig
 import io.nichijou.tujian.common.entity.*
+import io.nichijou.tujian.ui.archive.getNewUrl
 
 class TodayAdapter(private val items: List<Picture>) : RecyclerView.Adapter<TodayAdapter.ViewHolder>() {
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -14,7 +14,11 @@ class TodayAdapter(private val items: List<Picture>) : RecyclerView.Adapter<Toda
 
   override fun getItemCount(): Int = items.size
 
-  override fun onBindViewHolder(holder: ViewHolder, position: Int) = (holder.itemView as TodayItemView).updateUrl(BuildConfig.API_SS + items[position].nativePath)
+  override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    val path = getNewUrl(items[position])
+    return (holder.itemView as TodayItemView).updateUrl(path!!)
+  }
+
 
   class ViewHolder(itemView: TodayItemView) : RecyclerView.ViewHolder(itemView)
 }

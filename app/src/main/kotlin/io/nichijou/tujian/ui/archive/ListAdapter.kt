@@ -6,13 +6,11 @@ import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.RecyclerView
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.customview.customView
 import com.facebook.drawee.drawable.ProgressBarDrawable
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
-import io.nichijou.tujian.GetContext
+import io.nichijou.tujian.BuildConfig
 import io.nichijou.tujian.R
 import io.nichijou.tujian.common.entity.Picture
 import io.nichijou.tujian.common.ext.dp2px
@@ -25,7 +23,6 @@ import io.nichijou.tujian.ui.ColorAdapter
 import io.nichijou.utils.randomColor
 import jp.wasabeef.recyclerview.animators.LandingAnimator
 import kotlinx.android.synthetic.main.item_picture.view.*
-import kotlinx.android.synthetic.main.photo_item_viewpager_layout.*
 import java.util.*
 
 class ListAdapter(
@@ -42,7 +39,7 @@ class ListAdapter(
 
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val picture = getItem(position)
-    val colors = cacheColors[picture?.local]
+    val colors = cacheColors[getNewUrl(picture)]
     if (colors.isNullOrEmpty()) {
       holder.itemView.colors?.makeGone()
       if (colors == null) {
@@ -74,8 +71,9 @@ class ListAdapter(
       if (picture == null) return
       itemView.title.text = picture.title
       itemView.date.text = picture.date
+      val newUrl = getNewUrl(picture)+"!w360"
       itemView.drawee_history_bing.aspectRatio = picture.width.toFloat() / picture.height.toFloat()
-      itemView.drawee_history_bing.load(picture.local, progressDrawable = ProgressBarDrawable().apply {
+      itemView.drawee_history_bing.load(newUrl, progressDrawable = ProgressBarDrawable().apply {
         barWidth = itemView.context.dp2px(8f).toInt()
         setPadding(0)
         color = randomColor()
@@ -83,3 +81,5 @@ class ListAdapter(
     }
   }
 }
+
+fun getNewUrl(picture: Picture?): String? = if (picture?.nativePath == picture?.local) picture?.local else BuildConfig.API_SS + picture?.nativePath
