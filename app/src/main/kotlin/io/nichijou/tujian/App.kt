@@ -1,7 +1,5 @@
 package io.nichijou.tujian
 
-//import com.facebook.stetho.Stetho
-
 import android.app.ActivityManager
 import android.app.Application
 import android.content.ComponentCallbacks2
@@ -33,19 +31,23 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import java.io.File
 
-
 class App : Application() {
   private val okHttpClient: OkHttpClient by inject()
-  var mOkHttpClient: OkHttpClient? = null
+  private var mOkHttpClient: OkHttpClient? = null
 
   override fun onCreate() {
     super.onCreate()
-    GetContext.init(this)
+    context = applicationContext
     Kotpref.init(this)
-    //bugly
-    CrashReport.initCrashReport(applicationContext, BuildConfig.API_BUG, false)
-    this.mOkHttpClient = ProgressManager.getInstance().with(OkHttpClient.Builder())
-      .build()
+
+    // Bugly
+    @Suppress("ConstantConditionIf")
+    if (BuildConfig.API_BUGLY != "null") {
+      CrashReport.initCrashReport(applicationContext, BuildConfig.API_BUGLY, false)
+    }
+
+    this.mOkHttpClient = ProgressManager.getInstance().with(OkHttpClient.Builder()).build()
+
     startKoin {
       if (BuildConfig.DEBUG) {
         printLogger()
@@ -153,11 +155,12 @@ class App : Application() {
   }
 
   companion object {
-
     private const val FRESCO_BASE_CACHE_DIR = "fresco_main_cache"
     private const val FRESCO_SMALL_IMAGE_CACHE_DIR = "fresco_small_image_cache"
     private const val MAX_DISK_CACHE_SIZE = Long.MAX_VALUE
     private const val MAX_DISK_CACHE_LOW_SIZE = (300 * ByteConstants.MB).toLong()
     private const val MAX_DISK_CACHE_VERY_LOW_SIZE = (100 * ByteConstants.MB).toLong()
+
+    var context: Context? = null
   }
 }

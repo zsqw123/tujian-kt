@@ -97,7 +97,7 @@ class ArtworkWorker(context: Context, workerParams: WorkerParameters) : Coroutin
   companion object {
     @JvmStatic
     fun getMuzeiAuthority(context: Context): String {
-      return "${BuildConfig.ART_WORK_AUTHORITY}.${context.packageName}"
+      return "${BuildConfig.ARTWORK_AUTHORITY}.${context.packageName}"
     }
 
     @JvmStatic

@@ -103,12 +103,12 @@
       </intent-filter>
       <meta-data
         android:name="replacement"
-        android:value="${ArtWorkAuthority}.${applicationId}" />
+        android:value="${ArtworkAuthority}.${applicationId}" />
     </service>
 
     <provider
       android:name=".muzei.ArtworkProvider"
-      android:authorities="${ArtWorkAuthority}.${applicationId}"
+      android:authorities="${ArtworkAuthority}.${applicationId}"
       android:description="@string/tujian_muzei_desc"
       android:exported="true"
       android:label="@string/app_name"
