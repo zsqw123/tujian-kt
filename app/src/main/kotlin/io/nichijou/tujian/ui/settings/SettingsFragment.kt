@@ -12,7 +12,7 @@ import io.nichijou.oops.Oops
 import io.nichijou.oops.ext.applyOopsThemeStore
 import io.nichijou.oops.ext.drawableRes
 import io.nichijou.oops.ext.setPaddingTopPlusStatusBarHeight
-import io.nichijou.tujian.GetContext
+import io.nichijou.tujian.App
 import io.nichijou.tujian.R
 import io.nichijou.tujian.Settings
 import io.nichijou.tujian.base.BaseFragment
@@ -51,8 +51,7 @@ class SettingsFragment : BaseFragment(), View.OnClickListener, SeekBar.OnSeekBar
         0 -> dark = true
         1 -> dark = false
         else -> {
-          val context = GetContext.getContext()
-          when (context.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+          when (App.context!!.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
             Configuration.UI_MODE_NIGHT_NO -> {
               dark = false
             } // Night mode is not active, we're using the light theme

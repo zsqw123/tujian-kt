@@ -1,9 +1,6 @@
 apply plugin: 'com.android.library'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
-
 apply plugin: 'kotlin-kapt'
 
 android {
@@ -12,9 +9,9 @@ android {
   defaultConfig {
     minSdkVersion rootProject.versions.minsdk
     targetSdkVersion rootProject.versions.targetsdk
-    def artWorkAuthority = "io.nichijou.tujian.muzei"
-    manifestPlaceholders = [ArtWorkAuthority: artWorkAuthority]
-    buildConfigField("String", "ART_WORK_AUTHORITY", "\"${artWorkAuthority}\"")
+    def artworkAuthority = "io.nichijou.tujian.muzei"
+    manifestPlaceholders = [ArtworkAuthority: artworkAuthority]
+    buildConfigField("String", "ARTWORK_AUTHORITY", "\"${artworkAuthority}\"")
     buildConfigField("String", "LAUNCH_TUJIAN_URL", "\"tujian://launch\"")
   }
   buildTypes {
