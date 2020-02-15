@@ -42,7 +42,6 @@ import kotlin.system.exitProcess
 
 
 class MainActivity : BaseActivity() {
-
   override fun getContentViewId(): Int = R.layout.activity_main
 
   override fun handleOnCreate(savedInstanceState: Bundle?) {

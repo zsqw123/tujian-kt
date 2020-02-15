@@ -27,3 +27,7 @@
   **[] $VALUES;
   public *;
 }
+
+#glide进度
+ -keep class me.jessyan.progressmanager.** { *; }
+ -keep interface me.jessyan.progressmanager.** { *; }

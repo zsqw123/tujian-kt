@@ -7,10 +7,20 @@
   android:animateLayoutChanges="true"
   android:background="?android:windowBackground">
 
-  <androidx.viewpager2.widget.ViewPager2
-    android:id="@+id/photo_item_viewpager"
+  <com.github.florent37.shapeofview.shapes.RoundRectView
+    android:id="@+id/photo_item_viewpager_container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+    android:layout_height="match_parent"
+    app:shape_roundRect_bottomLeftRadius="10dp"
+    app:shape_roundRect_bottomRightRadius="10dp"
+    app:shape_roundRect_topLeftRadius="10dp"
+    app:shape_roundRect_topRightRadius="10dp">
+    <androidx.viewpager2.widget.ViewPager2
+      android:id="@+id/photo_item_viewpager"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent" />
+  </com.github.florent37.shapeofview.shapes.RoundRectView>
+
 <!--  &lt;!&ndash;加号&ndash;&gt;-->
 <!--  <io.nichijou.tujian.widget.Fab-->
 <!--    android:id="@+id/photo_item_fab"-->

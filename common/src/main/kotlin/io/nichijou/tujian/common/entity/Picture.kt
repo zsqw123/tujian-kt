@@ -11,6 +11,7 @@ import com.afollestad.assent.Permission
 import com.afollestad.assent.isAllGranted
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import io.nichijou.tujian.common.BuildConfig
 import io.nichijou.tujian.common.R
 import io.nichijou.tujian.common.ext.basePath
 import io.nichijou.tujian.common.ext.toClipboard
@@ -50,8 +51,8 @@ data class Picture(
   val category: String? = null, // 电脑壁纸
   @Json(name = "level")
   val level: Int = 1, // 1
-//  @Json(name = "nativePath")
-//  val nativePath: String,
+  @Json(name = "nativePath")
+  val nativePath: String,
   var from: Int = FROM_BROWSE// 0 浏览 1 wallpaper
 ) : BaseEntity(), Parcelable {
   fun share() = "标题：$title via $user\n" +
@@ -59,7 +60,6 @@ data class Picture(
     "描述：$desc\n" +
     "分辨率：$width × $height\n" +
     "下载地址：$local"
-
   fun copy(context: Context) {
     context.toClipboard(share())
     context.toast("$title via $user")

@@ -60,6 +60,7 @@ class TodayViewModel(application: Application, private val tujianService: Tujian
             bing.url,
             getApplication<App>().getString(R.string.today_bing_wallpaper),
             user ?: getApplication<App>().getString(R.string.bing), 1920, 1080,
+            nativePath = bing.url,//暂时先写在这儿
             category = getApplication<App>().getString(R.string.bing),
             from = Picture.FROM_BING))
         }

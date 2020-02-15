@@ -52,6 +52,7 @@ def readApiProperties() {
     Properties properties = new Properties()
     properties.load(inputStream)
     ext.API_BASE = properties.getProperty("api.base")
+    ext.API_SS = properties.getProperty("api.ss")
     ext.API_PREFIX = properties.getProperty("api.prefix")
     ext.API_TODAY = properties.getProperty("api.today")
     ext.API_SEARCH = properties.getProperty("api.search")

@@ -23,6 +23,7 @@ android {
     manifestPlaceholders = [documentsProviderAuthority: documentsProviderAuthority]
     buildConfigField("String", "DOCUMENTS_PROVIDER_AUTHORITY", "\"${documentsProviderAuthority}\"")
     buildConfigField("String", "API_BUG", "\"${project['API_BUG']}\"")
+    buildConfigField("String", "API_SS", "\"${project['API_SS']}\"")
   }
   buildTypes {
     release {
@@ -124,6 +125,10 @@ dependencies {
   implementation "com.facebook.fresco:fresco:${rootProject.versions.fresco}"
   //glide
   implementation "com.github.bumptech.glide:glide:${rootProject.versions.glide}"
+  implementation "com.github.bumptech.glide:okhttp3-integration:${rootProject.versions.glide}"
+  annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+  implementation 'me.jessyan:progressmanager:1.5.0'//glide进度
+
   //photoView
   implementation "com.bm.photoview:library:${rootProject.versions.photoview}"
   //Runtime Permissions

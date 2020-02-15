@@ -25,6 +25,7 @@ android {
     buildConfigField("String", "API_UPLOAD", "\"${project['API_UPLOAD']}\"")
     buildConfigField("String", "API_BING", "\"${project['API_BING']}\"")
     buildConfigField("String", "API_HITOKOTO", "\"${project['API_HITOKOTO']}\"")
+    buildConfigField("String", "API_SS", "\"${project['API_SS']}\"")
   }
   buildTypes {
     debug {

@@ -1,5 +1,7 @@
 package io.nichijou.tujian
 
+//import com.facebook.stetho.Stetho
+
 import android.app.ActivityManager
 import android.app.Application
 import android.content.ComponentCallbacks2
@@ -20,19 +22,21 @@ import com.facebook.imagepipeline.decoder.ProgressiveJpegConfig
 import com.facebook.imagepipeline.image.ImmutableQualityInfo
 import com.facebook.imagepipeline.image.QualityInfo
 import com.tencent.bugly.crashreport.CrashReport
-//import com.facebook.stetho.Stetho
 import io.nichijou.oops.Oops
 import io.nichijou.tujian.common.commonModule
 import io.nichijou.tujian.common.fresco.OkHttpNetworkFetcher
 import io.nichijou.tujian.func.shortcuts.ShortcutsController
+import me.jessyan.progressmanager.ProgressManager
 import okhttp3.OkHttpClient
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import java.io.File
 
+
 class App : Application() {
   private val okHttpClient: OkHttpClient by inject()
+  var mOkHttpClient: OkHttpClient? = null
 
   override fun onCreate() {
     super.onCreate()
@@ -40,6 +44,8 @@ class App : Application() {
     Kotpref.init(this)
     //bugly
     CrashReport.initCrashReport(applicationContext, BuildConfig.API_BUG, false)
+    this.mOkHttpClient = ProgressManager.getInstance().with(OkHttpClient.Builder())
+      .build()
     startKoin {
       if (BuildConfig.DEBUG) {
         printLogger()
@@ -142,7 +148,12 @@ class App : Application() {
     }
   }
 
+  fun getOkHttpClientMe(): OkHttpClient? {
+    return mOkHttpClient
+  }
+
   companion object {
+
     private const val FRESCO_BASE_CACHE_DIR = "fresco_main_cache"
     private const val FRESCO_SMALL_IMAGE_CACHE_DIR = "fresco_small_image_cache"
     private const val MAX_DISK_CACHE_SIZE = Long.MAX_VALUE

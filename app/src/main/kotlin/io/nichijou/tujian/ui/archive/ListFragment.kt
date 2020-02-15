@@ -6,11 +6,14 @@ import android.graphics.Typeface
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.os.bundleOf
+import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.FragmentTransitionImpl
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -108,14 +111,14 @@ class ListFragment : BaseFragment() {
       val point = Point()
       context!!.windowManager.defaultDisplay.getRealSize(point)
       val screenX = point.x
-
-      val dialog = MaterialDialog(context!!)
-        .customView(R.layout.photo_item_viewpager_layout, scrollable = true, noVerticalPadding = true)
-//        .title(text = "作者:" + list[pos].user)
-      dialog.show {
-        photo_item_viewpager.adapter = Viewpager2Adapter(list)
-        photo_item_viewpager.layoutParams = CoordinatorLayout.LayoutParams(matchParent, wrapContent)
-      }.cornerRadius((Settings.cardRadius / 100).toFloat())
+      PhotoItem(list, pos).show(childFragmentManager, "dialog")
+//      val dialog = MaterialDialog(context!!)
+//        .customView(R.layout.photo_item_viewpager_layout, scrollable = true, noVerticalPadding = true)
+////        .title(text = "作者:" + list[pos].user)
+//      dialog.show {
+//        photo_item_viewpager.adapter = Viewpager2Adapter(list)
+//        photo_item_viewpager.layoutParams = CoordinatorLayout.LayoutParams(matchParent, wrapContent)
+//      }.cornerRadius((Settings.cardRadius / 100).toFloat())
 
 //      viewer = Viewer.Builder(v.context, list, { itemView, dat ->
 //        itemView.update(dat.local)

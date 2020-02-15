@@ -4,12 +4,15 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import io.nichijou.tujian.common.entity.Bing
 import io.nichijou.tujian.common.entity.Category
 import io.nichijou.tujian.common.entity.Hitokoto
 import io.nichijou.tujian.common.entity.Picture
 
-@Database(entities = [(Category::class), (Picture::class), (Hitokoto::class), (Bing::class)], version = 1, exportSchema = false)
+
+@Database(entities = [(Category::class), (Picture::class), (Hitokoto::class), (Bing::class)], version = 2, exportSchema = false)
 abstract class TuJianDatabase : RoomDatabase() {
   abstract fun tujianDao(): TujianDao
 
@@ -20,8 +23,17 @@ abstract class TuJianDatabase : RoomDatabase() {
     fun getInstance(context: Context): TuJianDatabase {
       return instance ?: synchronized(this) {
         instance
-          ?: Room.databaseBuilder(context, TuJianDatabase::class.java, "${context.packageName}.db").build().also { instance = it }
+          ?: Room.databaseBuilder(context, TuJianDatabase::class.java, "${context.packageName}.db")
+            .fallbackToDestructiveMigration().build().also { instance = it }
       }
     }
+
+    //不会升级 删库重建
+//    private val MIGRATION_1_2: Migration = object : Migration(1, 2) {
+//      override fun migrate(database: SupportSQLiteDatabase) {
+//        database.execSQL("ALTER TABLE users "
+//          + " ADD COLUMN last_update INTEGER")
+//      }
+//    }
   }
 }
