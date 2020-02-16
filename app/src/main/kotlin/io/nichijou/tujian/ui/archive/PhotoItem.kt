@@ -8,7 +8,6 @@ import android.view.*
 import android.widget.ImageView
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
-import com.bm.library.PhotoView
 import com.bumptech.glide.Glide
 import com.zzhoujay.richtext.RichText
 import io.nichijou.tujian.R

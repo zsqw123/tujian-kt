@@ -44,8 +44,8 @@ class CreatureInteraction(private val creatures: List<Creature>) {
 
   companion object {
 
-    private val NEW_ARRIVAL_DURATION: Long = 1500
-    private val NEW_ARRIVAL_LOOK_CHANCE = 0.9f
+    private const val NEW_ARRIVAL_DURATION: Long = 1500
+    private const val NEW_ARRIVAL_LOOK_CHANCE = 0.9f
   }
 
 }

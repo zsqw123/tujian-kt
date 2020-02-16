@@ -1,12 +1,12 @@
 package com.larvalabs.boo
 
-import android.util.*
-import android.view.animation.*
+import android.util.Log
+import android.view.animation.PathInterpolator
 
 object Util {
 
-  val VERBOSE_ON = false
-  val TAG = "unlookable"
+  private const val VERBOSE_ON = false
+  private const val TAG = "unlookable"
 
   /**
    * Use for everything but entering/exiting..
@@ -27,6 +27,7 @@ object Util {
     Log.d(TAG, message)
   }
 
+  @Suppress("ConstantConditionIf")
   fun verbose(message: String) {
     if (VERBOSE_ON) {
       Log.v(TAG, message)

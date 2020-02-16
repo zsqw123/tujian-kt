@@ -1,6 +1,10 @@
 package com.larvalabs.boo
 
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Paint
+import kotlin.math.atan2
+import kotlin.math.cos
+import kotlin.math.sin
 
 open class Creature(private val bodyColor: Int, private val eyeColor: Int, bodySize: Float, private val system: PhysicsSystem, private val index: Int, private val creatureInteraction: CreatureInteraction) {
 
@@ -107,8 +111,8 @@ open class Creature(private val bodyColor: Int, private val eyeColor: Int, bodyS
         mode = Mode.LEAVING
       }
     } else if (mode == Mode.LEAVING) {
-      val escapeX = (PhysicsSystem.WIDTH.toDouble() * 2.0 * Math.cos(escapeAngle.toDouble())).toFloat()
-      val escapeY = (PhysicsSystem.WIDTH.toDouble() * 2.0 * Math.sin(escapeAngle.toDouble())).toFloat()
+      val escapeX = (PhysicsSystem.WIDTH.toDouble() * 2.0 * cos(escapeAngle.toDouble())).toFloat()
+      val escapeY = (PhysicsSystem.WIDTH.toDouble() * 2.0 * sin(escapeAngle.toDouble())).toFloat()
       system.setRepulsionStrength(1f)
       system.setSpringStrength(2f)
       system.moveTo(index, escapeX, escapeY)
@@ -123,13 +127,17 @@ open class Creature(private val bodyColor: Int, private val eyeColor: Int, bodyS
       if (behavior!!.type == BehaviorType.GROW) {
         val elapsed = t - behavior!!.startTime
         val scale: Float
-        if (elapsed < GROW_TIME) {
-          scale = MathUtils.map(elapsed.toFloat(), 0f, GROW_TIME.toFloat(), 1f, behavior!!.size, Util.PATH_CURVE)
-        } else if (elapsed < GROW_TIME + POP_TIME) {
-          scale = MathUtils.map(elapsed.toFloat(), GROW_TIME.toFloat(), (GROW_TIME + POP_TIME).toFloat(), behavior!!.size, 1f, POP_INTERPOLATOR)
-        } else {
-          scale = 1f
-          behavior = null
+        when {
+          elapsed < GROW_TIME -> {
+            scale = MathUtils.map(elapsed.toFloat(), 0f, GROW_TIME.toFloat(), 1f, behavior!!.size, Util.PATH_CURVE)
+          }
+          elapsed < GROW_TIME + POP_TIME -> {
+            scale = MathUtils.map(elapsed.toFloat(), GROW_TIME.toFloat(), (GROW_TIME + POP_TIME).toFloat(), behavior!!.size, 1f, POP_INTERPOLATOR)
+          }
+          else -> {
+            scale = 1f
+            behavior = null
+          }
         }
         resize(scale)
       }
@@ -162,8 +170,8 @@ open class Creature(private val bodyColor: Int, private val eyeColor: Int, bodyS
   @JvmOverloads
   fun reorient(angle: Float = MathUtils.random(0f, MathUtils.TWO_PI)) {
     escapeAngle = angle
-    val escapeX = (PhysicsSystem.WIDTH.toDouble() * 2.0 * Math.cos(escapeAngle.toDouble())).toFloat()
-    val escapeY = (PhysicsSystem.WIDTH.toDouble() * 2.0 * Math.sin(escapeAngle.toDouble())).toFloat()
+    val escapeX = (PhysicsSystem.WIDTH.toDouble() * 2.0 * cos(escapeAngle.toDouble())).toFloat()
+    val escapeY = (PhysicsSystem.WIDTH.toDouble() * 2.0 * sin(escapeAngle.toDouble())).toFloat()
     system.forceTo(index, escapeX, escapeY)
   }
 
@@ -181,7 +189,7 @@ open class Creature(private val bodyColor: Int, private val eyeColor: Int, bodyS
       escapeAngle = if (lastForce.x == 0f && lastForce.y == 0f) {
         MathUtils.random(0f, MathUtils.TWO_PI)
       } else {
-        Math.atan2(lastForce.y.toDouble(), lastForce.x.toDouble()).toFloat()
+        atan2(lastForce.y.toDouble(), lastForce.x.toDouble()).toFloat()
       }
       mode = Mode.NOTICING
       scareTime = System.currentTimeMillis() - startTime
@@ -190,7 +198,7 @@ open class Creature(private val bodyColor: Int, private val eyeColor: Int, bodyS
   }
 
   fun getAngleTo(other: Creature): Float {
-    return Math.atan2((other.position.y - position.y).toDouble(), (other.position.x - position.x).toDouble()).toFloat()
+    return atan2((other.position.y - position.y).toDouble(), (other.position.x - position.x).toDouble()).toFloat()
   }
 
   fun lookIfAble(t: Long, other: Creature) {
@@ -199,13 +207,13 @@ open class Creature(private val bodyColor: Int, private val eyeColor: Int, bodyS
 
   companion object {
 
-    private val NOTICING_TIME: Long = 100
-    private val SCARED_TIME: Long = 400
-    private val EYE_SCALE = 0.13f
+    private const val NOTICING_TIME: Long = 100
+    private const val SCARED_TIME: Long = 400
+    private const val EYE_SCALE = 0.13f
 
-    private val GROW_CHANCE = 0.0002f
-    private val GROW_TIME: Long = 4000
-    private val POP_TIME: Long = 400
+    private const val GROW_CHANCE = 0.0002f
+    private const val GROW_TIME: Long = 4000
+    private const val POP_TIME: Long = 400
     private val POP_INTERPOLATOR = EaseOutElasticInterpolator()
   }
 

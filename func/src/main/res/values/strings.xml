@@ -36,7 +36,7 @@
   <string name="notification_hitokoto_channel_name">一言微件切换通知</string>
   <string name="notification_controller">通知控制器</string>
   <string name="copy">复制信息</string>
-  <string name="download_wallaper">下载壁纸</string>
+  <string name="download_wallpaper">下载壁纸</string>
   <string name="no_picture_info_available">没有获得图片信息</string>
   <string name="tujian_appwidget_updated">图鉴微件更新啦</string>
   <string name="download">下载</string>

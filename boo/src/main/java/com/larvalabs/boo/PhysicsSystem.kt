@@ -1,5 +1,7 @@
 package com.larvalabs.boo
 
+import kotlin.math.*
+
 /**
  * Simulates a physical system with damping.
  */
@@ -37,8 +39,8 @@ class PhysicsSystem(width: Int, vararg sizes: Float) {
     }
 
     internal fun distance(other: Body): Float {
-      val d = Math.hypot((pos.x - other.pos.x).toDouble(), (pos.y - other.pos.y).toDouble()).toFloat()
-      return Math.max(1f, d - size - other.size)
+      val d = hypot((pos.x - other.pos.x).toDouble(), (pos.y - other.pos.y).toDouble()).toFloat()
+      return max(1f, d - size - other.size)
     }
 
   }
@@ -49,7 +51,7 @@ class PhysicsSystem(width: Int, vararg sizes: Float) {
   }
 
   fun setSpringOffset(index: Int, x: Float, y: Float) {
-    val body = bodies!![index]
+    val body = bodies[index]
     body.springOffset.x = x / scale
     body.springOffset.y = y / scale
   }
@@ -59,8 +61,8 @@ class PhysicsSystem(width: Int, vararg sizes: Float) {
     bodies = Array(n) {
       val body = Body(sizes[it] / scale)
       val angle = MathUtils.random(0f, MathUtils.TWO_PI)
-      body.pos.x = (Math.cos(angle.toDouble()) * 2.0 * WIDTH.toDouble()).toFloat()
-      body.pos.y = (Math.sin(angle.toDouble()) * 2.0 * WIDTH.toDouble()).toFloat()
+      body.pos.x = (cos(angle.toDouble()) * 2.0 * WIDTH.toDouble()).toFloat()
+      body.pos.y = (sin(angle.toDouble()) * 2.0 * WIDTH.toDouble()).toFloat()
       body
     }
     springStrength = SPRING_STRENGTH
@@ -81,14 +83,14 @@ class PhysicsSystem(width: Int, vararg sizes: Float) {
     var distanceSum: Float
     if (lastUpdate >= 0) {
       val t = STEP
-      for (i in bodies!!.indices) {
-        val body = bodies!![i]
-        for (j in bodies!!.indices) {
-          val other = bodies!![j]
+      for (i in bodies.indices) {
+        val body = bodies[i]
+        for (j in bodies.indices) {
+          val other = bodies[j]
           if (body !== other) {
             distance = body.distance(other)
             repulsion = repulsionStrength * repulsionFactor / distance
-            distanceSum = Math.max(1f, Math.abs(body.pos.x - other.pos.x) + Math.abs(body.pos.y - other.pos.y))
+            distanceSum = max(1f, abs(body.pos.x - other.pos.x) + abs(body.pos.y - other.pos.y))
             repulsiveForceX = (body.pos.x - other.pos.x) * repulsion / distanceSum
             repulsiveForceY = (body.pos.y - other.pos.y) * repulsion / distanceSum
             //                        Util.log("Repulsion = " + repulsion + " -> " + repulsiveForceX + ", " + repulsiveForceY);
@@ -126,13 +128,13 @@ class PhysicsSystem(width: Int, vararg sizes: Float) {
   }
 
   fun moveTo(index: Int, x: Float, y: Float) {
-    val body = bodies!![index]
+    val body = bodies[index]
     body.springPos.x = x
     body.springPos.y = y
   }
 
   fun forceTo(index: Int, x: Float, y: Float) {
-    val body = bodies!![index]
+    val body = bodies[index]
     body.springPos.x = x
     body.springPos.y = y
     body.pos.x = x
@@ -140,32 +142,32 @@ class PhysicsSystem(width: Int, vararg sizes: Float) {
   }
 
   fun scaleSize(index: Int, factor: Float) {
-    val body = bodies!![index]
+    val body = bodies[index]
     body.size = body.originalSize * factor
   }
 
   fun getOffset(index: Int, pos: Point) {
-    pos.x = scale * bodies!![index].pos.x
-    pos.y = scale * bodies!![index].pos.y
+    pos.x = scale * bodies[index].pos.x
+    pos.y = scale * bodies[index].pos.y
   }
 
   fun getLastForce(index: Int): Point {
-    return bodies!![index].lastForce
+    return bodies[index].lastForce
   }
 
   companion object {
 
-    val WIDTH = 360f
+    const val WIDTH = 360f
 
     // Larger value means that the bodies are heavier, harder to move/stop
-    private val MASS = 1f
+    private const val MASS = 1f
 
-    private val SPRING_STRENGTH = 250f
-    private val DAMPING = 0.75f
+    private const val SPRING_STRENGTH = 250f
+    private const val DAMPING = 0.75f
 
-    private val REPULSION_STRENGTH = 5000f
+    private const val REPULSION_STRENGTH = 5000f
 
-    private val STEP = 1 / 60f
+    private const val STEP = 1 / 60f
   }
 
 }
