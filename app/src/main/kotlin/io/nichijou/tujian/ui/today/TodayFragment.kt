@@ -258,7 +258,7 @@ class TodayFragment : BaseFragment() {
     val imageRequest = builder.build()
     val dataSource = Fresco.getImagePipeline().fetchDecodedImage(imageRequest, null)
     dataSource.subscribe(object : BaseBitmapDataSubscriber() {
-      override fun onFailureImpl(dataSource: DataSource<CloseableReference<CloseableImage>>?) {
+      override fun onFailureImpl(dataSource: DataSource<CloseableReference<CloseableImage>>) {
         toast(R.string.set_wallpaper_failure)
       }
 

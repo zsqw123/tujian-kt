@@ -1,13 +1,11 @@
 package io.nichijou.tujian.ui
 
-import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.SystemClock
 import android.view.MotionEvent
 import android.view.View
-import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -16,19 +14,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.assent.Permission
 import com.afollestad.assent.askForPermissions
-import com.afollestad.materialdialogs.DialogCallback
 import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.customview.customView
-import com.afollestad.materialdialogs.list.listItems
 import com.larvalabs.boo.BooFragment
 import com.yarolegovich.slidingrootnav.SlidingDrawer
 import com.yarolegovich.slidingrootnav.menu.*
-import com.zzhoujay.richtext.LinkHolder
 import com.zzhoujay.richtext.RichText
-import com.zzhoujay.richtext.callback.LinkFixCallback
 import io.nichijou.oops.Oops
 import io.nichijou.oops.ext.*
-import io.nichijou.tujian.App
 import io.nichijou.tujian.R
 import io.nichijou.tujian.Settings
 import io.nichijou.tujian.base.BaseActivity
@@ -37,6 +29,7 @@ import io.nichijou.tujian.common.ext.asLiveData
 import io.nichijou.tujian.ext.addFragmentToActivity
 import io.nichijou.tujian.ext.handleBackPress
 import io.nichijou.tujian.ext.replaceFragmentInActivity
+import io.nichijou.tujian.isDark
 import io.nichijou.tujian.ui.about.AboutFragment
 import io.nichijou.tujian.ui.archive.ArchiveFragment
 import io.nichijou.tujian.ui.settings.SettingsFragment
@@ -46,7 +39,7 @@ import io.nichijou.utils.bodyColor
 import io.nichijou.utils.isColorLight
 import io.nichijou.utils.titleColor
 import kotlinx.android.synthetic.main.menu_left_drawer.*
-import org.jetbrains.anko.*
+import org.jetbrains.anko.toast
 import org.koin.android.ext.android.inject
 import kotlin.system.exitProcess
 
@@ -93,18 +86,6 @@ class MainActivity : BaseActivity() {
     }
     initDrawer(savedInstanceState)
     bindLifecycle()
-    val dark = when (darkMode) {
-      0 -> true
-      1 -> false
-      else -> {
-        when (App.context!!.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
-          Configuration.UI_MODE_NIGHT_NO -> {
-            false
-          } // Night mode is not active, we're using the light theme
-          else -> true
-        }
-      }
-    }
     if (!Settings.feiHua) {
       MaterialDialog(this).title(text = "隐私政策提示").icon(R.mipmap.ic_launcher).show {
         cancelOnTouchOutside(false)
@@ -112,7 +93,7 @@ class MainActivity : BaseActivity() {
         message(R.string.fei_hua) {
           val text = messageTextView
           RichText.fromMarkdown(getString(R.string.fei_hua)).linkFix { holder ->
-            holder!!.color = if (dark) Color.parseColor("#22EB4F") else Color.parseColor("#DD14B0")
+            holder!!.color = if (isDark()) Color.parseColor("#22EB4F") else Color.parseColor("#DD14B0")
             holder.isUnderLine = false
           }.into(text)
         }

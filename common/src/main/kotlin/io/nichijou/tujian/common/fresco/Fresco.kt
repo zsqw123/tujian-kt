@@ -139,7 +139,7 @@ fun ImageRequest.getFileFromDiskCache(): File? {
 fun ImageRequest.getPalette(callback: (Palette?) -> Unit): DataSource<CloseableReference<CloseableImage>>? {
   val source = Fresco.getImagePipeline().fetchDecodedImage(this, null)
   source.subscribe(object : BaseBitmapDataSubscriber() {
-    override fun onFailureImpl(dataSource: DataSource<CloseableReference<CloseableImage>>?) {
+    override fun onFailureImpl(dataSource: DataSource<CloseableReference<CloseableImage>>) {
     }
 
     override fun onNewResultImpl(bitmap: Bitmap?) {
@@ -157,7 +157,7 @@ fun String.getPaletteSwatches(callback: (String, List<Palette.Swatch>) -> Unit):
   val request = ImageRequest.fromUri(this) ?: return null
   val source = Fresco.getImagePipeline().fetchDecodedImage(request, null)
   source.subscribe(object : BaseBitmapDataSubscriber() {
-    override fun onFailureImpl(dataSource: DataSource<CloseableReference<CloseableImage>>?) {
+    override fun onFailureImpl(dataSource: DataSource<CloseableReference<CloseableImage>>) {
     }
 
     override fun onNewResultImpl(bitmap: Bitmap?) {
@@ -176,7 +176,7 @@ fun String.getPaletteSwatches(callback: (String, List<Palette.Swatch>) -> Unit):
 fun ImageRequest.getPaletteSwatches(callback: (List<Palette.Swatch>) -> Unit): DataSource<CloseableReference<CloseableImage>>? {
   val source = Fresco.getImagePipeline().fetchDecodedImage(this, null)
   source.subscribe(object : BaseBitmapDataSubscriber() {
-    override fun onFailureImpl(dataSource: DataSource<CloseableReference<CloseableImage>>?) {
+    override fun onFailureImpl(dataSource: DataSource<CloseableReference<CloseableImage>>) {
     }
 
     override fun onNewResultImpl(bitmap: Bitmap?) {
