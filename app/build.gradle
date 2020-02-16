@@ -13,7 +13,6 @@ android {
     targetSdkVersion rootProject.versions.targetsdk
     versionCode 4
     versionName "1.2.12"
-    vectorDrawables.useSupportLibrary = true
     resConfigs "zh"
     def documentsProviderAuthority = "io.nichijou.tujian.localstorage.documents"
     manifestPlaceholders = [documentsProviderAuthority: documentsProviderAuthority]
