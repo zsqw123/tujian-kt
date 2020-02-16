@@ -41,6 +41,8 @@ import io.nichijou.tujian.common.ext.*
 import io.nichijou.tujian.common.fresco.getPalette
 import io.nichijou.tujian.ext.target
 import io.nichijou.tujian.func.wallpaper.WallpaperConfig
+import io.nichijou.tujian.getThemeColor
+import io.nichijou.tujian.isDark
 import io.nichijou.tujian.ui.ColorAdapter
 import io.nichijou.tujian.ui.MainViewModel
 import jp.wasabeef.fresco.processors.BlurPostprocessor
@@ -103,7 +105,10 @@ class TodayFragment : BaseFragment() {
   private fun bindInfo() {
     currentPicture?.let {
       toolbar.title = it.title
-      RichText.fromMarkdown(it.desc.replace("\n","  \n")).into(desc)
+      RichText.fromMarkdown(it.desc.replace("\n","  \n")).linkFix { holder ->
+        holder!!.color = getThemeColor()
+        holder.isUnderLine = false
+      }.into(desc)
       val dat = if (it.from == Picture.FROM_BING) it.date else it.date.substring(5)
       val user = " via ${it.user}"
       val result = dat + user
