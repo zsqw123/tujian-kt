@@ -127,4 +127,5 @@
   <string name="top_bar">标题栏</string>
   <string name="screen_saver">屏保</string>
   <string name="search">搜索</string>
+  <string name="fei_hua">根据相关法律法规要求，我们更新完善了\n[《图鉴用户协议》]("https://www.dailypics.cn/doc/1")和\n[《图鉴隐私政策》]("https://www.dailypics.cn/doc/2")\n，在您同意并接受后，将可正常使用图鉴日图为您提供的全部功能。\n\n即使您未同意该隐私条款也可正常浏览图鉴日图并下载相关内容，但无法进行投稿，请您悉知。</string>
 </resources>
