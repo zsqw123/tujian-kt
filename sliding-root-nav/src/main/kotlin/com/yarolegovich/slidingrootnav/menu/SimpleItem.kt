@@ -1,10 +1,11 @@
 package com.yarolegovich.slidingrootnav.menu
 
-import android.graphics.drawable.*
-import android.view.*
-import com.yarolegovich.slidingrootnav.*
+import android.graphics.drawable.Drawable
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import com.yarolegovich.slidingrootnav.R
 import kotlinx.android.synthetic.main.item_option.view.*
-
 
 class SimpleItem(override val id: Int, private val icon: Drawable?, private val title: String) : DrawerItem<SimpleItem.ViewHolder>(id) {
 

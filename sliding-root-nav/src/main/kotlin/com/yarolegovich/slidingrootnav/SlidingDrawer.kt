@@ -1,15 +1,20 @@
 package com.yarolegovich.slidingrootnav
 
-import android.app.*
-import android.os.*
-import android.view.*
-import androidx.annotation.*
+import android.app.Activity
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.View
+import android.view.ViewGroup
+import androidx.annotation.FloatRange
 import androidx.annotation.IntRange
-import androidx.appcompat.widget.*
-import androidx.drawerlayout.widget.*
+import androidx.annotation.LayoutRes
+import androidx.appcompat.widget.Toolbar
+import androidx.drawerlayout.widget.DrawerLayout
 import com.yarolegovich.slidingrootnav.transform.*
-import com.yarolegovich.slidingrootnav.util.*
+import com.yarolegovich.slidingrootnav.util.HiddenMenuClickConsumer
 import java.util.*
+import kotlin.math.roundToInt
 
 class SlidingDrawer(private val activity: Activity) {
 
@@ -248,7 +253,7 @@ class SlidingDrawer(private val activity: Activity) {
 
   private fun createCompositeTransformation(): RootTransformation {
     return if (transformations.isEmpty()) {
-      CompositeTransformation(Arrays.asList(
+      CompositeTransformation(listOf(
         ScaleTransformation(DEFAULT_END_SCALE),
         ElevationTransformation(dpToPx(DEFAULT_END_ELEVATION_DP).toFloat())))
     } else {
@@ -258,7 +263,7 @@ class SlidingDrawer(private val activity: Activity) {
 
 
   private fun dpToPx(dp: Int): Int {
-    return Math.round(activity.resources.displayMetrics.density * dp)
+    return (activity.resources.displayMetrics.density * dp).roundToInt()
   }
 
   companion object {

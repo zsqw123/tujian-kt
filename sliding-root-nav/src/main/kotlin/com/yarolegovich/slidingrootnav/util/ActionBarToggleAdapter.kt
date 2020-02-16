@@ -1,10 +1,9 @@
 package com.yarolegovich.slidingrootnav.util
 
-import android.annotation.*
-import android.content.*
-import androidx.drawerlayout.widget.*
-import com.yarolegovich.slidingrootnav.*
-
+import android.annotation.SuppressLint
+import android.content.Context
+import androidx.drawerlayout.widget.DrawerLayout
+import com.yarolegovich.slidingrootnav.SlidingDrawerLayout
 
 @SuppressLint("ViewConstructor")
 class ActionBarToggleAdapter(context: Context, private val drawer: SlidingDrawerLayout) : DrawerLayout(context) {

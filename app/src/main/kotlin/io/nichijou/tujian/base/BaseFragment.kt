@@ -1,16 +1,19 @@
 package io.nichijou.tujian.base
 
-import android.os.*
+import android.os.Bundle
 import android.view.*
-import androidx.appcompat.app.*
-import androidx.appcompat.widget.*
-import androidx.fragment.app.*
-import androidx.lifecycle.*
-import com.yarolegovich.slidingrootnav.util.*
-import io.nichijou.oops.ext.*
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import com.yarolegovich.slidingrootnav.util.ActionBarToggleAdapter
+import com.yarolegovich.slidingrootnav.util.DrawerToggleListenerAdapter
+import io.nichijou.oops.ext.applyOopsThemeStore
 import io.nichijou.tujian.R
-import io.nichijou.tujian.ext.*
-import io.nichijou.tujian.ui.*
+import io.nichijou.tujian.ext.FragmentBackHandler
+import io.nichijou.tujian.ext.handleBackPress
+import io.nichijou.tujian.ext.target
+import io.nichijou.tujian.ui.MainActivity
 
 abstract class BaseFragment : Fragment(), FragmentBackHandler {
   protected abstract fun getFragmentViewId(): Int

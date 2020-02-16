@@ -1,7 +1,7 @@
 package io.nichijou.tujian.ui.about
 
-import com.squareup.moshi.*
-
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class Team(

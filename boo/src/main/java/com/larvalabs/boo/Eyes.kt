@@ -24,7 +24,7 @@ class Eyes(private val creature: Creature, private val creatureInteraction: Crea
   private val testPaint: Paint = Paint()
   private var lookTarget: Creature? = null
 
-  private enum class BehaviorType private constructor(internal var chance: Float, internal var changeTime: Long, internal var minDuration: Long, internal var maxDuration: Long) {
+  private enum class BehaviorType(internal var chance: Float, internal var changeTime: Long, internal var minDuration: Long, internal var maxDuration: Long) {
 
     BLINK(1f / 4f / 60f, 125, 75, 75),
     LOOK(1f / 3f / 60f, 300, 500, 3000),
@@ -39,7 +39,7 @@ class Eyes(private val creature: Creature, private val creatureInteraction: Crea
 
   }
 
-  private class Behavior internal constructor(internal var startTime: Long, internal var type: BehaviorType, internal var param: Float) {
+  private class Behavior internal constructor(internal var startTime: Long, type: BehaviorType, internal var param: Float) {
     internal var holdTime: Long = 0
     internal var stopTime: Long = 0
     internal var endTime: Long = 0
@@ -235,8 +235,8 @@ class Eyes(private val creature: Creature, private val creatureInteraction: Crea
 
   companion object {
 
-    private val SCARED_SCALE = 1.65f
-    private val EYE_CURVATURE = 0.25f
+    private const val SCARED_SCALE = 1.65f
+    private const val EYE_CURVATURE = 0.25f
   }
 
 }

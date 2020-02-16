@@ -1,8 +1,10 @@
 package io.nichijou.tujian.common.ext
 
-import android.view.*
-import androidx.annotation.*
-import androidx.recyclerview.widget.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.annotation.LayoutRes
+import androidx.recyclerview.widget.RecyclerView
 
 fun <T> RecyclerView.addNew(newData: List<T>?, reset: Boolean = false) {
   if (newData == null) return

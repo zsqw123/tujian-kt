@@ -37,7 +37,6 @@ import jp.wasabeef.fresco.processors.gpu.PixelationFilterPostprocessor
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-
 class BingAppWidgetProvider : AppWidgetProvider() {
 
   override fun onEnabled(context: Context) {
@@ -53,9 +52,9 @@ class BingAppWidgetProvider : AppWidgetProvider() {
   override fun onReceive(context: Context, intent: Intent?) {
     super.onReceive(context, intent)
     when (intent?.action) {
-        ACTION_NEXT -> BingAppWidgetWorker.enqueueLoad()
-        ACTION_SAVE -> bing?.download(context)
-        ACTION_COPY -> bing?.copy(context)
+      ACTION_NEXT -> BingAppWidgetWorker.enqueueLoad()
+      ACTION_SAVE -> bing?.download(context)
+      ACTION_COPY -> bing?.copy(context)
     }
   }
 

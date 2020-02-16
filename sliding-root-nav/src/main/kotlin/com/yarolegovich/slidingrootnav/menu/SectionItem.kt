@@ -1,9 +1,10 @@
 package com.yarolegovich.slidingrootnav.menu
 
-import android.view.*
-import com.yarolegovich.slidingrootnav.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import com.yarolegovich.slidingrootnav.R
 import kotlinx.android.synthetic.main.item_option.view.*
-
 
 class SectionItem(private val title: String) : DrawerItem<SectionItem.ViewHolder>(isSelectable = false) {
 

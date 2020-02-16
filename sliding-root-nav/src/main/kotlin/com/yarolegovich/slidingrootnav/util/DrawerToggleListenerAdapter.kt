@@ -1,8 +1,7 @@
 package com.yarolegovich.slidingrootnav.util
 
-import android.view.*
-import androidx.drawerlayout.widget.*
-
+import android.view.View
+import androidx.drawerlayout.widget.DrawerLayout
 
 class DrawerToggleListenerAdapter(private val drawerListener: DrawerLayout.DrawerListener, private val drawer: View) : DrawerLayout.DrawerListener {
   override fun onDrawerStateChanged(newState: Int) = drawerListener.onDrawerStateChanged(newState)

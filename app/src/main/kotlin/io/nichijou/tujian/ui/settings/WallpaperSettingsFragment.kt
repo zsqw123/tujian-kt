@@ -1,20 +1,26 @@
 package io.nichijou.tujian.ui.settings
 
-import android.widget.*
-import androidx.lifecycle.*
+import android.widget.CompoundButton
+import android.widget.SeekBar
+import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import io.nichijou.oops.ext.drawableRes
 import io.nichijou.oops.ext.setPaddingTopPlusStatusBarHeight
 import io.nichijou.tujian.R
-import io.nichijou.tujian.base.*
-import io.nichijou.tujian.common.ext.*
+import io.nichijou.tujian.base.BaseFragment
+import io.nichijou.tujian.common.ext.animateTo
+import io.nichijou.tujian.common.ext.asLiveData
 import io.nichijou.tujian.common.ext.setMarginTopPlusStatusBarHeight
-import io.nichijou.tujian.ext.*
-import io.nichijou.tujian.func.wallpaper.*
+import io.nichijou.tujian.common.ext.toDateStr
+import io.nichijou.tujian.ext.target
+import io.nichijou.tujian.func.wallpaper.WallpaperConfig
+import io.nichijou.tujian.func.wallpaper.WallpaperWorker
 import kotlinx.android.synthetic.main.fragment_settings_wallpaper.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.jetbrains.anko.support.v4.toast
-import java.util.concurrent.*
-
+import java.util.concurrent.TimeUnit
 
 class WallpaperSettingsFragment : BaseFragment(), CompoundButton.OnCheckedChangeListener, SeekBar.OnSeekBarChangeListener {
   companion object {

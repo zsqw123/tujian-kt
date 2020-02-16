@@ -6,7 +6,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import io.nichijou.tujian.R
-import io.nichijou.tujian.common.BuildConfig
 import io.nichijou.tujian.common.C
 import io.nichijou.tujian.common.entity.Post
 import io.nichijou.tujian.common.entity.Upload
@@ -22,7 +21,6 @@ import org.json.JSONObject
 import java.io.IOException
 import java.net.URL
 import java.util.regex.Pattern
-
 
 class UploadViewModel(application: Application) : AndroidViewModel(application) {
   val msg = MutableLiveData<String>()

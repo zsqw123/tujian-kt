@@ -1,8 +1,9 @@
 package com.yarolegovich.slidingrootnav.menu
 
-import android.util.*
-import android.view.*
-import androidx.recyclerview.widget.*
+import android.util.SparseArray
+import android.view.View
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import java.util.*
 
 class DrawerAdapter(val items: MutableList<DrawerItem<ViewHolder>>) : RecyclerView.Adapter<DrawerAdapter.ViewHolder>() {

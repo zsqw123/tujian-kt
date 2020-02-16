@@ -1,15 +1,14 @@
 package io.nichijou.tujian.func.muzei
 
-import android.content.*
-import android.net.*
-import com.google.android.apps.muzei.api.*
-import com.google.android.apps.muzei.api.provider.*
+import android.content.Intent
+import android.net.Uri
+import com.google.android.apps.muzei.api.UserCommand
 import com.google.android.apps.muzei.api.provider.Artwork
-import io.nichijou.tujian.common.ext.*
+import com.google.android.apps.muzei.api.provider.MuzeiArtProvider
+import io.nichijou.tujian.common.ext.logd
 import io.nichijou.tujian.func.BuildConfig
 import io.nichijou.tujian.func.R
 import org.jetbrains.anko.toast
-
 
 class ArtworkProvider : MuzeiArtProvider() {
   override fun getCommands(artwork: Artwork): MutableList<UserCommand> {

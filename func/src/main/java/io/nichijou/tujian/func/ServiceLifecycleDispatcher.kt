@@ -1,7 +1,9 @@
 package io.nichijou.tujian.func
 
-import android.os.*
-import androidx.lifecycle.*
+import android.os.Handler
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LifecycleRegistry
 
 class ServiceLifecycleDispatcher(provider: LifecycleOwner) {
 

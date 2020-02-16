@@ -1,11 +1,14 @@
 package io.nichijou.tujian.widget
 
-import android.content.*
-import android.graphics.drawable.*
-import android.util.*
-import androidx.lifecycle.*
-import io.nichijou.oops.ext.*
-import io.nichijou.oops.widget.*
+import android.content.Context
+import android.graphics.drawable.Drawable
+import android.util.AttributeSet
+import androidx.lifecycle.Observer
+import io.nichijou.oops.ext.activity
+import io.nichijou.oops.ext.applyOopsThemeStore
+import io.nichijou.oops.ext.attrValue
+import io.nichijou.oops.ext.tint
+import io.nichijou.oops.widget.ImageView
 import io.nichijou.tujian.R
 
 class TintIcon(context: Context, attrs: AttributeSet?) : ImageView(context, attrs) {

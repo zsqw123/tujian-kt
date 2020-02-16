@@ -1,15 +1,21 @@
 package io.nichijou.tujian.provider
 
-import android.content.res.*
-import android.database.*
-import android.graphics.*
-import android.os.*
-import android.provider.*
-import android.provider.DocumentsContract.*
-import android.webkit.*
-import io.nichijou.tujian.*
-import io.nichijou.tujian.common.ext.*
-import java.io.*
+import android.content.res.AssetFileDescriptor
+import android.database.Cursor
+import android.database.MatrixCursor
+import android.graphics.Point
+import android.os.CancellationSignal
+import android.os.Handler
+import android.os.ParcelFileDescriptor
+import android.provider.DocumentsContract.Document
+import android.provider.DocumentsContract.Root
+import android.provider.DocumentsProvider
+import android.webkit.MimeTypeMap
+import io.nichijou.tujian.R
+import io.nichijou.tujian.common.ext.basePath
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.IOException
 import java.util.*
 
 class TujianDocumentsProvider : DocumentsProvider() {
@@ -131,8 +137,7 @@ class TujianDocumentsProvider : DocumentsProvider() {
 
   override fun deleteDocument(documentId: String) {
     val file = getFileForDocId(documentId)
-    if (file.delete()) {
-    } else {
+    if (!file.delete()) {
       throw FileNotFoundException("Failed to delete document with id $documentId")
     }
   }

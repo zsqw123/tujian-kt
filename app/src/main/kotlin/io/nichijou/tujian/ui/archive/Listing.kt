@@ -1,8 +1,8 @@
 package io.nichijou.tujian.ui.archive
 
-import androidx.lifecycle.*
-import androidx.paging.*
-import io.nichijou.tujian.paging.*
+import androidx.lifecycle.LiveData
+import androidx.paging.PagedList
+import io.nichijou.tujian.paging.LoadState
 
 data class Listing<T>(
   val pagedList: LiveData<PagedList<T>>,
