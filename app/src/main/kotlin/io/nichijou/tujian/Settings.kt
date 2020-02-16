@@ -1,7 +1,11 @@
 package io.nichijou.tujian
 
+import android.content.Context
 import android.content.res.Configuration
+import android.graphics.Color
 import com.chibatching.kotpref.*
+import io.nichijou.oops.KEY_COLOR_ACCENT
+import io.nichijou.oops.PREFS_NAME
 import org.jetbrains.anko.configuration
 
 object Settings : KotprefModel() {
@@ -32,3 +36,6 @@ fun isDark(): Boolean {
     }
   }
 }
+
+fun getThemeColor(): Int = App.context!!.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+  .getInt(KEY_COLOR_ACCENT, Color.BLACK)

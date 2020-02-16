@@ -8,11 +8,13 @@ import android.view.*
 import android.widget.ImageView
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
+import com.bm.library.PhotoView
 import com.bumptech.glide.Glide
 import com.zzhoujay.richtext.RichText
 import io.nichijou.tujian.R
 import io.nichijou.tujian.common.entity.Picture
 import io.nichijou.tujian.common.ext.ViewHolder
+import io.nichijou.tujian.isDark
 import kotlinx.android.synthetic.main.photo_item_layout.view.*
 import kotlinx.android.synthetic.main.photo_item_viewpager_layout.*
 
@@ -31,9 +33,13 @@ class Viewpager2Adapter(private val data: ArrayList<Picture>) :
     photoView.enable()
     photoView.scaleType = ImageView.ScaleType.CENTER_CROP
     item.photo_item_desc.typeface = Typeface.DEFAULT_BOLD
-    RichText.fromMarkdown(items[position].desc.replace("\n", "  \n")).into(item.photo_item_desc)
+    RichText.fromMarkdown(items[position].desc.replace("\n", "  \n")).linkFix { linkHolder ->
+      linkHolder!!.color = if (isDark()) Color.parseColor("#22EB4F") else Color.parseColor("#DD14B0")
+      linkHolder.isUnderLine = false
+    }.into(item.photo_item_desc)
     Glide.with(item.context).load(getNewUrl(items[position])).into(photoView)
   }
+
   override fun getItemCount() = data.size
 
   fun add(newData: ArrayList<Picture>, reset: Boolean = false) {

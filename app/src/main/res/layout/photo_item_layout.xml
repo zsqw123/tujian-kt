@@ -16,7 +16,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
-    android:background="#99FFFFFF"
+    android:background="#33000000"
+    android:textColor="#A0000000"
     android:text="5555" />
 </FrameLayout>
 
