@@ -15,5 +15,5 @@
     android:id="@+id/action_c"
     android:icon="@android:drawable/ic_delete"
     android:title="hhh"
-    app:showAsAction="always" />
+    app:showAsAction="ifRoom" />
 </menu>

@@ -1,6 +1,5 @@
 package io.nichijou.tujian.ui
 
-import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -20,9 +19,7 @@ import com.larvalabs.boo.BooFragment
 import com.yarolegovich.slidingrootnav.SlidingDrawer
 import com.yarolegovich.slidingrootnav.menu.*
 import com.zzhoujay.richtext.RichText
-import io.nichijou.oops.KEY_COLOR_ACCENT
 import io.nichijou.oops.Oops
-import io.nichijou.oops.OopsThemeStore
 import io.nichijou.oops.ext.*
 import io.nichijou.tujian.R
 import io.nichijou.tujian.Settings

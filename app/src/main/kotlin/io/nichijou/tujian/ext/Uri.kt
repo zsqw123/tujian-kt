@@ -1,12 +1,15 @@
 package io.nichijou.tujian.ext
 
-import android.content.*
-import android.database.*
-import android.net.*
-import android.os.*
-import android.provider.*
-import io.nichijou.tujian.*
-import java.io.*
+import android.content.ContentResolver
+import android.content.ContentUris
+import android.content.Context
+import android.database.Cursor
+import android.net.Uri
+import android.os.Environment
+import android.provider.DocumentsContract
+import android.provider.MediaStore
+import io.nichijou.tujian.BuildConfig
+import java.io.File
 
 
 fun Uri.toFile(context: Context): File? {
@@ -43,7 +46,7 @@ fun Uri.toFilePath(context: Context): String? {
       isDownloadsDocument() -> {
         val id = DocumentsContract.getDocumentId(this)
         val contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), id.toLong())
-        result = contentUri?.getDataColumn(context, null, null)
+        result = contentUri.getDataColumn(context, null, null)
       }
       isMediaDocument() -> {
         val docId = DocumentsContract.getDocumentId(this)

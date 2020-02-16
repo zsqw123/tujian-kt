@@ -26,8 +26,8 @@ class Point {
 
     val point = o as Point?
 
-    if (java.lang.Float.compare(point!!.x, x) != 0) return false
-    return java.lang.Float.compare(point.y, y) == 0
+    if (point!!.x.compareTo(x) != 0) return false
+    return point.y.compareTo(y) == 0
 
   }
 

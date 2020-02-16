@@ -1,12 +1,13 @@
 package com.yarolegovich.slidingrootnav.util
 
-import android.annotation.*
-import android.content.*
-import android.view.*
-import com.yarolegovich.slidingrootnav.*
+import android.annotation.SuppressLint
+import android.content.Context
+import android.view.MotionEvent
+import android.view.View
+import com.yarolegovich.slidingrootnav.SlidingDrawerLayout
 
 
-@SuppressLint("ViewConstructor")
+@SuppressLint("ViewConstructor, ClickableViewAccessibility")
 class HiddenMenuClickConsumer(context: Context, private val drawer: SlidingDrawerLayout) : View(context) {
   override fun onTouchEvent(event: MotionEvent): Boolean {
     return !drawer.isMenuOpened()

@@ -42,7 +42,6 @@ import io.nichijou.tujian.common.fresco.getPalette
 import io.nichijou.tujian.ext.target
 import io.nichijou.tujian.func.wallpaper.WallpaperConfig
 import io.nichijou.tujian.getThemeColor
-import io.nichijou.tujian.isDark
 import io.nichijou.tujian.ui.ColorAdapter
 import io.nichijou.tujian.ui.MainViewModel
 import jp.wasabeef.fresco.processors.BlurPostprocessor

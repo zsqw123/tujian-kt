@@ -1,14 +1,13 @@
 package io.nichijou.tujian.widget
 
-import android.content.*
-import android.graphics.*
-import android.util.*
-import androidx.lifecycle.*
-import io.nichijou.oops.ext.*
-import io.nichijou.oops.widget.*
+import android.content.Context
+import android.graphics.Color
+import android.util.AttributeSet
+import androidx.lifecycle.Observer
+import io.nichijou.oops.ext.activity
+import io.nichijou.oops.ext.applyOopsThemeStore
+import io.nichijou.oops.widget.MaterialCardView
 import io.nichijou.tujian.R
-import io.nichijou.tujian.common.entity.*
-import io.nichijou.tujian.common.ext.*
 import kotlinx.android.synthetic.main.item_menu_hitokoto.view.*
 
 class HitokotoItemView(context: Context, attrs: AttributeSet) : MaterialCardView(context, attrs) {

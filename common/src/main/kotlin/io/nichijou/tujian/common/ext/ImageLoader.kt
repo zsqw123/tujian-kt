@@ -14,6 +14,7 @@ import kotlinx.coroutines.withContext
 import java.io.FileNotFoundException
 import java.io.IOException
 import java.io.InputStream
+import kotlin.math.max
 
 fun InputStream.isValidImage(): Boolean {
   val options = BitmapFactory.Options().apply {
@@ -86,7 +87,7 @@ sealed class ImageLoader {
           BitmapFactory.Options().apply {
             inPreferredConfig = Bitmap.Config.ARGB_8888
             if (targetWidth != 0) {
-              inSampleSize = Math.max(
+              inSampleSize = max(
                 width.sampleSize(targetWidth),
                 height.sampleSize(targetHeight))
             }

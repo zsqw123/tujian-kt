@@ -1,7 +1,10 @@
 package com.yarolegovich.slidingrootnav
 
 
-import androidx.customview.widget.*
+import androidx.customview.widget.ViewDragHelper
+import kotlin.math.abs
+import kotlin.math.max
+import kotlin.math.min
 
 enum class SlideGravity {
 
@@ -52,7 +55,7 @@ enum class SlideGravity {
     }
 
     override fun clampViewPosition(left: Int, maxDrag: Int): Int {
-      return Math.max(0, Math.min(left, maxDrag))
+      return max(0, min(left, maxDrag))
     }
 
     override fun enableEdgeTrackingOn(dragHelper: ViewDragHelper) {
@@ -75,11 +78,11 @@ enum class SlideGravity {
     }
 
     override fun getDragProgress(viewLeft: Int, maxDrag: Int): Float {
-      return Math.abs(viewLeft).toFloat() / maxDrag
+      return abs(viewLeft).toFloat() / maxDrag
     }
 
     override fun clampViewPosition(left: Int, maxDrag: Int): Int {
-      return Math.max(-maxDrag, Math.min(left, 0))
+      return max(-maxDrag, min(left, 0))
     }
 
     override fun enableEdgeTrackingOn(dragHelper: ViewDragHelper) {

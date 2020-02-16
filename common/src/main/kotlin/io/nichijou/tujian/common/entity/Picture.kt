@@ -11,7 +11,6 @@ import com.afollestad.assent.Permission
 import com.afollestad.assent.isAllGranted
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import io.nichijou.tujian.common.BuildConfig
 import io.nichijou.tujian.common.R
 import io.nichijou.tujian.common.ext.basePath
 import io.nichijou.tujian.common.ext.toClipboard

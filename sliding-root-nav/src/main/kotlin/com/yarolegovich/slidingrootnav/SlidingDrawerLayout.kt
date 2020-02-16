@@ -1,14 +1,18 @@
 package com.yarolegovich.slidingrootnav
 
-import android.content.*
-import android.graphics.*
-import android.os.*
-import android.view.*
-import android.widget.*
-import androidx.core.view.*
-import androidx.customview.widget.*
-import androidx.drawerlayout.widget.*
-import com.yarolegovich.slidingrootnav.transform.*
+import android.annotation.SuppressLint
+import android.content.Context
+import android.graphics.Rect
+import android.os.Bundle
+import android.os.Parcelable
+import android.view.MotionEvent
+import android.view.View
+import android.view.ViewConfiguration
+import android.widget.FrameLayout
+import androidx.core.view.ViewCompat
+import androidx.customview.widget.ViewDragHelper
+import androidx.drawerlayout.widget.DrawerLayout
+import com.yarolegovich.slidingrootnav.transform.RootTransformation
 import kotlin.math.abs
 
 
@@ -49,6 +53,7 @@ class SlidingDrawerLayout(context: Context) : FrameLayout(context) {
     return !isMenuLocked && dragHelper.shouldInterceptTouchEvent(ev) || shouldBlockClick(ev)
   }
 
+  @SuppressLint("ClickableViewAccessibility")
   override fun onTouchEvent(event: MotionEvent): Boolean {
     dragHelper.processTouchEvent(event)
     return true

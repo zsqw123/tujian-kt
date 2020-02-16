@@ -1,18 +1,19 @@
 package com.larvalabs.boo
 
-import android.graphics.*
+import android.graphics.Matrix
 import android.view.animation.Interpolator
 import java.util.*
+import kotlin.math.*
 
 object MathUtils {
 
-  val SQRT_2 = Math.sqrt(2.0).toFloat()
-  val TWO_PI = (Math.PI * 2).toFloat()
-  val PI = Math.PI.toFloat()
-  val PI_OVER_2 = (Math.PI / 2.0).toFloat()
-  val PI_OVER_4 = (Math.PI / 4.0).toFloat()
+  val SQRT_2 = sqrt(2.0).toFloat()
+  const val TWO_PI = (Math.PI * 2).toFloat()
+  const val PI = Math.PI.toFloat()
+  const val PI_OVER_2 = (Math.PI / 2.0).toFloat()
+  const val PI_OVER_4 = (Math.PI / 4.0).toFloat()
 
-  val ROOT_PI_OVER_TWO = Math.sqrt(Math.PI / 2).toFloat()
+  val ROOT_PI_OVER_TWO = sqrt(Math.PI / 2).toFloat()
 
   val RANDOM = Random()
 
@@ -143,13 +144,13 @@ object MathUtils {
   // Go from 0 to 1 and back down again, but "hanging" out at 1 for a while.
   fun hang(time: Long, period: Float): Float {
     val v = time % period * 2f * ROOT_PI_OVER_TWO / period - ROOT_PI_OVER_TWO
-    return Math.cos((v * v).toDouble()).toFloat()
+    return cos((v * v).toDouble()).toFloat()
   }
 
   // Smoothly oscillate from 0 to 1 and back
   fun smoothPulse(time: Long, period: Float): Float {
-    val v = MathUtils.clampedMap(time.toDouble(), 0.0, period.toDouble(), (-PI).toDouble(), PI.toDouble())
-    return (Math.cos(v) + 1).toFloat() / 2
+    val v = clampedMap(time.toDouble(), 0.0, period.toDouble(), (-PI).toDouble(), PI.toDouble())
+    return (cos(v) + 1).toFloat() / 2
   }
 
   fun cycleBackwards(time: Long, period: Float): Float {
@@ -157,16 +158,16 @@ object MathUtils {
   }
 
   fun oscillate(time: Long, period: Float): Float {
-    return Math.sin(time.toDouble() * TWO_PI / period.toDouble()).toFloat()
+    return sin(time.toDouble() * TWO_PI / period.toDouble()).toFloat()
   }
 
   fun doubleOscillate(time: Long, period1: Float, period2: Float): Float {
-    return ((Math.sin(time.toDouble() * TWO_PI / period1.toDouble()) + Math.sin(time.toDouble() * TWO_PI / period2.toDouble())) / 2).toFloat()
+    return ((sin(time.toDouble() * TWO_PI / period1.toDouble()) + sin(time.toDouble() * TWO_PI / period2.toDouble())) / 2).toFloat()
   }
 
   // Phase shift is 1-based
   fun oscillate(time: Long, period: Float, phaseShift: Float): Float {
-    return Math.sin((time / period.toDouble() + phaseShift) * TWO_PI).toFloat()
+    return sin((time / period.toDouble() + phaseShift) * TWO_PI).toFloat()
   }
 
   // Do a smooth pulse at start of a longer period
@@ -175,18 +176,18 @@ object MathUtils {
     return if (t >= 1) {
       0f
     } else {
-      MathUtils.map(Math.cos((t * TWO_PI).toDouble()).toFloat(), -1f, 1f, 1f, 0f)
+      map(cos((t * TWO_PI).toDouble()).toFloat(), -1f, 1f, 1f, 0f)
     }
   }
 
   fun fractionalPart(v: Float): Float {
-    return (v - Math.floor(v.toDouble())).toFloat()
+    return (v - floor(v.toDouble())).toFloat()
   }
 
   fun quadrant(time: Long, period: Float): Int {
     val v = time * TWO_PI / period
-    val x = Math.cos(v.toDouble()).toFloat()
-    val y = Math.sin(v.toDouble()).toFloat()
+    val x = cos(v.toDouble()).toFloat()
+    val y = sin(v.toDouble()).toFloat()
     return if (x > 0 && y > 0) {
       0
     } else if (x < 0 && y > 0) {
@@ -204,11 +205,11 @@ object MathUtils {
   }
 
   fun random(min: Float, max: Float): Float {
-    return MathUtils.map(RANDOM.nextFloat(), 0f, 1f, min, max)
+    return map(RANDOM.nextFloat(), 0f, 1f, min, max)
   }
 
   fun random(min: Int, max: Int): Int {
-    var i = MathUtils.mapInt(RANDOM.nextFloat(), 0f, 1f, min, max + 1)
+    var i = mapInt(RANDOM.nextFloat(), 0f, 1f, min, max + 1)
     if (i == max + 1) {
       i = max
     }
@@ -216,7 +217,7 @@ object MathUtils {
   }
 
   fun random(min: Long, max: Long): Long {
-    var i = MathUtils.mapLong(RANDOM.nextDouble(), 0.0, 1.0, min, max + 1)
+    var i = mapLong(RANDOM.nextDouble(), 0.0, 1.0, min, max + 1)
     if (i == max + 1) {
       i = max
     }
@@ -255,17 +256,17 @@ object MathUtils {
    * @return
    */
   fun overshoot(x: Float, min: Float, max: Float, unit: Float): Float {
-    if (x > max) {
+    return if (x > max) {
       val amount = (x - max) / unit
       val adjusted = amount / (amount + 1)
-      return adjusted * unit + max
+      adjusted * unit + max
     } else if (x < min) {
       val amount = (min - x) / unit
       val adjusted = amount / (amount + 1)
-      return min - adjusted * unit
+      min - adjusted * unit
     } else {
       // Still in range
-      return x
+      x
     }
   }
 
@@ -339,15 +340,15 @@ object MathUtils {
   }
 
   private fun mapToSphere(x: Float, y: Float, radius: Float, curvature: Float, result: Point) {
-    val theta = Math.atan2(y.toDouble(), x.toDouble())
-    val r = Math.min(1.0, Math.hypot(x.toDouble(), y.toDouble()) / radius)
-    val newD = ((1 - curvature) * r + curvature * Math.sqrt(r)) * radius
-    result.x = (Math.cos(theta) * newD).toFloat()
-    result.y = (Math.sin(theta) * newD).toFloat()
+    val theta = atan2(y.toDouble(), x.toDouble())
+    val r = min(1.0, hypot(x.toDouble(), y.toDouble()) / radius)
+    val newD = ((1 - curvature) * r + curvature * sqrt(r)) * radius
+    result.x = (cos(theta) * newD).toFloat()
+    result.y = (sin(theta) * newD).toFloat()
   }
 
   fun constrain(v: Int, min: Int, max: Int): Int {
-    return Math.min(max, Math.max(v, min))
+    return min(max, max(v, min))
   }
 
   fun flip(chance: Float): Boolean {
