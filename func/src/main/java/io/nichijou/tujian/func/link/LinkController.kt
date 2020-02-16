@@ -8,7 +8,6 @@ import io.nichijou.tujian.func.R
 import io.nichijou.tujian.func.wallpaper.WallpaperWorker
 import org.jetbrains.anko.toast
 
-
 class LinkController : AppCompatActivity() {
   init {
     lifecycleScope.launchWhenCreated {
@@ -24,7 +23,7 @@ class LinkController : AppCompatActivity() {
             it.component = ComponentName(this@LinkController.packageName, "io.nichijou.tujian.ui.MainActivity")
             startActivity(it)
           }
-          func == FUNC_WALLAPER -> {
+          func == FUNC_WALLPAPER -> {
             if (pid.isNullOrBlank() || pid.length != 36) {
               applicationContext.toast(R.string.wallpaper_param_error)
             } else {
@@ -38,6 +37,6 @@ class LinkController : AppCompatActivity() {
   }
 
   companion object {
-    private const val FUNC_WALLAPER = "wp"
+    private const val FUNC_WALLPAPER = "wp"
   }
 }

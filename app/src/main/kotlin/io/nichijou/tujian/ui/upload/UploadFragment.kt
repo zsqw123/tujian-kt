@@ -24,7 +24,6 @@ import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.toast
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-
 class UploadFragment : BaseFragment() {
 
   override fun getFragmentViewId(): Int = R.layout.fragment_upload

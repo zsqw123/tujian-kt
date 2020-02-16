@@ -1,15 +1,19 @@
 package io.nichijou.tujian.func.shortcuts
 
-import android.content.*
-import android.content.pm.*
-import android.graphics.drawable.*
-import android.os.*
-import androidx.annotation.*
-import androidx.fragment.app.*
-import androidx.lifecycle.*
+import android.content.Context
+import android.content.Intent
+import android.content.pm.ShortcutInfo
+import android.content.pm.ShortcutManager
+import android.graphics.drawable.Icon
+import android.os.Build
+import androidx.annotation.RequiresApi
+import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.lifecycleScope
 import io.nichijou.tujian.func.R
-import io.nichijou.tujian.func.appwidget.*
-import io.nichijou.tujian.func.wallpaper.*
+import io.nichijou.tujian.func.appwidget.TujianAppWidgetConfig
+import io.nichijou.tujian.func.appwidget.TujianAppWidgetWorker
+import io.nichijou.tujian.func.wallpaper.WallpaperConfig
+import io.nichijou.tujian.func.wallpaper.WallpaperWorker
 
 @RequiresApi(Build.VERSION_CODES.N_MR1)
 class ShortcutsController : FragmentActivity() {

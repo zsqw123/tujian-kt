@@ -1,16 +1,19 @@
 package io.nichijou.tujian.common.ext
 
-import android.content.*
-import android.graphics.*
-import android.util.*
-import java.io.*
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.util.Size
+import java.io.File
+import kotlin.math.max
+import kotlin.math.roundToInt
 
 fun Bitmap.scale(destWidth: Int, destHeight: Int): Bitmap? {
   if (width == 0 || height == 0 ||
     destWidth == 0 || destHeight == 0) {
     return null
   }
-  val largestDimension = Math.max(destWidth, destHeight)
+  val largestDimension = max(destWidth, destHeight)
   var width = width
   var height = height
   when {
@@ -70,12 +73,12 @@ fun File.getFitScreenSizeBitmap(context: Context) {
   val ratio = options.outWidth / options.outHeight.toFloat()
   if (ratio > 1f) {
     val inSimpleSize = options.outWidth / screenWidth.toFloat()
-    options.inSampleSize = if (inSimpleSize >= 1) Math.round(inSimpleSize) else 1
+    options.inSampleSize = if (inSimpleSize >= 1) inSimpleSize.roundToInt() else 1
     options.outWidth = (screenHeight * ratio).toInt()
     options.outHeight = screenHeight
   } else {
     val inSimpleSize = options.outHeight / screenHeight.toFloat()
-    options.inSampleSize = if (inSimpleSize >= 1) Math.round(inSimpleSize) else 1
+    options.inSampleSize = if (inSimpleSize >= 1) inSimpleSize.roundToInt() else 1
     options.outWidth = screenWidth
     options.outHeight = (screenWidth / ratio).toInt()
   }

@@ -9,7 +9,6 @@ import io.nichijou.tujian.common.entity.Picture
 import kotlinx.coroutines.CoroutineScope
 import java.util.concurrent.Executor
 
-
 class ListRepository(private val executor: Executor, private val service: TujianService, private val dbStore: TujianStore, private val scope: CoroutineScope) {
   @MainThread
   fun get(tid: String, pageSize: Int): Listing<Picture> {

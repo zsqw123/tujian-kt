@@ -1,19 +1,19 @@
 package io.nichijou.tujian.widget
 
-import android.content.*
+import android.content.Context
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.RelativeSizeSpan
-import android.util.*
+import android.util.AttributeSet
 import androidx.lifecycle.Observer
 import androidx.palette.graphics.Palette
 import com.facebook.drawee.drawable.ProgressBarDrawable
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
-import io.nichijou.oops.ext.*
-import io.nichijou.oops.widget.*
-import io.nichijou.tujian.*
+import io.nichijou.oops.ext.activity
+import io.nichijou.oops.widget.MaterialCardView
+import io.nichijou.tujian.StyleViewModel
 import io.nichijou.tujian.common.entity.Bing
 import io.nichijou.tujian.common.entity.Picture
 import io.nichijou.tujian.common.ext.*
@@ -26,7 +26,7 @@ import kotlinx.android.synthetic.main.item_history_bing.view.*
 import kotlinx.android.synthetic.main.item_history_bing.view.colors
 import kotlinx.android.synthetic.main.item_history_bing.view.desc
 import kotlinx.android.synthetic.main.item_history_picture.view.*
-import java.util.*
+import java.util.WeakHashMap
 import kotlin.collections.List
 
 class Card(context: Context, attrs: AttributeSet) : MaterialCardView(context, attrs) {

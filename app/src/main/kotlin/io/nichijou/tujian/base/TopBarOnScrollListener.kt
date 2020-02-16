@@ -1,9 +1,11 @@
 package io.nichijou.tujian.base
 
-import android.view.*
-import android.view.animation.*
-import androidx.core.view.*
-import androidx.recyclerview.widget.*
+import android.view.View
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.DecelerateInterpolator
+import androidx.core.view.marginBottom
+import androidx.core.view.marginTop
+import androidx.recyclerview.widget.RecyclerView
 
 class TopBarOnScrollListener(private val barView: View) : RecyclerView.OnScrollListener() {
   private var mOffset = 0

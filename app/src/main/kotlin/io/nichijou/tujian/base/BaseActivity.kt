@@ -1,9 +1,12 @@
 package io.nichijou.tujian.base
 
-import android.os.*
-import android.view.*
-import io.nichijou.oops.*
-import kotlinx.coroutines.*
+import android.os.Bundle
+import android.view.Window
+import android.view.WindowManager
+import io.nichijou.oops.OopsActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
 
 abstract class BaseActivity : OopsActivity(), CoroutineScope by MainScope() {
 

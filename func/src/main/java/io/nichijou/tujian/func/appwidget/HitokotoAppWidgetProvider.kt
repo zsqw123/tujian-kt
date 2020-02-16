@@ -1,20 +1,23 @@
 package io.nichijou.tujian.func.appwidget
 
-import android.app.*
-import android.appwidget.*
-import android.content.*
-import android.graphics.*
-import android.os.*
-import android.util.TypedValue.*
-import android.widget.*
-import io.nichijou.tujian.common.db.*
-import io.nichijou.tujian.common.entity.*
-import io.nichijou.tujian.common.ext.*
+import android.app.PendingIntent
+import android.appwidget.AppWidgetManager
+import android.appwidget.AppWidgetProvider
+import android.content.ComponentName
+import android.content.Context
+import android.content.Intent
+import android.graphics.Color
+import android.os.Bundle
+import android.util.TypedValue.COMPLEX_UNIT_SP
+import android.widget.RemoteViews
+import io.nichijou.tujian.common.db.TuJianDatabase
+import io.nichijou.tujian.common.entity.Hitokoto
+import io.nichijou.tujian.common.ext.getWallpaperPrimaryColorCompat
 import io.nichijou.tujian.func.R
-import io.nichijou.tujian.func.notification.*
-import io.nichijou.utils.*
-import kotlinx.coroutines.*
-
+import io.nichijou.tujian.func.notification.NotificationController
+import io.nichijou.utils.bodyColor
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class HitokotoAppWidgetProvider : AppWidgetProvider() {
 

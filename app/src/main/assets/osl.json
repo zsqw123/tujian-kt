@@ -99,7 +99,7 @@
   },
   {
     "name": "Recyclerview-animators",
-    "desc": "An Android Animation library which easily add itemanimator to RecyclerView items.",
+    "desc": "An Android Animation library which easily add item animator to RecyclerView items.",
     "license": "Apache-2.0",
     "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0",
     "website": "https://github.com/wasabeef/recyclerview-animators"

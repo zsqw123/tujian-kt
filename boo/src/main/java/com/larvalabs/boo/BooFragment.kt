@@ -1,14 +1,15 @@
 package com.larvalabs.boo
 
-import android.animation.*
-import android.graphics.*
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.graphics.Color
 import android.hardware.Camera
-import android.os.*
+import android.os.Bundle
 import android.view.*
-import androidx.core.content.*
-import androidx.core.os.*
-import androidx.fragment.app.*
-import java.io.*
+import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
+import java.io.IOException
 
 class BooFragment : Fragment(), SurfaceHolder.Callback {
 
@@ -131,7 +132,7 @@ class BooFragment : Fragment(), SurfaceHolder.Callback {
     creaturesView.setCreatureNum(creaturesNum)
     booWrapper = view.findViewById(R.id.boo_wrapper)
     if (enableBackground) {
-      if (booWrapper!=null){
+      if (booWrapper != null) {
         booWrapper!!.background = ContextCompat.getDrawable(view.context, bgRes)
       }
     }

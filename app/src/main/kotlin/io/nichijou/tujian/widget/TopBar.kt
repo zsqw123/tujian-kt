@@ -1,11 +1,11 @@
 package io.nichijou.tujian.widget
 
-import android.content.*
-import android.util.*
-import androidx.lifecycle.*
-import io.nichijou.oops.ext.*
-import io.nichijou.oops.widget.*
-import io.nichijou.tujian.*
+import android.content.Context
+import android.util.AttributeSet
+import androidx.lifecycle.Observer
+import io.nichijou.oops.ext.activity
+import io.nichijou.oops.widget.MaterialCardView
+import io.nichijou.tujian.StyleViewModel
 
 class TopBar(context: Context, attrs: AttributeSet) : MaterialCardView(context, attrs) {
 

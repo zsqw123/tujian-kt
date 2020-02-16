@@ -8,7 +8,6 @@ import android.view.*
 import android.widget.ImageView
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
-import com.bm.library.PhotoView
 import com.bumptech.glide.Glide
 import com.zzhoujay.richtext.RichText
 import io.nichijou.tujian.R
@@ -17,7 +16,6 @@ import io.nichijou.tujian.common.ext.ViewHolder
 import io.nichijou.tujian.isDark
 import kotlinx.android.synthetic.main.photo_item_layout.view.*
 import kotlinx.android.synthetic.main.photo_item_viewpager_layout.*
-
 
 class Viewpager2Adapter(private val data: ArrayList<Picture>) :
   RecyclerView.Adapter<RecyclerView.ViewHolder>() {

@@ -1,11 +1,12 @@
 package com.larvalabs.boo
 
-import android.content.*
-import android.graphics.*
-import android.util.*
-import android.view.*
-import androidx.appcompat.app.*
-import kotlin.random.*
+import android.content.Context
+import android.graphics.Canvas
+import android.graphics.Color
+import android.util.AttributeSet
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import kotlin.random.Random
 
 class CreaturesView : View {
 
@@ -67,13 +68,13 @@ class CreaturesView : View {
         val creatureInteraction = CreatureInteraction(creatures!!)
         for (i in 0..6) {
           val creature: Creature = when (i) {
-              1 -> LetterCreature(context, bodyColor, eyeColor, sizes[i], system, i, creatureInteraction, R.drawable.letter_t, Random.nextFloat())
-              2 -> LetterCreature(context, bodyColor, eyeColor, sizes[i], system, i, creatureInteraction, R.drawable.letter_u, Random.nextFloat())
-              3 -> LetterCreature(context, bodyColor, eyeColor, sizes[i], system, i, creatureInteraction, R.drawable.letter_j, Random.nextFloat())
-              4 -> LetterCreature(context, bodyColor, eyeColor, sizes[i], system, i, creatureInteraction, R.drawable.letter_i, Random.nextFloat())
-              5 -> LetterCreature(context, bodyColor, eyeColor, sizes[i], system, i, creatureInteraction, R.drawable.letter_a, Random.nextFloat())
-              6 -> LetterCreature(context, bodyColor, eyeColor, sizes[i], system, i, creatureInteraction, R.drawable.letter_n, Random.nextFloat())
-              else -> Creature(bodyColor, eyeColor, sizes[i], system, i, creatureInteraction)
+            1 -> LetterCreature(context, bodyColor, eyeColor, sizes[i], system, i, creatureInteraction, R.drawable.letter_t, Random.nextFloat())
+            2 -> LetterCreature(context, bodyColor, eyeColor, sizes[i], system, i, creatureInteraction, R.drawable.letter_u, Random.nextFloat())
+            3 -> LetterCreature(context, bodyColor, eyeColor, sizes[i], system, i, creatureInteraction, R.drawable.letter_j, Random.nextFloat())
+            4 -> LetterCreature(context, bodyColor, eyeColor, sizes[i], system, i, creatureInteraction, R.drawable.letter_i, Random.nextFloat())
+            5 -> LetterCreature(context, bodyColor, eyeColor, sizes[i], system, i, creatureInteraction, R.drawable.letter_a, Random.nextFloat())
+            6 -> LetterCreature(context, bodyColor, eyeColor, sizes[i], system, i, creatureInteraction, R.drawable.letter_n, Random.nextFloat())
+            else -> Creature(bodyColor, eyeColor, sizes[i], system, i, creatureInteraction)
           }
           creatures!!.add(creature)
         }

@@ -1,20 +1,20 @@
 package io.nichijou.tujian.func.appwidget
 
-
-import android.content.*
-import android.os.*
+import android.content.Context
+import android.os.Build
 import androidx.work.*
-import io.nichijou.tujian.common.*
-import io.nichijou.tujian.common.db.*
-import io.nichijou.tujian.common.entity.*
-import io.nichijou.tujian.common.ext.*
+import io.nichijou.tujian.common.TujianService
+import io.nichijou.tujian.common.db.TujianStore
+import io.nichijou.tujian.common.entity.Category
+import io.nichijou.tujian.common.entity.Picture
 import io.nichijou.tujian.func.R
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers.IO
 import org.jetbrains.anko.toast
-import org.koin.core.*
-import java.util.concurrent.*
-import kotlin.random.*
+import org.koin.core.KoinComponent
+import org.koin.core.inject
+import java.util.concurrent.TimeUnit
+import kotlin.random.Random
 
 class TujianAppWidgetWorker(context: Context, workerParams: WorkerParameters) : CoroutineWorker(context, workerParams), KoinComponent {
 

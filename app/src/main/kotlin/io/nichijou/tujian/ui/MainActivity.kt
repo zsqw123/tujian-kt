@@ -1,6 +1,5 @@
 package io.nichijou.tujian.ui
 
-import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -20,9 +19,7 @@ import com.larvalabs.boo.BooFragment
 import com.yarolegovich.slidingrootnav.SlidingDrawer
 import com.yarolegovich.slidingrootnav.menu.*
 import com.zzhoujay.richtext.RichText
-import io.nichijou.oops.KEY_COLOR_ACCENT
 import io.nichijou.oops.Oops
-import io.nichijou.oops.OopsThemeStore
 import io.nichijou.oops.ext.*
 import io.nichijou.tujian.R
 import io.nichijou.tujian.Settings
@@ -45,7 +42,6 @@ import kotlinx.android.synthetic.main.menu_left_drawer.*
 import org.jetbrains.anko.toast
 import org.koin.android.ext.android.inject
 import kotlin.system.exitProcess
-
 
 class MainActivity : BaseActivity() {
   override fun getContentViewId(): Int = R.layout.activity_main
@@ -272,7 +268,7 @@ class MainActivity : BaseActivity() {
     }
     adapter = DrawerAdapter(
       mutableListOf(
-        HeaderItem(this.drawableRes(R.drawable.ic_launcher_foreground), getString(R.string.app_name), getString(R.string.app_name_pinyin)),
+        HeaderItem(this.drawableRes(R.mipmap.ic_launcher_foreground), getString(R.string.app_name), getString(R.string.app_name_pinyin)),
 //        HitokotoItem(-100),
         SimpleItem(R.drawable.ic_twotone_wb_sunny, this.drawableRes(R.drawable.ic_twotone_wb_sunny), getString(R.string.today)).setChecked(true),
         SimpleItem(R.drawable.ic_twotone_loyalty, this.drawableRes(R.drawable.ic_twotone_loyalty), getString(R.string.archive)),

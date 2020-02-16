@@ -1,18 +1,18 @@
 package io.nichijou.tujian.ui.settings
 
-import android.widget.*
-import androidx.lifecycle.*
+import android.widget.CompoundButton
+import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import io.nichijou.oops.ext.drawableRes
 import io.nichijou.oops.ext.setPaddingTopPlusStatusBarHeight
 import io.nichijou.tujian.R
-import io.nichijou.tujian.base.*
-import io.nichijou.tujian.common.ext.*
+import io.nichijou.tujian.base.BaseFragment
+import io.nichijou.tujian.common.ext.asLiveData
 import io.nichijou.tujian.common.ext.setMarginTopPlusStatusBarHeight
-import io.nichijou.tujian.ext.*
-import io.nichijou.tujian.func.muzei.*
+import io.nichijou.tujian.ext.target
+import io.nichijou.tujian.func.muzei.MuzeiConfig
 import kotlinx.android.synthetic.main.fragment_settings_muzei.*
-import kotlinx.coroutines.*
-
+import kotlinx.coroutines.launch
 
 class MuzeiSettingsFragment : BaseFragment(), CompoundButton.OnCheckedChangeListener {
   companion object {

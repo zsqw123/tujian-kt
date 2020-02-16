@@ -1,7 +1,7 @@
 package io.nichijou.tujian.ext
 
-import android.app.*
-import com.chibatching.kotpref.*
+import android.app.DownloadManager
+import com.chibatching.kotpref.KotprefModel
 
 object DownloadConfig : KotprefModel() {
   /**

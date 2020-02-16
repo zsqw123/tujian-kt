@@ -1,8 +1,10 @@
 package io.nichijou.tujian
 
-import androidx.appcompat.app.*
-import androidx.lifecycle.*
-import io.nichijou.tujian.common.ext.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
+import io.nichijou.tujian.common.ext.asLiveData
 
 class StyleViewModel : ViewModel() {
 

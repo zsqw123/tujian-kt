@@ -1,15 +1,16 @@
 package io.nichijou.tujian.ui.settings
 
-import android.graphics.*
-import androidx.fragment.app.*
-import androidx.lifecycle.*
-import androidx.viewpager2.adapter.*
-import androidx.viewpager2.widget.*
-import io.nichijou.oops.*
-import io.nichijou.oops.ext.*
+import android.graphics.Color
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
+import io.nichijou.oops.Oops
+import io.nichijou.oops.ext.setMarginTopPlusStatusBarHeight
 import io.nichijou.tujian.R
-import io.nichijou.tujian.base.*
-import io.nichijou.tujian.ui.*
+import io.nichijou.tujian.base.BaseFragment
+import io.nichijou.tujian.ui.MainViewModel
 import kotlinx.android.synthetic.main.fragment_settings_appwidget.*
 
 class AppWidgetSettingsFragment : BaseFragment() {

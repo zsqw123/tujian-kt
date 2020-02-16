@@ -1,11 +1,14 @@
 package io.nichijou.tujian.func.appwidget
 
-import android.graphics.drawable.*
-import android.os.*
-import android.service.quicksettings.*
-import androidx.annotation.*
-import androidx.lifecycle.*
-import io.nichijou.tujian.common.ext.*
+import android.graphics.drawable.Icon
+import android.os.Build
+import android.service.quicksettings.Tile
+import android.service.quicksettings.TileService
+import androidx.annotation.RequiresApi
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
+import io.nichijou.tujian.common.ext.asLiveData
 import io.nichijou.tujian.func.R
 import io.nichijou.tujian.func.ServiceLifecycleDispatcher
 import org.jetbrains.anko.toast

@@ -1,12 +1,15 @@
 package io.nichijou.tujian.widget
 
-import android.content.*
-import android.util.*
-import android.view.*
-import androidx.annotation.*
-import androidx.lifecycle.*
+import android.content.Context
+import android.util.AttributeSet
+import android.view.View
+import androidx.annotation.Nullable
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleRegistry
+import androidx.lifecycle.Observer
 import com.google.android.material.appbar.CollapsingToolbarLayout
-import io.nichijou.oops.*
+import io.nichijou.oops.KEY_DEFAULT_COLLAPSING_TOOLBAR_TAG
+import io.nichijou.oops.OopsLifecycleOwner
 import io.nichijou.oops.ext.*
 
 class CollapsingToolbarLayout @JvmOverloads constructor(context: Context, @Nullable attrs: AttributeSet? = null) : CollapsingToolbarLayout(context, attrs), OopsLifecycleOwner {

@@ -11,7 +11,6 @@ import com.afollestad.assent.Permission
 import com.afollestad.assent.isAllGranted
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import io.nichijou.tujian.common.BuildConfig
 import io.nichijou.tujian.common.R
 import io.nichijou.tujian.common.ext.basePath
 import io.nichijou.tujian.common.ext.toClipboard
@@ -20,8 +19,6 @@ import org.jetbrains.anko.toast
 import java.io.File
 import java.util.*
 
-
-// 图片
 @Entity(tableName = "tb_picture", indices = [Index(value = ["pid", "from"], unique = true)])
 @JsonClass(generateAdapter = true)
 @Parcelize
@@ -60,6 +57,7 @@ data class Picture(
     "描述：$desc\n" +
     "分辨率：$width × $height\n" +
     "下载地址：$local"
+
   fun copy(context: Context) {
     context.toClipboard(share())
     context.toast("$title via $user")
