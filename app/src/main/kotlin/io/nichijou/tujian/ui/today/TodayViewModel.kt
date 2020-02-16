@@ -1,15 +1,17 @@
 package io.nichijou.tujian.ui.today
 
-import android.app.*
-import androidx.lifecycle.*
-import io.nichijou.tujian.*
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import io.nichijou.tujian.App
 import io.nichijou.tujian.R
-import io.nichijou.tujian.common.*
-import io.nichijou.tujian.common.db.*
-import io.nichijou.tujian.common.entity.*
-import kotlinx.coroutines.*
+import io.nichijou.tujian.common.TujianService
+import io.nichijou.tujian.common.db.TujianStore
+import io.nichijou.tujian.common.entity.Picture
 import kotlinx.coroutines.Dispatchers.IO
-import java.util.regex.*
+import kotlinx.coroutines.launch
+import java.util.regex.Pattern
 
 class TodayViewModel(application: Application, private val tujianService: TujianService, private val tujianStore: TujianStore) : AndroidViewModel(application) {
 

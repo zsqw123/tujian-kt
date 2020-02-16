@@ -9,7 +9,6 @@ import io.nichijou.tujian.common.entity.Category
 import io.nichijou.tujian.common.entity.Hitokoto
 import io.nichijou.tujian.common.entity.Picture
 
-
 @Database(entities = [(Category::class), (Picture::class), (Hitokoto::class), (Bing::class)], version = 2, exportSchema = false)
 abstract class TuJianDatabase : RoomDatabase() {
   abstract fun tujianDao(): TujianDao

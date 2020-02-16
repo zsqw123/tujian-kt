@@ -17,7 +17,7 @@
 package io.nichijou.tujian.ext
 
 import androidx.fragment.app.*
-import androidx.viewpager.widget.*
+import androidx.viewpager.widget.ViewPager
 
 interface FragmentBackHandler {
   fun onBackPressed(): Boolean

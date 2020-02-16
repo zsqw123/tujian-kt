@@ -1,12 +1,16 @@
 package io.nichijou.tujian.ui.about
 
-import android.app.*
-import androidx.lifecycle.*
-import com.squareup.moshi.*
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.Types
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import io.nichijou.tujian.common.db.*
-import io.nichijou.tujian.common.ext.*
-import kotlinx.coroutines.*
+import io.nichijou.tujian.common.db.TujianStore
+import io.nichijou.tujian.common.ext.readAssetsFileText
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class AboutViewModel(application: Application, private val tujianStore: TujianStore) : AndroidViewModel(application) {
 

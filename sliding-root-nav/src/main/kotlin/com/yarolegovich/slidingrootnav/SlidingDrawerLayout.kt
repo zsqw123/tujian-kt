@@ -15,7 +15,6 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.yarolegovich.slidingrootnav.transform.RootTransformation
 import kotlin.math.abs
 
-
 class SlidingDrawerLayout(context: Context) : FrameLayout(context) {
 
   private val FLING_MIN_VELOCITY: Float = ViewConfiguration.get(context).scaledMinimumFlingVelocity.toFloat()

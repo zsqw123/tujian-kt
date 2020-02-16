@@ -7,8 +7,6 @@ import java.net.URL
 /**
  * Created by tarek on 9/13/17.
  */
-
-
 class SimpleUpload
 /**
  * This constructor initializes a new HTTP POST request with content type

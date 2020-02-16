@@ -1,13 +1,16 @@
 package io.nichijou.tujian.ui.settings
 
-import android.provider.*
-import androidx.lifecycle.*
-import com.google.android.apps.muzei.api.provider.*
+import android.provider.BaseColumns
+import androidx.lifecycle.lifecycleScope
+import com.google.android.apps.muzei.api.provider.Artwork
+import com.google.android.apps.muzei.api.provider.ProviderContract
 import io.nichijou.tujian.R
-import io.nichijou.tujian.base.*
-import io.nichijou.tujian.ext.*
-import io.nichijou.tujian.func.muzei.*
-import kotlinx.coroutines.*
+import io.nichijou.tujian.base.BaseFragment
+import io.nichijou.tujian.ext.target
+import io.nichijou.tujian.func.muzei.ArtworkWorker
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MuzeiArtworkManageFragment : BaseFragment() {
 

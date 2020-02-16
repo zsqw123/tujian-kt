@@ -1,6 +1,6 @@
 package io.nichijou.tujian.func.appwidget
 
-import com.chibatching.kotpref.*
+import com.chibatching.kotpref.KotprefModel
 
 object BingAppWidgetConfig : KotprefModel() {
   var notification: Boolean by booleanPref(true)

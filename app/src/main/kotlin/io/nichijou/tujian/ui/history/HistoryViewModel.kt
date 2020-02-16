@@ -1,10 +1,13 @@
 package io.nichijou.tujian.ui.history
 
-import androidx.lifecycle.*
-import io.nichijou.tujian.common.db.*
-import io.nichijou.tujian.common.entity.*
-import kotlinx.coroutines.*
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import io.nichijou.tujian.common.db.TujianStore
+import io.nichijou.tujian.common.entity.BaseEntity
 import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class HistoryViewModel(private val tujianStore: TujianStore) : ViewModel() {
   private lateinit var history: MutableLiveData<List<BaseEntity>>

@@ -17,7 +17,6 @@ import kotlinx.android.parcel.Parcelize
 import org.jetbrains.anko.toast
 import java.io.File
 
-
 @Entity(tableName = "tb_bing", indices = [Index(value = ["url", "date"], unique = true)])
 @JsonClass(generateAdapter = true)
 @Parcelize

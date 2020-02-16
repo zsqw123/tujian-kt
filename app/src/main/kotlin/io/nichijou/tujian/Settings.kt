@@ -3,7 +3,7 @@ package io.nichijou.tujian
 import android.content.Context
 import android.content.res.Configuration
 import android.graphics.Color
-import com.chibatching.kotpref.*
+import com.chibatching.kotpref.KotprefModel
 import io.nichijou.oops.KEY_COLOR_ACCENT
 import io.nichijou.oops.PREFS_NAME
 import org.jetbrains.anko.configuration

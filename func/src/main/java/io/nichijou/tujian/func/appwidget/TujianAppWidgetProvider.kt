@@ -39,7 +39,6 @@ import jp.wasabeef.fresco.processors.gpu.PixelationFilterPostprocessor
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-
 class TujianAppWidgetProvider : AppWidgetProvider() {
 
   override fun onEnabled(context: Context) {
@@ -57,9 +56,9 @@ class TujianAppWidgetProvider : AppWidgetProvider() {
   override fun onReceive(context: Context, intent: Intent?) {
     super.onReceive(context, intent)
     when (intent?.action) {
-        ACTION_NEXT -> TujianAppWidgetWorker.enqueueLoad()
-        ACTION_SAVE -> picture?.download(context)
-        ACTION_COPY -> hitokoto?.copy(context)
+      ACTION_NEXT -> TujianAppWidgetWorker.enqueueLoad()
+      ACTION_SAVE -> picture?.download(context)
+      ACTION_COPY -> hitokoto?.copy(context)
     }
   }
 

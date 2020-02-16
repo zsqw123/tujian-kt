@@ -22,7 +22,6 @@ import java.io.IOException
 import java.net.URL
 import java.util.regex.Pattern
 
-
 class UploadViewModel(application: Application) : AndroidViewModel(application) {
   val msg = MutableLiveData<String>()
   val url = MutableLiveData<String>()

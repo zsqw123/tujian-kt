@@ -1,7 +1,7 @@
 package io.nichijou.tujian.func.muzei
 
-import android.app.*
-import android.content.*
+import android.app.Service
+import android.content.Intent
 
 class ArtworkSource : Service() {
   override fun onBind(intent: Intent?) = null

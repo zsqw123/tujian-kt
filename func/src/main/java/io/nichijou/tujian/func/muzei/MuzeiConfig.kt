@@ -1,6 +1,6 @@
 package io.nichijou.tujian.func.muzei
 
-import com.chibatching.kotpref.*
+import com.chibatching.kotpref.KotprefModel
 
 object MuzeiConfig : KotprefModel() {
   var requiresBatteryNotLow: Boolean by booleanPref(false)

@@ -27,7 +27,6 @@ import kotlinx.coroutines.withContext
 import org.jetbrains.anko.support.v4.toast
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-
 class ArchiveFragment : BaseFragment() {
   companion object {
     fun newInstance() = ArchiveFragment()

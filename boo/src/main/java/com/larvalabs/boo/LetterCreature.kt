@@ -1,6 +1,6 @@
 package com.larvalabs.boo
 
-import android.content.*
+import android.content.Context
 import android.graphics.*
 
 class LetterCreature(context: Context, private val bodyColor: Int, eyeColor: Int, bodySize: Float, system: PhysicsSystem, index: Int, creatureInteraction: CreatureInteraction, svgResource: Int, private val xOffset: Float) : Creature(bodyColor, eyeColor, bodySize, system, index, creatureInteraction) {

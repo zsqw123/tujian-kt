@@ -1,7 +1,6 @@
 package com.yarolegovich.slidingrootnav.menu
 
-import android.view.*
-
+import android.view.ViewGroup
 
 abstract class DrawerItem<T : DrawerAdapter.ViewHolder>(open val id: Int = -1, open var isSelectable: Boolean = true) {
 

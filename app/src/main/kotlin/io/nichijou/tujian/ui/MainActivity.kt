@@ -43,7 +43,6 @@ import org.jetbrains.anko.toast
 import org.koin.android.ext.android.inject
 import kotlin.system.exitProcess
 
-
 class MainActivity : BaseActivity() {
   override fun getContentViewId(): Int = R.layout.activity_main
 

@@ -1,13 +1,14 @@
 package io.nichijou.tujian.ui.bing
 
-import androidx.lifecycle.*
-import androidx.recyclerview.widget.*
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import io.nichijou.tujian.R
-import io.nichijou.tujian.base.*
-import io.nichijou.tujian.ext.*
-import jp.wasabeef.recyclerview.animators.*
+import io.nichijou.tujian.base.BaseFragment
+import io.nichijou.tujian.ext.target
+import jp.wasabeef.recyclerview.animators.LandingAnimator
 import kotlinx.android.synthetic.main.fragment_bing.*
-import org.koin.androidx.viewmodel.ext.android.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class BingFragment : BaseFragment() {
   companion object {

@@ -1,9 +1,9 @@
 package io.nichijou.tujian.ext
 
-import androidx.annotation.*
-import androidx.appcompat.app.*
-import androidx.fragment.app.*
-import io.nichijou.tujian.*
+import androidx.annotation.IdRes
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import io.nichijou.tujian.R
 import java.util.*
 
 

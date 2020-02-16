@@ -1,25 +1,37 @@
 package io.nichijou.tujian.ui.about
 
-import android.graphics.*
-import androidx.fragment.app.*
-import androidx.lifecycle.*
-import androidx.recyclerview.widget.*
-import com.facebook.imagepipeline.request.*
-import com.google.android.flexbox.*
-import com.larvalabs.boo.*
-import io.nichijou.oops.*
-import io.nichijou.oops.ext.*
+import android.graphics.Color
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.facebook.imagepipeline.request.ImageRequest
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexWrap
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
+import com.larvalabs.boo.BooFragment
+import io.nichijou.oops.Oops
+import io.nichijou.oops.ext.setMarginTopPlusStatusBarHeight
 import io.nichijou.tujian.R
-import io.nichijou.tujian.base.*
-import io.nichijou.tujian.common.ext.*
-import io.nichijou.tujian.common.fresco.*
-import io.nichijou.tujian.ext.*
-import io.nichijou.tujian.ui.*
-import io.nichijou.utils.*
+import io.nichijou.tujian.base.BaseFragment
+import io.nichijou.tujian.common.ext.addNew
+import io.nichijou.tujian.common.ext.dp2px
+import io.nichijou.tujian.common.ext.openUrl
+import io.nichijou.tujian.common.ext.with
+import io.nichijou.tujian.common.fresco.GaussianBlurPostprocessor
+import io.nichijou.tujian.common.fresco.getPalette
+import io.nichijou.tujian.common.fresco.load
+import io.nichijou.tujian.ext.addFragment
+import io.nichijou.tujian.ext.suffixRandom
+import io.nichijou.tujian.ext.target
+import io.nichijou.tujian.ui.MainActivity
+import io.nichijou.tujian.ui.MainViewModel
+import io.nichijou.utils.isColorDark
 import kotlinx.android.synthetic.main.fragment_about.*
 import kotlinx.android.synthetic.main.item_osl.view.*
 import org.jetbrains.anko.support.v4.browse
-import org.koin.androidx.viewmodel.ext.android.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlinx.android.synthetic.main.item_osl.view.name as oslName
 import kotlinx.android.synthetic.main.item_team_core.view.avatar as coreAvatar
 import kotlinx.android.synthetic.main.item_team_core.view.job as coreJob
