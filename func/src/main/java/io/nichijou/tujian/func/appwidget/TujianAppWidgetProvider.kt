@@ -1,33 +1,43 @@
 package io.nichijou.tujian.func.appwidget
 
-import android.app.*
-import android.appwidget.*
-import android.content.*
-import android.graphics.*
-import android.net.*
-import android.os.*
-import android.util.*
+import android.app.PendingIntent
+import android.appwidget.AppWidgetManager
+import android.appwidget.AppWidgetProvider
+import android.content.ComponentName
+import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Color
+import android.net.Uri
+import android.os.Bundle
 import android.util.TypedValue.*
-import android.widget.*
-import com.facebook.common.executors.*
-import com.facebook.common.references.*
-import com.facebook.datasource.*
-import com.facebook.drawee.backends.pipeline.*
-import com.facebook.imagepipeline.common.*
-import com.facebook.imagepipeline.datasource.*
-import com.facebook.imagepipeline.image.*
-import com.facebook.imagepipeline.request.*
-import io.nichijou.tujian.common.db.*
-import io.nichijou.tujian.common.entity.*
+import android.widget.RemoteViews
+import com.facebook.common.executors.CallerThreadExecutor
+import com.facebook.common.references.CloseableReference
+import com.facebook.datasource.DataSource
+import com.facebook.drawee.backends.pipeline.Fresco
+import com.facebook.imagepipeline.common.ImageDecodeOptions
+import com.facebook.imagepipeline.common.Priority
+import com.facebook.imagepipeline.common.RotationOptions
+import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber
+import com.facebook.imagepipeline.image.CloseableImage
+import com.facebook.imagepipeline.request.ImageRequestBuilder
+import io.nichijou.tujian.common.db.TuJianDatabase
+import io.nichijou.tujian.common.entity.Hitokoto
 import io.nichijou.tujian.common.entity.Picture
-import io.nichijou.tujian.common.ext.*
+import io.nichijou.tujian.common.ext.getWallpaperPrimaryColorCompat
+import io.nichijou.tujian.common.ext.logd
+import io.nichijou.tujian.common.ext.loge
+import io.nichijou.tujian.common.ext.scale
 import io.nichijou.tujian.func.R
-import io.nichijou.tujian.func.notification.*
-import io.nichijou.tujian.func.shortcuts.*
-import io.nichijou.utils.*
-import jp.wasabeef.fresco.processors.*
-import jp.wasabeef.fresco.processors.gpu.*
-import kotlinx.coroutines.*
+import io.nichijou.tujian.func.notification.NotificationController
+import io.nichijou.tujian.func.shortcuts.ShortcutsController
+import io.nichijou.utils.bodyColor
+import jp.wasabeef.fresco.processors.BlurPostprocessor
+import jp.wasabeef.fresco.processors.CombinePostProcessors
+import jp.wasabeef.fresco.processors.gpu.PixelationFilterPostprocessor
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 class TujianAppWidgetProvider : AppWidgetProvider() {
@@ -46,10 +56,10 @@ class TujianAppWidgetProvider : AppWidgetProvider() {
 
   override fun onReceive(context: Context, intent: Intent?) {
     super.onReceive(context, intent)
-    when {
-      intent?.action == ACTION_NEXT -> TujianAppWidgetWorker.enqueueLoad()
-      intent?.action == ACTION_SAVE -> picture?.download(context)
-      intent?.action == ACTION_COPY -> hitokoto?.copy(context)
+    when (intent?.action) {
+        ACTION_NEXT -> TujianAppWidgetWorker.enqueueLoad()
+        ACTION_SAVE -> picture?.download(context)
+        ACTION_COPY -> hitokoto?.copy(context)
     }
   }
 
@@ -101,7 +111,7 @@ class TujianAppWidgetProvider : AppWidgetProvider() {
       }
       val imageRequest = builder.build()
       Fresco.getImagePipeline().fetchDecodedImage(imageRequest, null).subscribe(object : BaseBitmapDataSubscriber() {
-        override fun onFailureImpl(dataSource: DataSource<CloseableReference<CloseableImage>>?) {
+        override fun onFailureImpl(dataSource: DataSource<CloseableReference<CloseableImage>>) {
         }
 
         override fun onNewResultImpl(bitmap: Bitmap?) {
@@ -117,10 +127,10 @@ class TujianAppWidgetProvider : AppWidgetProvider() {
             val minWidgetSize = context.resources.getDimensionPixelSize(R.dimen.widget_min_size)
             for (widgetId in appWidgetIds) {
               val extras = appWidgetManager.getAppWidgetOptions(widgetId)
-              var widgetWidth = TypedValue.applyDimension(COMPLEX_UNIT_DIP, extras.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH).toFloat(), displayMetrics).toInt()
-              widgetWidth = Math.max(Math.min(widgetWidth, displayMetrics.widthPixels), minWidgetSize)
-              var widgetHeight = TypedValue.applyDimension(COMPLEX_UNIT_DIP, extras.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT).toFloat(), displayMetrics).toInt()
-              widgetHeight = Math.max(Math.min(widgetHeight, displayMetrics.heightPixels), minWidgetSize)
+              var widgetWidth = applyDimension(COMPLEX_UNIT_DIP, extras.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH).toFloat(), displayMetrics).toInt()
+              widgetWidth = widgetWidth.coerceAtMost(displayMetrics.widthPixels).coerceAtLeast(minWidgetSize)
+              var widgetHeight = applyDimension(COMPLEX_UNIT_DIP, extras.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT).toFloat(), displayMetrics).toInt()
+              widgetHeight = widgetHeight.coerceAtMost(displayMetrics.heightPixels).coerceAtLeast(minWidgetSize)
               var success = false
               while (!success) {
                 val nextIntent = Intent(context, TujianAppWidgetProvider::class.java).apply {

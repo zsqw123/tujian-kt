@@ -154,7 +154,7 @@ class WallpaperWorker(context: Context, workerParams: WorkerParameters) : Corout
     val imageRequest = builder.build()
     val dataSource = Fresco.getImagePipeline().fetchDecodedImage(imageRequest, null)
     dataSource.subscribe(object : BaseBitmapDataSubscriber() {
-      override fun onFailureImpl(dataSource: DataSource<CloseableReference<CloseableImage>>?) {
+      override fun onFailureImpl(dataSource: DataSource<CloseableReference<CloseableImage>>) {
         val pid = inputData.getString("pid")
         if (!pid.isNullOrBlank()) {
           stopLoad()

@@ -82,6 +82,7 @@ class ListAdapter(
   }
 }
 
+// tujian v2 API
 fun getNewUrl(picture: Picture?): String? {
   return if (picture?.nativePath == picture?.local) picture?.local else C.API_SS + picture?.nativePath
 }

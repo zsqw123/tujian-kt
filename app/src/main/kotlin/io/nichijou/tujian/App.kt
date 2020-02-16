@@ -37,7 +37,6 @@ class App : Application() {
     super.onCreate()
     context = applicationContext
     Kotpref.init(this)
-
     // Bugly
     @Suppress("ConstantConditionIf")
     if (BuildConfig.API_BUGLY != "null") {

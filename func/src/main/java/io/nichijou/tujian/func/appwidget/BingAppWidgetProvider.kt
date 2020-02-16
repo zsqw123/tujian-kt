@@ -1,31 +1,41 @@
 package io.nichijou.tujian.func.appwidget
 
-import android.app.*
-import android.appwidget.*
-import android.content.*
-import android.graphics.*
-import android.net.*
-import android.os.*
-import android.util.*
+import android.app.PendingIntent
+import android.appwidget.AppWidgetManager
+import android.appwidget.AppWidgetProvider
+import android.content.ComponentName
+import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Color
+import android.net.Uri
+import android.os.Bundle
 import android.util.TypedValue.*
-import android.widget.*
-import com.facebook.common.executors.*
-import com.facebook.common.references.*
-import com.facebook.datasource.*
-import com.facebook.drawee.backends.pipeline.*
-import com.facebook.imagepipeline.common.*
-import com.facebook.imagepipeline.datasource.*
-import com.facebook.imagepipeline.image.*
-import com.facebook.imagepipeline.request.*
-import io.nichijou.tujian.common.db.*
-import io.nichijou.tujian.common.entity.*
-import io.nichijou.tujian.common.ext.*
+import android.widget.RemoteViews
+import com.facebook.common.executors.CallerThreadExecutor
+import com.facebook.common.references.CloseableReference
+import com.facebook.datasource.DataSource
+import com.facebook.drawee.backends.pipeline.Fresco
+import com.facebook.imagepipeline.common.ImageDecodeOptions
+import com.facebook.imagepipeline.common.Priority
+import com.facebook.imagepipeline.common.RotationOptions
+import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber
+import com.facebook.imagepipeline.image.CloseableImage
+import com.facebook.imagepipeline.request.ImageRequestBuilder
+import io.nichijou.tujian.common.db.TuJianDatabase
+import io.nichijou.tujian.common.entity.Bing
+import io.nichijou.tujian.common.ext.getWallpaperPrimaryColorCompat
+import io.nichijou.tujian.common.ext.logd
+import io.nichijou.tujian.common.ext.loge
+import io.nichijou.tujian.common.ext.scale
 import io.nichijou.tujian.func.R
-import io.nichijou.tujian.func.notification.*
-import io.nichijou.utils.*
-import jp.wasabeef.fresco.processors.*
-import jp.wasabeef.fresco.processors.gpu.*
-import kotlinx.coroutines.*
+import io.nichijou.tujian.func.notification.NotificationController
+import io.nichijou.utils.bodyColor
+import jp.wasabeef.fresco.processors.BlurPostprocessor
+import jp.wasabeef.fresco.processors.CombinePostProcessors
+import jp.wasabeef.fresco.processors.gpu.PixelationFilterPostprocessor
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 class BingAppWidgetProvider : AppWidgetProvider() {
@@ -97,7 +107,7 @@ class BingAppWidgetProvider : AppWidgetProvider() {
       }
       val imageRequest = builder.build()
       Fresco.getImagePipeline().fetchDecodedImage(imageRequest, null).subscribe(object : BaseBitmapDataSubscriber() {
-        override fun onFailureImpl(dataSource: DataSource<CloseableReference<CloseableImage>>?) {
+        override fun onFailureImpl(dataSource: DataSource<CloseableReference<CloseableImage>>) {
         }
 
         override fun onNewResultImpl(bitmap: Bitmap?) {
