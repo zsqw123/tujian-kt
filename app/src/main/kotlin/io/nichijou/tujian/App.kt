@@ -24,7 +24,6 @@ import io.nichijou.oops.Oops
 import io.nichijou.tujian.common.commonModule
 import io.nichijou.tujian.common.fresco.OkHttpNetworkFetcher
 import io.nichijou.tujian.func.shortcuts.ShortcutsController
-import me.jessyan.progressmanager.ProgressManager
 import okhttp3.OkHttpClient
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
@@ -33,7 +32,6 @@ import java.io.File
 
 class App : Application() {
   private val okHttpClient: OkHttpClient by inject()
-  private var mOkHttpClient: OkHttpClient? = null
 
   override fun onCreate() {
     super.onCreate()
@@ -45,9 +43,6 @@ class App : Application() {
     if (BuildConfig.API_BUGLY != "null") {
       CrashReport.initCrashReport(applicationContext, BuildConfig.API_BUGLY, false)
     }
-
-    this.mOkHttpClient = ProgressManager.getInstance().with(OkHttpClient.Builder()).build()
-
     startKoin {
       if (BuildConfig.DEBUG) {
         printLogger()
@@ -148,10 +143,6 @@ class App : Application() {
     } else {
       context.cacheDir
     }
-  }
-
-  fun getOkHttpClientMe(): OkHttpClient? {
-    return mOkHttpClient
   }
 
   companion object {

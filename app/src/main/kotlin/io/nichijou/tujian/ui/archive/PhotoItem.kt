@@ -2,7 +2,6 @@ package io.nichijou.tujian.ui.archive
 
 import android.content.Context
 import android.graphics.Color
-import android.graphics.Point
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -15,10 +14,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.GlideBuilder
 import com.bumptech.glide.Registry
 import com.bumptech.glide.annotation.GlideModule
+import com.bumptech.glide.integration.okhttp3.OkHttpUrlLoader
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.module.AppGlideModule
-import com.bumptech.glide.integration.okhttp3.OkHttpUrlLoader;
-import java.io.InputStream;
 import com.zzhoujay.richtext.RichText
 import io.nichijou.tujian.App
 import io.nichijou.tujian.R
@@ -30,7 +28,7 @@ import me.jessyan.progressmanager.ProgressListener
 import me.jessyan.progressmanager.ProgressManager
 import me.jessyan.progressmanager.body.ProgressInfo
 import org.jetbrains.anko.toast
-import org.jetbrains.anko.windowManager
+import java.io.InputStream
 
 
 class Viewpager2Adapter(private val data: ArrayList<Picture>) :
@@ -43,11 +41,6 @@ class Viewpager2Adapter(private val data: ArrayList<Picture>) :
 
   override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
     val item = holder.itemView
-    val point = Point()
-    item.context.windowManager.defaultDisplay.getRealSize(point)
-//    val screenX = point.x
-    val screenY = point.y
-
     val photoView = item.photo_item
     photoView.enable()
     photoView.scaleType = ImageView.ScaleType.CENTER_CROP
@@ -96,7 +89,7 @@ class PhotoItem(val list: ArrayList<Picture>, private val nowPos: Int) : DialogF
   }
 
   override fun onActivityCreated(savedInstanceState: Bundle?) {
-    dialog!!.window!!.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    dialog!!.window!!.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
     dialog!!.window!!.requestFeature(Window.FEATURE_NO_TITLE)
     super.onActivityCreated(savedInstanceState)
     dialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -109,19 +102,5 @@ class PhotoItem(val list: ArrayList<Picture>, private val nowPos: Int) : DialogF
     photo_item_viewpager.adapter = Viewpager2Adapter(list)
 //    photo_item_viewpager.layoutParams = FrameLayout.LayoutParams(matchParent, wrapContent)
     photo_item_viewpager.currentItem = nowPos
-  }
-}
-
-@GlideModule
-class GlideConfiguration : AppGlideModule() {
-  override fun applyOptions(context: Context, builder: GlideBuilder) {}
-  override fun registerComponents(context: Context, glide: Glide, registry: Registry) {
-    val application: App = context.applicationContext as App
-    //Glide 底层默认使用 HttpConnection 进行网络请求,这里替换为 Okhttp 后才能使用本框架,进行 Glide 的加载进度监听
-    registry.replace(GlideUrl::class.java, InputStream::class.java, OkHttpUrlLoader.Factory(application.getOkHttpClientMe()!!))
-  }
-
-  override fun isManifestParsingEnabled(): Boolean {
-    return false
   }
 }
