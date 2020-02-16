@@ -8,7 +8,6 @@ import io.nichijou.tujian.func.R
 import io.nichijou.tujian.func.wallpaper.WallpaperWorker
 import org.jetbrains.anko.toast
 
-
 class LinkController : AppCompatActivity() {
   init {
     lifecycleScope.launchWhenCreated {

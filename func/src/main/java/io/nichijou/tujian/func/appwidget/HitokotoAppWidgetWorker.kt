@@ -1,6 +1,5 @@
 package io.nichijou.tujian.func.appwidget
 
-
 import android.content.Context
 import android.os.Build
 import androidx.work.*

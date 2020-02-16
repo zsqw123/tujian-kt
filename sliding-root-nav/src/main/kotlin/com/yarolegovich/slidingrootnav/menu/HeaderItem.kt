@@ -1,11 +1,12 @@
 package com.yarolegovich.slidingrootnav.menu
 
-import android.graphics.drawable.*
-import android.view.*
-import com.yarolegovich.slidingrootnav.*
-import io.nichijou.oops.ext.*
+import android.graphics.drawable.Drawable
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import com.yarolegovich.slidingrootnav.R
+import io.nichijou.oops.ext.setPaddingTopPlusStatusBarHeight
 import kotlinx.android.synthetic.main.item_header.view.*
-
 
 class HeaderItem(private val icon: Drawable?, private val title: CharSequence, private val subtitle: String) : DrawerItem<HeaderItem.ViewHolder>(isSelectable = false) {
 

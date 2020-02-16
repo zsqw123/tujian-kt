@@ -1,17 +1,26 @@
 package io.nichijou.tujian.func.notification
 
-import android.app.*
-import android.content.*
-import android.os.*
-import androidx.core.app.*
-import com.facebook.imagepipeline.request.*
-import io.nichijou.tujian.common.entity.*
-import io.nichijou.tujian.common.ext.*
-import io.nichijou.tujian.common.fresco.*
-import io.nichijou.tujian.func.*
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.os.Build
+import androidx.core.app.NotificationCompat
+import com.facebook.imagepipeline.request.ImageRequest
+import io.nichijou.tujian.common.entity.Bing
+import io.nichijou.tujian.common.entity.Hitokoto
+import io.nichijou.tujian.common.entity.Picture
+import io.nichijou.tujian.common.ext.ContentUriImageLoader
+import io.nichijou.tujian.common.ext.toURI
+import io.nichijou.tujian.common.fresco.getFileFromDiskCache
+import io.nichijou.tujian.func.R
 import io.nichijou.tujian.func.appwidget.*
-import io.nichijou.tujian.func.wallpaper.*
-import kotlinx.coroutines.*
+import io.nichijou.tujian.func.wallpaper.WallpaperConfig
+import io.nichijou.tujian.func.wallpaper.WallpaperWorker
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.jetbrains.anko.toast
 
 class NotificationController : BroadcastReceiver() {

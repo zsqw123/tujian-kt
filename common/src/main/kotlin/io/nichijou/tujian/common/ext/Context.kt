@@ -1,18 +1,21 @@
 package io.nichijou.tujian.common.ext
 
-import android.annotation.*
-import android.app.*
-import android.content.*
-import android.content.pm.*
-import android.net.*
-import android.os.*
-import android.util.*
-import androidx.annotation.*
-import androidx.core.graphics.drawable.*
-import androidx.palette.graphics.*
+import android.annotation.SuppressLint
+import android.app.WallpaperManager
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
+import android.os.Environment
+import android.util.TypedValue
+import androidx.annotation.Px
+import androidx.core.graphics.drawable.toBitmap
+import androidx.palette.graphics.Palette
 import org.jetbrains.anko.toast
-import java.io.*
-
+import java.io.File
 
 @Px
 fun Context.getStatusBarHeight() = this.resources.getDimensionPixelSize(this.resources.getIdentifier("status_bar_height", "dimen", "android"))

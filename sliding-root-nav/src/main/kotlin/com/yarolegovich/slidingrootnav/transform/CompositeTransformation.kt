@@ -1,6 +1,6 @@
 package com.yarolegovich.slidingrootnav.transform
 
-import android.view.*
+import android.view.View
 
 class CompositeTransformation(private val transformations: List<RootTransformation>) : RootTransformation {
 

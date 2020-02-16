@@ -104,7 +104,7 @@ class TodayFragment : BaseFragment() {
   private fun bindInfo() {
     currentPicture?.let {
       toolbar.title = it.title
-      RichText.fromMarkdown(it.desc.replace("\n","  \n")).linkFix { holder ->
+      RichText.fromMarkdown(it.desc.replace("\n", "  \n")).linkFix { holder ->
         holder!!.color = getThemeColor()
         holder.isUnderLine = false
       }.into(desc)

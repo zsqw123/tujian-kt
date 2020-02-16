@@ -1,8 +1,8 @@
 package io.nichijou.tujian.ui.today
 
-import android.view.*
-import androidx.recyclerview.widget.*
-import io.nichijou.tujian.common.entity.*
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import io.nichijou.tujian.common.entity.Picture
 import io.nichijou.tujian.ui.archive.getNewUrl
 
 class TodayAdapter(private val items: List<Picture>) : RecyclerView.Adapter<TodayAdapter.ViewHolder>() {

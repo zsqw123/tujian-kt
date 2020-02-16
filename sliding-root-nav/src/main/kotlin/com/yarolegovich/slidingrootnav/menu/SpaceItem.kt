@@ -1,8 +1,8 @@
 package com.yarolegovich.slidingrootnav.menu
 
-import android.util.*
-import android.view.*
-
+import android.util.TypedValue
+import android.view.View
+import android.view.ViewGroup
 
 class SpaceItem(private val spaceDp: Float) : DrawerItem<SpaceItem.ViewHolder>(isSelectable = false) {
 

@@ -1,7 +1,7 @@
 package io.nichijou.tujian.func.wallpaper
 
-import com.chibatching.kotpref.*
-import java.util.concurrent.*
+import com.chibatching.kotpref.KotprefModel
+import java.util.concurrent.TimeUnit
 
 object WallpaperConfig : KotprefModel() {
   var notification: Boolean by booleanPref(true)

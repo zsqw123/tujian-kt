@@ -1,8 +1,7 @@
 package com.yarolegovich.slidingrootnav.transform
 
-import android.view.*
-import com.yarolegovich.slidingrootnav.util.*
-
+import android.view.View
+import com.yarolegovich.slidingrootnav.util.slideEvaluate
 
 class ScaleTransformation(private val endScale: Float) : RootTransformation {
 

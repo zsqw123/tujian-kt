@@ -1,17 +1,22 @@
 package io.nichijou.tujian.ui.today
 
-import android.content.*
-import android.net.*
-import android.widget.*
-import com.davemorrissey.labs.subscaleview.*
-import com.facebook.common.executors.*
-import com.facebook.datasource.*
-import com.facebook.drawee.backends.pipeline.*
-import com.facebook.imagepipeline.common.*
-import com.facebook.imagepipeline.request.*
+import android.content.Context
+import android.net.Uri
+import android.widget.FrameLayout
+import com.davemorrissey.labs.subscaleview.ImageSource
+import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
+import com.facebook.common.executors.UiThreadImmediateExecutorService
+import com.facebook.datasource.BaseDataSubscriber
+import com.facebook.datasource.DataSource
+import com.facebook.drawee.backends.pipeline.Fresco
+import com.facebook.imagepipeline.common.Priority
+import com.facebook.imagepipeline.request.ImageRequest
 import io.nichijou.tujian.R
-import io.nichijou.tujian.common.ext.*
-import io.nichijou.tujian.common.fresco.*
+import io.nichijou.tujian.common.ext.getScreenHeight
+import io.nichijou.tujian.common.ext.getScreenWidth
+import io.nichijou.tujian.common.ext.makeGone
+import io.nichijou.tujian.common.ext.makeVisible
+import io.nichijou.tujian.common.fresco.getFileFromDiskCache
 import kotlinx.android.synthetic.main.view_today_item.view.*
 import org.jetbrains.anko.toast
 

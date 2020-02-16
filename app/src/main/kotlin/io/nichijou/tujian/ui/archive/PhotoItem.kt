@@ -17,7 +17,6 @@ import io.nichijou.tujian.isDark
 import kotlinx.android.synthetic.main.photo_item_layout.view.*
 import kotlinx.android.synthetic.main.photo_item_viewpager_layout.*
 
-
 class Viewpager2Adapter(private val data: ArrayList<Picture>) :
   RecyclerView.Adapter<RecyclerView.ViewHolder>() {
   private var items: ArrayList<Picture> = data

@@ -10,8 +10,8 @@ import com.facebook.drawee.drawable.ProgressBarDrawable
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
-import io.nichijou.tujian.common.C
 import io.nichijou.tujian.R
+import io.nichijou.tujian.common.C
 import io.nichijou.tujian.common.entity.Picture
 import io.nichijou.tujian.common.ext.dp2px
 import io.nichijou.tujian.common.ext.makeGone

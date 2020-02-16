@@ -34,7 +34,6 @@ import org.jetbrains.anko.uiThread
 
 class SettingsFragment : BaseFragment(), View.OnClickListener, SeekBar.OnSeekBarChangeListener {
 
-
   override fun onClick(v: View?) {
     when (v?.id) {
       R.id.view_wallpaper_settings -> addFragmentToActivity(WallpaperSettingsFragment.newInstance(), hideBefore = true)

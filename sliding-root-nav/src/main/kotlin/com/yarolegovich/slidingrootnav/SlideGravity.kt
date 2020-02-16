@@ -1,6 +1,5 @@
 package com.yarolegovich.slidingrootnav
 
-
 import androidx.customview.widget.ViewDragHelper
 import kotlin.math.abs
 import kotlin.math.max

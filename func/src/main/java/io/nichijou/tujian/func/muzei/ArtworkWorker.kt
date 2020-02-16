@@ -19,7 +19,6 @@ import org.koin.core.KoinComponent
 import org.koin.core.inject
 import kotlin.random.Random
 
-
 class ArtworkWorker(context: Context, workerParams: WorkerParameters) : CoroutineWorker(context, workerParams), KoinComponent {
 
   private val tujianService by inject<TujianService>()
