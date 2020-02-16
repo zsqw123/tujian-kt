@@ -269,7 +269,7 @@ class MainActivity : BaseActivity() {
     }
     adapter = DrawerAdapter(
       mutableListOf(
-        HeaderItem(this.drawableRes(R.drawable.ic_launcher_foreground), getString(R.string.app_name), getString(R.string.app_name_pinyin)),
+        HeaderItem(this.drawableRes(R.mipmap.ic_launcher_foreground), getString(R.string.app_name), getString(R.string.app_name_pinyin)),
 //        HitokotoItem(-100),
         SimpleItem(R.drawable.ic_twotone_wb_sunny, this.drawableRes(R.drawable.ic_twotone_wb_sunny), getString(R.string.today)).setChecked(true),
         SimpleItem(R.drawable.ic_twotone_loyalty, this.drawableRes(R.drawable.ic_twotone_loyalty), getString(R.string.archive)),
