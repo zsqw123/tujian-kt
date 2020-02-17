@@ -8,6 +8,7 @@ import android.view.*
 import android.widget.ImageView
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.zzhoujay.richtext.RichText
 import io.nichijou.tujian.R
@@ -30,11 +31,6 @@ class Viewpager2Adapter(private val data: ArrayList<Picture>) :
     val photoView = item.photo_item
     photoView.enable()
     photoView.scaleType = ImageView.ScaleType.CENTER_CROP
-    item.photo_item_desc.typeface = Typeface.DEFAULT_BOLD
-    RichText.fromMarkdown(items[position].desc.replace("\n", "  \n")).linkFix { linkHolder ->
-      linkHolder!!.color = if (isDark()) Color.parseColor("#22EB4F") else Color.parseColor("#DD14B0")
-      linkHolder.isUnderLine = false
-    }.into(item.photo_item_desc)
     Glide.with(item.context).load(getNewUrl(items[position])).into(photoView)
   }
 
@@ -74,6 +70,15 @@ class PhotoItem(val list: ArrayList<Picture>, private val nowPos: Int) : DialogF
     super.onViewCreated(view, savedInstanceState)
     photo_item_viewpager_layout.background = ColorDrawable(Color.TRANSPARENT)
     photo_item_viewpager.adapter = Viewpager2Adapter(list)
+    photo_item_viewpager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+      override fun onPageSelected(position: Int) {
+        super.onPageSelected(position)
+        RichText.fromMarkdown(list[position].desc.replace("\n", "  \n")).linkFix { linkHolder ->
+          linkHolder!!.color = if (isDark()) Color.parseColor("#22EB4F") else Color.parseColor("#DD14B0")
+          linkHolder.isUnderLine = false
+        }.into(photo_item_desc)
+      }
+    })
 //    photo_item_viewpager.layoutParams = FrameLayout.LayoutParams(matchParent, wrapContent)
     photo_item_viewpager.currentItem = nowPos
   }
