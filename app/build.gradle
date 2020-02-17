@@ -25,7 +25,7 @@ android {
         abiFilters 'armeabi-v7a'
       }
       minifyEnabled false
-      proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+      proguardFiles getDefaultProguardFile('proguard-android-optimize.txt') , 'proguard-rules.pro'
     }
     debug{
       minifyEnabled false

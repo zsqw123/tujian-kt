@@ -3,9 +3,11 @@ package io.nichijou.tujian.ui.archive
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.paging.PagedListAdapter
 import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.facebook.drawee.drawable.ProgressBarDrawable
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
@@ -23,6 +25,9 @@ import io.nichijou.tujian.ui.ColorAdapter
 import io.nichijou.utils.randomColor
 import jp.wasabeef.recyclerview.animators.LandingAnimator
 import kotlinx.android.synthetic.main.item_picture.view.*
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.matchParent
+import org.jetbrains.anko.uiThread
 import java.util.*
 
 class ListAdapter(
@@ -51,7 +56,7 @@ class ListAdapter(
     } else {
       bindColors(holder, colors)
     }
-    holder.itemView.drawee_history_bing.setOnClickListener {
+    holder.itemView.list_item_thumbnail.setOnClickListener {
       draweeClicked.invoke(it, this, position)
     }
     holder.bind(picture)
@@ -72,12 +77,14 @@ class ListAdapter(
       itemView.title.text = picture.title
       itemView.date.text = picture.date
       val newUrl = getNewUrl(picture) + "!w360"
-      itemView.drawee_history_bing.aspectRatio = picture.width.toFloat() / picture.height.toFloat()
-      itemView.drawee_history_bing.load(newUrl, progressDrawable = ProgressBarDrawable().apply {
-        barWidth = itemView.context.dp2px(8f).toInt()
-        setPadding(0)
-        color = randomColor()
-      })
+      itemView.list_item_thumbnail.ratio = picture.height.toFloat()/ picture.width.toFloat()
+      Glide.with(itemView).load(newUrl).into(itemView.list_item_thumbnail)
+//      itemView.drawee_history_bing.aspectRatio = picture.width.toFloat() / picture.height.toFloat()
+//      itemView.drawee_history_bing.load(newUrl, progressDrawable = ProgressBarDrawable().apply {
+//        barWidth = itemView.context.dp2px(8f).toInt()
+//        setPadding(0)
+//        color = randomColor()
+//      })
     }
   }
 }

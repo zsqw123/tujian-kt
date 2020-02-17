@@ -5,13 +5,17 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Point
 import android.provider.MediaStore
+import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ListAdapter
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.view.drawToBitmap
 import androidx.core.view.setMargins
+import com.bm.library.PhotoView
 import com.google.android.material.snackbar.Snackbar
+import io.nichijou.tujian.common.R
 import org.jetbrains.anko.*
 import java.io.OutputStream
 import kotlin.math.hypot
@@ -173,5 +177,41 @@ fun View.attachLongClick(context: Context = this.context, savedName: String = "8
       }
     }.show()
     true
+  }
+}
+
+class AspectRatioImageView @JvmOverloads constructor(
+  context: Context,
+  attrs: AttributeSet? = null,
+  defStyleAttr: Int = 0
+): PhotoView(context, attrs, defStyleAttr) {
+
+  var ratio: Float = DEFAULT_RATIO
+
+  init {
+    attrs?.let {
+      context.obtainStyledAttributes(it, R.styleable.AspectRatioImageView).apply {
+        ratio = getFloat(R.styleable.AspectRatioImageView_aspect_ratio, DEFAULT_RATIO)
+        recycle()
+      }
+    }
+  }
+
+  override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+    super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+    var width = measuredWidth
+    var height = measuredHeight
+
+    when {
+      width > 0 -> height = (width * ratio).toInt()
+      height > 0 -> width = (height / ratio).toInt()
+      else -> return
+    }
+
+    setMeasuredDimension(width, height)
+  }
+
+  companion object {
+    const val DEFAULT_RATIO = 1F
   }
 }
