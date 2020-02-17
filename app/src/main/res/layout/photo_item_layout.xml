@@ -10,14 +10,5 @@
     android:id="@+id/photo_item"
     android:layout_width="match_parent"
     android:layout_height="match_parent" />
-
-  <TextView
-    android:id="@+id/photo_item_desc"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="bottom"
-    android:background="#33000000"
-    android:textColor="#A0000000"
-    android:text="5555" />
 </FrameLayout>
 
