@@ -13,12 +13,6 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-<!--    <com.facebook.drawee.view.SimpleDraweeView-->
-<!--      android:id="@+id/drawee_history_bing"-->
-<!--      android:layout_width="match_parent"-->
-<!--      android:layout_height="wrap_content"-->
-<!--      android:background="#36000000"-->
-<!--      app:viewAspectRatio="1" />-->
     <io.nichijou.tujian.common.ext.AspectRatioImageView
       android:id="@+id/list_item_thumbnail"
       android:layout_width="match_parent"
