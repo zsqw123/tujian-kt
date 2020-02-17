@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import io.nichijou.oops.Oops
 import io.nichijou.oops.ext.setMarginTopPlusStatusBarHeight
 import io.nichijou.tujian.R
+import io.nichijou.tujian.Settings
 import io.nichijou.tujian.base.BaseFragment
 import io.nichijou.tujian.common.entity.Upload
 import io.nichijou.tujian.common.ext.makeGone
@@ -66,6 +67,7 @@ class UploadFragment : BaseFragment() {
       target().application.toast(it.toString())
     })
     submit?.setOnClickListener {
+      if (Settings.feiHua) return@setOnClickListener
       val url = uploadViewModel.url.value
       if (url.isNullOrBlank()) {
         target().application.toast("请先选择待上传图片")

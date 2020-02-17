@@ -3,12 +3,10 @@ package io.nichijou.tujian.ui.archive
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.paging.PagedListAdapter
 import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.facebook.drawee.drawable.ProgressBarDrawable
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
@@ -19,15 +17,11 @@ import io.nichijou.tujian.common.ext.dp2px
 import io.nichijou.tujian.common.ext.makeGone
 import io.nichijou.tujian.common.ext.makeVisible
 import io.nichijou.tujian.common.fresco.getPaletteSwatches
-import io.nichijou.tujian.common.fresco.load
 import io.nichijou.tujian.diff.PictureDiffCallback
+import io.nichijou.tujian.isDark
 import io.nichijou.tujian.ui.ColorAdapter
-import io.nichijou.utils.randomColor
 import jp.wasabeef.recyclerview.animators.LandingAnimator
 import kotlinx.android.synthetic.main.item_picture.view.*
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.matchParent
-import org.jetbrains.anko.uiThread
 import java.util.*
 
 class ListAdapter(
@@ -77,14 +71,9 @@ class ListAdapter(
       itemView.title.text = picture.title
       itemView.date.text = picture.date
       val newUrl = getNewUrl(picture) + "!w360"
-      itemView.list_item_thumbnail.ratio = picture.height.toFloat()/ picture.width.toFloat()
-      Glide.with(itemView).load(newUrl).into(itemView.list_item_thumbnail)
-//      itemView.drawee_history_bing.aspectRatio = picture.width.toFloat() / picture.height.toFloat()
-//      itemView.drawee_history_bing.load(newUrl, progressDrawable = ProgressBarDrawable().apply {
-//        barWidth = itemView.context.dp2px(8f).toInt()
-//        setPadding(0)
-//        color = randomColor()
-//      })
+      itemView.list_item_thumbnail.ratio = picture.height.toFloat() / picture.width.toFloat()
+      if (isDark()) Glide.with(itemView).load(newUrl).placeholder(R.mipmap.placeholder_night).into(itemView.list_item_thumbnail)
+      else Glide.with(itemView).load(newUrl).placeholder(R.mipmap.placeholder).into(itemView.list_item_thumbnail)
     }
   }
 }
