@@ -22,6 +22,7 @@ import io.nichijou.tujian.common.ext.basePath
 import io.nichijou.tujian.common.ext.saveToAlbum
 import io.nichijou.tujian.common.ext.toClipboard
 import kotlinx.android.parcel.Parcelize
+import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.toast
 import java.io.File
 import java.util.*
@@ -73,12 +74,14 @@ data class Picture(
   fun download(context: Context) {
     context.toast("开始下载原图...")
     val name = "Tujian-" + title + Date()
-    Glide.with(context).asBitmap().load(getNewUrl(this)).into(object : CustomTarget<Bitmap>() {
-      override fun onLoadCleared(placeholder: Drawable?) {}
-      override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-        resource.saveToAlbum(context, name)
-      }
-    })
+    doAsync {
+      Glide.with(context).asBitmap().load(getNewUrl(this@Picture)).into(object : CustomTarget<Bitmap>() {
+        override fun onLoadCleared(placeholder: Drawable?) {}
+        override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+          resource.saveToAlbum(context, name)
+        }
+      })
+    }
   }
 
   companion object {
