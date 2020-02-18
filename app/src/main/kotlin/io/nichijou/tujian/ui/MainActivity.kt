@@ -97,7 +97,7 @@ class MainActivity : BaseActivity() {
           }.into(text)
         }
 
-        positiveButton(text = "同意并继续") { Settings.feiHua = true;toast("agree") }
+        positiveButton(text = "同意并继续") { Settings.feiHua = true}
         negativeButton(text = "仅浏览")
       }.cornerRadius(12f)
     }
