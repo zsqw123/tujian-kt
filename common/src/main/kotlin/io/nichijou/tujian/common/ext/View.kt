@@ -137,54 +137,31 @@ fun Context.getRadiusByCenterPoint(point: Point): Float {
   return max(max(r1, r2), max(r3, r4)).toFloat()
 }
 
-//保存view
-fun View.saveView(context: Context, fileName: String): Boolean {
+//保存bitmap
+fun Bitmap.saveToAlbum(context: Context, fileName: String) {
   val contentValues = ContentValues()
-  contentValues.put(MediaStore.Images.Media.DISPLAY_NAME, fileName)
+  contentValues.put(MediaStore.Images.Media.DISPLAY_NAME, "/图鉴日图/$fileName")
   contentValues.put(MediaStore.Images.Media.DESCRIPTION, fileName)
   contentValues.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+//  contentValues.put(MediaStore.Images.Media.IS_PENDING, 1)
   val uri = context.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
   val outputStream: OutputStream? = context.contentResolver.openOutputStream(uri!!)
   try {
-    val bitmap = this.drawToBitmap()
-    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+    this.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
     outputStream!!.close()
     context.toast("已保存到相册")
   } catch (e: Exception) {
     e.printStackTrace()
-    return false
+    return
   }
-  return true
-}
-
-//view附加长按事件
-fun View.attachLongClick(context: Context = this.context, savedName: String = "888") {
-  this.setOnLongClickListener {
-    val view: View = this
-    context.alert {
-      customView {
-        verticalLayout {
-          //标题
-          toolbar {
-            lparams(width = matchParent, height = wrapContent)
-            title = "是否保存此图片"
-          }
-          negativeButton("否") {}
-          positiveButton("是") {
-            view.saveView(context, savedName)
-          }
-        }
-      }
-    }.show()
-    true
-  }
+  return
 }
 
 class AspectRatioImageView @JvmOverloads constructor(
   context: Context,
   attrs: AttributeSet? = null,
   defStyleAttr: Int = 0
-): PhotoView(context, attrs, defStyleAttr) {
+) : PhotoView(context, attrs, defStyleAttr) {
 
   var ratio: Float = DEFAULT_RATIO
 

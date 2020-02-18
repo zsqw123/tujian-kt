@@ -3,6 +3,7 @@ package io.nichijou.tujian.ui.today
 import android.app.WallpaperManager
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.text.SpannableString
 import android.text.Spanned
@@ -18,6 +19,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.palette.graphics.Palette
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.SimpleResource
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.target.SimpleTarget
+import com.bumptech.glide.request.transition.Transition
 import com.facebook.common.executors.UiThreadImmediateExecutorService
 import com.facebook.common.references.CloseableReference
 import com.facebook.datasource.DataSource
@@ -44,6 +50,7 @@ import io.nichijou.tujian.func.wallpaper.WallpaperConfig
 import io.nichijou.tujian.getThemeColor
 import io.nichijou.tujian.ui.ColorAdapter
 import io.nichijou.tujian.ui.MainViewModel
+import io.nichijou.tujian.ui.archive.getNewUrl
 import jp.wasabeef.fresco.processors.BlurPostprocessor
 import jp.wasabeef.fresco.processors.CombinePostProcessors
 import jp.wasabeef.fresco.processors.gpu.PixelationFilterPostprocessor
@@ -130,7 +137,7 @@ class TodayFragment : BaseFragment() {
   private val colorCaches by lazy(LazyThreadSafetyMode.NONE) { hashMapOf<String, Palette>() }
 
   private fun palette() {
-    currentPicture?.local?.let { url ->
+    getNewUrl(currentPicture)?.let { url ->
       val palette = colorCaches[url]
       if (palette == null) {
         ImageRequest.fromUri(url)?.getPalette {
@@ -227,8 +234,13 @@ class TodayFragment : BaseFragment() {
             target().shareString(currentPicture?.share())
           }
           1 -> {
-            actual_view.saveView(context!!, currentPicture?.title + Date())
-//            currentPicture?.download(target())
+            val name = currentPicture?.title + Date()
+            Glide.with(context!!).asBitmap().load(getNewUrl(currentPicture)).into(object : CustomTarget<Bitmap>() {
+              override fun onLoadCleared(placeholder: Drawable?) {}
+              override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                resource.saveToAlbum(context!!, name)
+              }
+            })
           }
           2 -> {
             setWallpaper()
@@ -244,7 +256,7 @@ class TodayFragment : BaseFragment() {
   }
 
   private fun setWallpaper() = lifecycleScope.launch {
-    val local = currentPicture?.local ?: return@launch
+    val local = getNewUrl(currentPicture) ?: return@launch
     val uri = Uri.parse(local) ?: return@launch
     val builder = ImageRequestBuilder.newBuilderWithSource(uri)
       .setRotationOptions(RotationOptions.autoRotate())

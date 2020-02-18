@@ -2,6 +2,8 @@ package io.nichijou.tujian.common.entity
 
 import android.app.DownloadManager
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Parcelable
 import androidx.room.Entity
@@ -9,10 +11,15 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.afollestad.assent.Permission
 import com.afollestad.assent.isAllGranted
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import io.nichijou.tujian.common.C
 import io.nichijou.tujian.common.R
 import io.nichijou.tujian.common.ext.basePath
+import io.nichijou.tujian.common.ext.saveToAlbum
 import io.nichijou.tujian.common.ext.toClipboard
 import kotlinx.android.parcel.Parcelize
 import org.jetbrains.anko.toast
@@ -64,28 +71,14 @@ data class Picture(
   }
 
   fun download(context: Context) {
-    if (context.isAllGranted(Permission.WRITE_EXTERNAL_STORAGE)) {
-      val uri = Uri.parse(local) ?: return
-      val manager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-      val request = DownloadManager.Request(uri)
-      val fileName = title + " - " + Date() + ".jpg"
-      val dirPath = context.basePath()
-      val dir = File(dirPath)
-      if (!dir.exists()) {
-        dir.mkdirs()
+    context.toast("开始下载原图...")
+    val name = "Tujian-" + title + Date()
+    Glide.with(context).asBitmap().load(getNewUrl(this)).into(object : CustomTarget<Bitmap>() {
+      override fun onLoadCleared(placeholder: Drawable?) {}
+      override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+        resource.saveToAlbum(context, name)
       }
-      request.setDestinationInExternalPublicDir(dirPath.substring(dirPath.indexOf("tujian")), fileName)
-      request.setTitle("图鉴•$fileName")
-      request.setDescription("$desc\n via $user $date")
-      request.allowScanningByMediaScanner()
-      request.setVisibleInDownloadsUi(true)
-      request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-      request.setMimeType("image/*")
-      manager.enqueue(request)
-      context.toast(R.string.start_download)
-    } else {
-      context.toast(R.string.no_permission_for_download)
-    }
+    })
   }
 
   companion object {
@@ -95,4 +88,9 @@ data class Picture(
     const val FROM_APPWIDGET = 3
     const val FROM_BING = 4
   }
+}
+
+// tujian v2 API
+fun getNewUrl(picture: Picture?): String? {
+  return if (picture?.nativePath == picture?.local) picture?.local else C.API_SS + picture?.nativePath
 }

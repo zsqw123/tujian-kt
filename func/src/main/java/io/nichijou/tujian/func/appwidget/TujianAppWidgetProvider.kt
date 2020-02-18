@@ -22,6 +22,7 @@ import com.facebook.imagepipeline.common.RotationOptions
 import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber
 import com.facebook.imagepipeline.image.CloseableImage
 import com.facebook.imagepipeline.request.ImageRequestBuilder
+import io.nichijou.tujian.common.C
 import io.nichijou.tujian.common.db.TuJianDatabase
 import io.nichijou.tujian.common.entity.Hitokoto
 import io.nichijou.tujian.common.entity.Picture
@@ -95,7 +96,9 @@ class TujianAppWidgetProvider : AppWidgetProvider() {
     }
 
     private fun doUpdateWidget(context: Context, picture: Picture, hitokoto: Hitokoto) {
-      val uri = Uri.parse(picture.local) ?: return
+      val uri = Uri.parse(
+        if (picture.nativePath == picture.local)
+          picture.local else C.API_SS + picture.nativePath)
       val builder = ImageRequestBuilder.newBuilderWithSource(uri)
         .setRotationOptions(RotationOptions.autoRotate())
         .setRequestPriority(Priority.HIGH)
