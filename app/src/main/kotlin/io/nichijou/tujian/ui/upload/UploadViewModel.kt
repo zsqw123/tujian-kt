@@ -71,7 +71,7 @@ class UploadViewModel(application: Application) : AndroidViewModel(application) 
       "url" to upload.url,
       "user" to upload.user,
       "sort" to upload.sort,
-      "hz" to upload.sort
+      "hz" to upload.hz
     )
     val requestBody = JSONObject(map).toString().toRequestBody(json)
     val request = Request.Builder()

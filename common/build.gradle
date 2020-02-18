@@ -101,4 +101,6 @@ dependencies {
   implementation "org.jetbrains.anko:anko:${rootProject.versions.anko}"
   // PhotoView
   implementation "com.bm.photoview:library:${rootProject.versions.photoview}"
+  // Glide
+  implementation "com.github.bumptech.glide:glide:${rootProject.versions.glide}"
 }

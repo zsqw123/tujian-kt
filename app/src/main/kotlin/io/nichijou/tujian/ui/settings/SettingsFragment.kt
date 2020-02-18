@@ -201,7 +201,8 @@ class SettingsFragment : BaseFragment(), View.OnClickListener, SeekBar.OnSeekBar
         R.id.view_card_space -> Settings.cardSpace = progress
         R.id.view_creature_num -> {
           Settings.creatureNum = progress
-          if (progress / 100 == 0) Settings.fuckBoo = true
+          if (progress / 100 < 1) Settings.fuckBoo = true
+          view_fuck_boo.isChecked = true
           toast(getString(R.string.creature_num_format).format(progress / 100))
         }
       }

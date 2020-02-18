@@ -68,7 +68,7 @@ class Card(context: Context, attrs: AttributeSet) : MaterialCardView(context, at
         setPadding(0)
         color = randomColor()
       })
-      drawee.attachLongClick()
+      item.download(context)
     }
   }
 
@@ -94,7 +94,7 @@ class Card(context: Context, attrs: AttributeSet) : MaterialCardView(context, at
         setPadding(0)
         color = randomColor()
       })
-      drawee.attachLongClick()
+      item.download(context)
     }
   }
 
