@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Point
+import android.os.Environment.DIRECTORY_PICTURES
 import android.provider.MediaStore
 import android.util.AttributeSet
 import android.view.View
@@ -140,10 +141,12 @@ fun Context.getRadiusByCenterPoint(point: Point): Float {
 //保存bitmap
 fun Bitmap.saveToAlbum(context: Context, fileName: String) {
   val contentValues = ContentValues()
-  contentValues.put(MediaStore.Images.Media.DISPLAY_NAME, "/图鉴日图/$fileName")
+  contentValues.put(MediaStore.Images.Media.TITLE, fileName)
+  contentValues.put(MediaStore.Images.Media.DISPLAY_NAME, fileName)
   contentValues.put(MediaStore.Images.Media.DESCRIPTION, fileName)
   contentValues.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
-//  contentValues.put(MediaStore.Images.Media.IS_PENDING, 1)
+//  contentValues.put(MediaStore.Images.Media.RELATIVE_PATH, "$DIRECTORY_PICTURES/图鉴日图")
+//  contentValues.put(MediaStore.Images.Media.IS_PENDING, true)
   val uri = context.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
   val outputStream: OutputStream? = context.contentResolver.openOutputStream(uri!!)
   try {

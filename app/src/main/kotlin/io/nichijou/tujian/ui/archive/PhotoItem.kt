@@ -10,6 +10,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.list.listItems
 import com.bumptech.glide.Glide
 import com.zzhoujay.richtext.RichText
 import io.nichijou.tujian.R
@@ -17,6 +18,7 @@ import io.nichijou.tujian.Settings
 import io.nichijou.tujian.common.entity.Picture
 import io.nichijou.tujian.common.ext.ViewHolder
 import io.nichijou.tujian.isDark
+import io.nichijou.viewer.internal.saveView
 import kotlinx.android.synthetic.main.photo_item_layout.view.*
 import kotlinx.android.synthetic.main.photo_item_viewpager_layout.*
 import org.jetbrains.anko.toast
@@ -36,8 +38,13 @@ class Viewpager2Adapter(private val data: ArrayList<Picture>) :
     photoView.scaleType = ImageView.ScaleType.CENTER_CROP
     Glide.with(item.context).load(getNewUrl(items[position])).into(photoView)
     photoView.setOnLongClickListener {
-      MaterialDialog(item.context).title(text = "保存原图").icon(R.mipmap.ic_launcher).show {
-        positiveButton(text = "保存") { items[position].download(item.context) }
+      MaterialDialog(item.context).title(text = "图鉴日图").icon(R.mipmap.ic_launcher).show {
+        listItems(items = listOf("保存","分享")){ _: MaterialDialog, i: Int, _: CharSequence ->
+          when(i){
+            0-> {}
+          }
+        }
+        positiveButton(text = "") { items[position].download(item.context) }
         negativeButton(text = "取消")
       }.cornerRadius(12f)
       return@setOnLongClickListener true

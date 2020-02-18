@@ -11,8 +11,8 @@ android {
     applicationId "cn.dailypics.tujian.r"
     minSdkVersion rootProject.versions.minsdk
     targetSdkVersion rootProject.versions.targetsdk
-    versionCode 4
-    versionName "1.2.12"
+    versionCode 5
+    versionName "1.2.18"
     resConfigs "zh"
     def documentsProviderAuthority = "io.nichijou.tujian.localstorage.documents"
     manifestPlaceholders = [documentsProviderAuthority: documentsProviderAuthority]
@@ -142,6 +142,8 @@ dependencies {
   implementation 'com.afollestad.material-dialogs:core:3.2.1'
   // 自定义View shape
   implementation 'com.github.florent37:shapeofview:1.4.7'
+  // 侧滑
+  implementation 'com.billy.android:smart-swipe:1.1.2'
   // Debug by Chrome
   // implementation "com.facebook.stetho:stetho:${rootProject.versions.stetho}"
   // implementation "com.facebook.stetho:stetho-okhttp3:${rootProject.versions.stetho}"

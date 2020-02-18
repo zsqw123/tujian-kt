@@ -1,6 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   android:id="@+id/container"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:background="?android:windowBackground" />
+  android:background="?android:windowBackground">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      android:id="@+id/slide">
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="24dp"
+        android:paddingTop="64dp"
+        android:paddingEnd="24dp">
+
+        <ImageView
+          android:id="@+id/icon"
+          android:layout_width="56dp"
+          android:layout_height="56dp"
+          android:src="@mipmap/ic_launcher_foreground"
+          app:layout_constraintBottom_toBottomOf="@id/title"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="@id/subtitle" />
+
+        <TextView
+          android:id="@+id/subtitle"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="16dp"
+          android:tag="ignore_oops_view"
+          android:text="tujian"
+          android:textColor="?colorAccent"
+          android:textSize="16sp"
+          android:typeface="monospace"
+          app:layout_constraintStart_toEndOf="@id/icon"
+          app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+          android:id="@+id/title"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:tag="ignore_oops_view"
+          android:text="图鉴"
+          android:textColor="?android:textColorPrimary"
+          android:textSize="28sp"
+          android:textStyle="bold"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintStart_toStartOf="@id/subtitle"
+          app:layout_constraintTop_toBottomOf="@id/subtitle" />
+
+      </androidx.constraintlayout.widget.ConstraintLayout>
+      <!--  今日-->
+      <LinearLayout
+        android:id="@+id/slide_today"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp">
+
+        <ImageView
+          android:layout_width="24dp"
+          android:layout_height="24dp"
+          android:layout_marginStart="14dp"
+          android:src="@drawable/ic_twotone_wb_sunny" />
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="34dp"
+          android:text="今日"
+          android:textStyle="bold" />
+
+      </LinearLayout>
+      <!--  归档-->
+      <LinearLayout
+        android:id="@+id/slide_save"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp">
+
+        <ImageView
+          android:layout_width="24dp"
+          android:layout_height="24dp"
+          android:layout_marginStart="14dp"
+          android:src="@drawable/ic_twotone_loyalty" />
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="34dp"
+          android:text="归档"
+          android:textStyle="bold" />
+
+      </LinearLayout>
+      <!--  投稿-->
+      <LinearLayout
+        android:id="@+id/slide_upload"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp">
+
+        <ImageView
+          android:layout_width="24dp"
+          android:layout_height="24dp"
+          android:layout_marginStart="14dp"
+          android:src="@drawable/ic_twotone_supervisor_account" />
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="34dp"
+          android:text="投稿"
+          android:textStyle="bold" />
+
+      </LinearLayout>
+    </LinearLayout>
+</FrameLayout>
