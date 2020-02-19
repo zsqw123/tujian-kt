@@ -71,10 +71,12 @@ class MainActivity : BaseActivity() {
     }
     if (Settings.enableFaceDetection) {
       askForPermissions(Permission.CAMERA) {}
+    } else {
+      askForPermissions(
+        Permission.READ_EXTERNAL_STORAGE,
+        Permission.WRITE_EXTERNAL_STORAGE,
+        Permission.CAMERA) {}
     }
-    askForPermissions(
-      Permission.READ_EXTERNAL_STORAGE,
-      Permission.WRITE_EXTERNAL_STORAGE) {}
     if (savedInstanceState == null) {
       replaceFragmentInActivity(TodayFragment.newInstance())
       val newFragment = BooFragment.newInstance(Oops.immed().isDark, isIntro = true, enableFace = enableFaceDetection, enableFuckBoo = enableFuckBoo)
@@ -97,7 +99,7 @@ class MainActivity : BaseActivity() {
           }.into(text)
         }
 
-        positiveButton(text = "同意并继续") { Settings.feiHua = true}
+        positiveButton(text = "同意并继续") { Settings.feiHua = true }
         negativeButton(text = "仅浏览")
       }.cornerRadius(12f)
     }
