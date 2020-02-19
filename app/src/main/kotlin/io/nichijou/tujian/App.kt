@@ -39,8 +39,10 @@ class App : Application() {
     Kotpref.init(this)
     // Bugly
     @Suppress("ConstantConditionIf")
-    if (BuildConfig.API_BUGLY != "null") {
-      CrashReport.initCrashReport(applicationContext, BuildConfig.API_BUGLY, false)
+    if (!BuildConfig.DEBUG) {
+      if (BuildConfig.API_BUGLY != "null") {
+        CrashReport.initCrashReport(applicationContext, BuildConfig.API_BUGLY, false)
+      }
     }
     startKoin {
       if (BuildConfig.DEBUG) {
