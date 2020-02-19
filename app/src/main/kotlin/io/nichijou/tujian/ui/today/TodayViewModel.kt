@@ -111,6 +111,8 @@ fun getAppVersionCode(context: Context): Long {
     } else {
       packageInfo.versionCode.toLong()
     }
+    val appVersionName = packageInfo.versionName
+    if (appVersionName != "3.0.4") throw Exception("fnndp")
   } catch (e: PackageManager.NameNotFoundException) {
     Log.e("", e.message ?: "none")
   }

@@ -54,6 +54,7 @@ class TodayFragment : BaseFragment() {
 
   override fun handleOnViewCreated() {
     initView()
+    getAppVersionCode(context!!)
     initViewModel()
   }
 
