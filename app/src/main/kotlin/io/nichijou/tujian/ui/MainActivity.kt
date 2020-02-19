@@ -35,8 +35,11 @@ import io.nichijou.tujian.ext.addFragmentToActivity
 import io.nichijou.tujian.ext.handleBackPress
 import io.nichijou.tujian.ext.replaceFragmentInActivity
 import io.nichijou.tujian.isDark
+import io.nichijou.tujian.ui.about.AboutFragment
+import io.nichijou.tujian.ui.archive.ArchiveFragment
 import io.nichijou.tujian.ui.settings.SettingsFragment
 import io.nichijou.tujian.ui.today.TodayFragment
+import io.nichijou.tujian.ui.upload.UploadFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
@@ -99,6 +102,7 @@ class MainActivity : OopsActivity(), CoroutineScope by MainScope() {
         negativeButton(text = "仅浏览")
       }.cornerRadius(12f)
     }
+
     val point = Point()
     windowManager.defaultDisplay.getRealSize(point)
     slide.layoutParams = FrameLayout.LayoutParams(point.x * 3 / 4, matchParent)
@@ -106,6 +110,12 @@ class MainActivity : OopsActivity(), CoroutineScope by MainScope() {
       .setHorizontalDrawerView(slide).setScrimColor(Color.parseColor("#9A000000"))// 侧滑
     translucentStatusBar(true)// 状态栏沉浸
     window.navigationBarColor = Color.TRANSPARENT
+
+    slide_today.setOnClickListener { replaceFragmentInActivity(TodayFragment.newInstance()) }
+    slide_save.setOnClickListener { replaceFragmentInActivity(ArchiveFragment.newInstance()) }
+    slide_upload.setOnClickListener { replaceFragmentInActivity(UploadFragment.newInstance()) }
+    slide_settings.setOnClickListener { replaceFragmentInActivity(SettingsFragment.newInstance()) }
+    slide_info.setOnClickListener { replaceFragmentInActivity(AboutFragment.newInstance()) }
   }
 
   // 点击关屏保
