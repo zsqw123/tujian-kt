@@ -32,7 +32,6 @@ class UploadFragment : BaseFragment() {
   private val uploadViewModel by viewModel<UploadViewModel>()
 
   override fun handleOnViewCreated() {
-    mainViewModel.barColor.postValue(Color.TRANSPARENT)
     mainViewModel.enableScreenSaver.postValue(false)
     toolbar.setMarginTopPlusStatusBarHeight()
     lifecycleScope.launch(Dispatchers.IO) {

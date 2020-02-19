@@ -25,7 +25,6 @@ import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.material.tabs.TabLayoutMediator
-import com.squareup.moshi.Json
 import com.zzhoujay.richtext.RichText
 import io.nichijou.tujian.R
 import io.nichijou.tujian.base.BaseFragment
@@ -35,7 +34,6 @@ import io.nichijou.tujian.common.ext.*
 import io.nichijou.tujian.common.fresco.getPalette
 import io.nichijou.tujian.ext.target
 import io.nichijou.tujian.getThemeColor
-import io.nichijou.tujian.isDark
 import io.nichijou.tujian.ui.ColorAdapter
 import io.nichijou.tujian.ui.MainViewModel
 import io.nichijou.tujian.ui.archive.getNewUrl
@@ -149,7 +147,6 @@ class TodayFragment : BaseFragment() {
 
   private val mainViewModel by activityViewModels<MainViewModel>()
   private fun initView() {
-    mainViewModel.barColor.postValue(Color.TRANSPARENT)
     mainViewModel.enableScreenSaver.postValue(true)
     fab.setOnClickListener {
       fabRotation()

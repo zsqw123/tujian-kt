@@ -5,15 +5,14 @@ import android.view.*
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import com.yarolegovich.slidingrootnav.util.ActionBarToggleAdapter
+import com.billy.android.swipe.SwipeConsumer
 import com.yarolegovich.slidingrootnav.util.DrawerToggleListenerAdapter
-import io.nichijou.oops.ext.applyOopsThemeStore
-import io.nichijou.tujian.R
 import io.nichijou.tujian.ext.FragmentBackHandler
 import io.nichijou.tujian.ext.handleBackPress
 import io.nichijou.tujian.ext.target
 import io.nichijou.tujian.ui.MainActivity
+import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.support.v4.toast
 
 abstract class BaseFragment : Fragment(), FragmentBackHandler {
   protected abstract fun getFragmentViewId(): Int
@@ -75,17 +74,11 @@ abstract class BaseFragment : Fragment(), FragmentBackHandler {
   protected fun setupDrawerWithToolbar(toolbar: Toolbar) {
     val activity = target()
     activity.setSupportActionBar(toolbar)
+    toolbar.setNavigationOnClickListener {
+      MainActivity.swipeConsumer!!.open(true, SwipeConsumer.DIRECTION_LEFT)
+    }
     if (activity is MainActivity) {
     }
-  }
-
-  protected fun setupBackWithToolbar(toolbar: Toolbar?) {
-    target().setSupportActionBar(toolbar)
-    toolbar?.setNavigationOnClickListener { close() }
-  }
-
-  protected fun setSupportActionBar(toolbar: Toolbar?) {
-    target().setSupportActionBar(toolbar)
   }
 
   companion object {

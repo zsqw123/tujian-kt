@@ -78,7 +78,6 @@ class HistoryFragment : BaseFragment() {
   private fun initView() {
     setupDrawerWithToolbar(toolbar)
     top_bar.setMarginTopPlusStatusBarHeight()// 加上一个状态栏高度的margin
-    mainViewModel.barColor.postValue(if (Oops.immed().isDark) Color.BLACK else Color.WHITE)
     mainViewModel.enableScreenSaver.postValue(true)
     recycler_view.addOnScrollListener(TopBarOnScrollListener(top_bar))
     recycler_view.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)

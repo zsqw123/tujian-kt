@@ -53,7 +53,6 @@ class AboutFragment : BaseFragment() {
   private val aboutViewModel by viewModel<AboutViewModel>()
 
   override fun handleOnViewCreated() {
-    mainViewModel.barColor.postValue(Color.TRANSPARENT)
     mainViewModel.enableScreenSaver.postValue(false)
     toolbar.setMarginTopPlusStatusBarHeight()
     toolbar.setNavigationOnClickListener { (target() as MainActivity).drawer.openMenu() }

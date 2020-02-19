@@ -33,7 +33,6 @@ class AppWidgetSettingsFragment : BaseFragment() {
   override fun handleOnViewCreated() {
     top_bar.setMarginTopPlusStatusBarHeight()
     setupDrawerWithToolbar(toolbar)
-    mainViewModel.barColor.postValue(if (Oops.immed().isDark) Color.BLACK else Color.WHITE)
     mainViewModel.enableScreenSaver.postValue(true)
     view_pager.adapter = adapter
     view_pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {

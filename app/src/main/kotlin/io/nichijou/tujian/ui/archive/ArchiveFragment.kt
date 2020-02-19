@@ -1,6 +1,5 @@
 package io.nichijou.tujian.ui.archive
 
-import android.graphics.Color
 import android.graphics.Point
 import android.view.MenuItem
 import android.view.View
@@ -10,7 +9,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
-import io.nichijou.oops.Oops
 import io.nichijou.oops.ext.setPaddingTopPlusStatusBarHeight
 import io.nichijou.tujian.R
 import io.nichijou.tujian.base.BaseFragment
@@ -55,7 +53,6 @@ class ArchiveFragment : BaseFragment() {
   override fun handleOnViewCreated() {
     top_bar.setPaddingTopPlusStatusBarHeight()
     setupDrawerWithToolbar(toolbar)
-    mainViewModel.barColor.postValue(if (Oops.immed().isDark) Color.BLACK else Color.WHITE)
     mainViewModel.enableScreenSaver.postValue(true)
     initViewModel()
   }

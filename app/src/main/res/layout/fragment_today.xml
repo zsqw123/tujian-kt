@@ -52,7 +52,7 @@
           android:layout_height="50dp"
           android:background="?android:windowBackground"
           app:contentInsetStartWithNavigation="0dp"
-          app:navigationIcon="?android:attr/homeAsUpIndicator"
+          app:navigationIcon="@drawable/ic_menu"
           app:titleTextAppearance="@style/ToolbarTitleTextAppearance" />
 
         <LinearLayout
