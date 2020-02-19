@@ -140,7 +140,8 @@ fun Context.getRadiusByCenterPoint(point: Point): Float {
 //保存bitmap
 fun Bitmap.saveToAlbum(context: Context, fileName: String) {
   val contentValues = ContentValues()
-  contentValues.put(MediaStore.Images.Media.DISPLAY_NAME, "/图鉴日图/$fileName")
+  contentValues.put(MediaStore.Images.Media.TITLE, fileName)
+  contentValues.put(MediaStore.Images.Media.DISPLAY_NAME, fileName)
   contentValues.put(MediaStore.Images.Media.DESCRIPTION, fileName)
   contentValues.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
 //  contentValues.put(MediaStore.Images.Media.IS_PENDING, 1)

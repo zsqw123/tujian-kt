@@ -141,6 +141,8 @@ dependencies {
   implementation 'com.afollestad.material-dialogs:core:3.2.1'
   // 自定义View shape
   implementation 'com.github.florent37:shapeofview:1.4.7'
+  // 侧滑
+  implementation 'com.billy.android:smart-swipe:1.1.2'
   // Debug by Chrome
   // implementation "com.facebook.stetho:stetho:${rootProject.versions.stetho}"
   // implementation "com.facebook.stetho:stetho-okhttp3:${rootProject.versions.stetho}"
