@@ -229,6 +229,7 @@ class TodayFragment : BaseFragment() {
             target().shareString(currentPicture?.share())
           }
           1 -> {
+            toast("开始保存...")
             val name = currentPicture?.title + Date()
             Glide.with(context!!).asBitmap().load(getNewUrl(currentPicture)).into(object : CustomTarget<Bitmap>() {
               override fun onLoadCleared(placeholder: Drawable?) {}

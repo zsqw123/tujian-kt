@@ -76,16 +76,6 @@ abstract class BaseFragment : Fragment(), FragmentBackHandler {
     val activity = target()
     activity.setSupportActionBar(toolbar)
     if (activity is MainActivity) {
-      val toggleAdapter = ActionBarToggleAdapter(activity, activity.drawer.getDrawer())
-      toggle = ActionBarDrawerToggle(activity, toggleAdapter, toolbar, R.string.srn_drawer_open, R.string.srn_drawer_close)
-      drawerToggleListenerAdapter = DrawerToggleListenerAdapter(toggle, activity.drawer.getMenuView())
-      activity.drawer.addDrawerListener(drawerToggleListenerAdapter)
-      toggle.syncState()
-      applyOopsThemeStore {
-        colorAccent.observe(this@BaseFragment, Observer {
-          toggle.drawerArrowDrawable.color = it
-        })
-      }
     }
   }
 
@@ -105,7 +95,6 @@ abstract class BaseFragment : Fragment(), FragmentBackHandler {
   override fun onDestroyView() {
     val activity = target()
     if (activity is MainActivity && ::drawerToggleListenerAdapter.isInitialized) {
-      activity.drawer.removeDrawerListener(drawerToggleListenerAdapter)
     }
     super.onDestroyView()
   }
