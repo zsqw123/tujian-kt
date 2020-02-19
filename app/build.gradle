@@ -11,8 +11,8 @@ android {
     applicationId "cn.dailypics.tujian.r"
     minSdkVersion rootProject.versions.minsdk
     targetSdkVersion rootProject.versions.targetsdk
-    versionCode 4
-    versionName "1.2.12"
+    versionCode 200219
+    versionName "3.0.4"
     resConfigs "zh"
     def documentsProviderAuthority = "io.nichijou.tujian.localstorage.documents"
     manifestPlaceholders = [documentsProviderAuthority: documentsProviderAuthority]
