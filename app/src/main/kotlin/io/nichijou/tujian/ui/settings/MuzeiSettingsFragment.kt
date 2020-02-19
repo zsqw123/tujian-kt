@@ -10,7 +10,7 @@ import io.nichijou.tujian.base.BaseFragment
 import io.nichijou.tujian.common.ext.asLiveData
 import io.nichijou.tujian.common.ext.setMarginTopPlusStatusBarHeight
 import io.nichijou.tujian.ext.target
-import io.nichijou.tujian.func.muzei.MuzeiConfig
+import io.nichijou.tujian.common.muzei.MuzeiConfig
 import kotlinx.android.synthetic.main.fragment_settings_muzei.*
 import kotlinx.coroutines.launch
 

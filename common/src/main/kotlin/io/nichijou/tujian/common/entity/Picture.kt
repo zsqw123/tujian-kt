@@ -1,6 +1,6 @@
 package io.nichijou.tujian.common.entity
 
-import android.app.DownloadManager
+import android.app.WallpaperManager
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
@@ -9,22 +9,32 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import com.afollestad.assent.Permission
-import com.afollestad.assent.isAllGranted
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import com.facebook.common.executors.UiThreadImmediateExecutorService
+import com.facebook.common.references.CloseableReference
+import com.facebook.datasource.DataSource
+import com.facebook.drawee.backends.pipeline.Fresco
+import com.facebook.imagepipeline.common.ImageDecodeOptions
+import com.facebook.imagepipeline.common.Priority
+import com.facebook.imagepipeline.common.RotationOptions
+import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber
+import com.facebook.imagepipeline.image.CloseableImage
+import com.facebook.imagepipeline.request.ImageRequestBuilder
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import io.nichijou.tujian.common.C
-import io.nichijou.tujian.common.R
-import io.nichijou.tujian.common.ext.basePath
 import io.nichijou.tujian.common.ext.saveToAlbum
 import io.nichijou.tujian.common.ext.toClipboard
+import io.nichijou.tujian.common.wallpaper.WallpaperConfig
+import jp.wasabeef.fresco.processors.BlurPostprocessor
+import jp.wasabeef.fresco.processors.CombinePostProcessors
+import jp.wasabeef.fresco.processors.gpu.PixelationFilterPostprocessor
 import kotlinx.android.parcel.Parcelize
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.toast
-import java.io.File
+import org.jetbrains.anko.uiThread
 import java.util.*
 
 @Entity(tableName = "tb_picture", indices = [Index(value = ["pid", "from"], unique = true)])
@@ -64,7 +74,7 @@ data class Picture(
     "日期：$date\n" +
     "描述：$desc\n" +
     "分辨率：$width × $height\n" +
-    "下载地址：$local"
+    "下载地址：${getNewUrl(this)}"
 
   fun copy(context: Context) {
     context.toClipboard(share())
@@ -96,4 +106,45 @@ data class Picture(
 // tujian v2 API
 fun getNewUrl(picture: Picture?): String? {
   return if (picture?.nativePath == picture?.local) picture?.local else C.API_SS + picture?.nativePath
+}
+
+fun setWallpaper(context: Context, picture: Picture) = context.doAsync {
+  val local = getNewUrl(picture)
+  val uri = Uri.parse(local)
+  val builder = ImageRequestBuilder.newBuilderWithSource(uri)
+    .setRotationOptions(RotationOptions.autoRotate())
+    .setRequestPriority(Priority.HIGH)
+    .setImageDecodeOptions(ImageDecodeOptions.newBuilder().setBitmapConfig(Bitmap.Config.ARGB_8888).build())
+  val blur = WallpaperConfig.blur
+  val pixel = WallpaperConfig.pixel
+  if (blur || pixel) {
+    val processorBuilder = CombinePostProcessors.Builder()
+    if (blur) processorBuilder.add(BlurPostprocessor(context, WallpaperConfig.blurValue))
+    if (pixel) processorBuilder.add(PixelationFilterPostprocessor(context, WallpaperConfig.pixelValue.toFloat()))
+    builder.postprocessor = processorBuilder.build()
+  }
+  uiThread {
+    context.toast("开始设置壁纸")
+  }
+  val imageRequest = builder.build()
+  val dataSource = Fresco.getImagePipeline().fetchDecodedImage(imageRequest, null)
+  dataSource.subscribe(object : BaseBitmapDataSubscriber() {
+    override fun onFailureImpl(dataSource: DataSource<CloseableReference<CloseableImage>>) {
+      uiThread {
+        context.toast("壁纸设置失败")
+      }
+    }
+
+    override fun onNewResultImpl(bitmap: Bitmap?) {
+      if (bitmap != null) {
+        doAsync {
+          val bitmap0: Bitmap = bitmap
+          WallpaperManager.getInstance(context).setBitmap(bitmap0)
+          uiThread {
+            context.toast("壁纸设置成功")
+          }
+        }
+      }
+    }
+  }, UiThreadImmediateExecutorService.getInstance())
 }

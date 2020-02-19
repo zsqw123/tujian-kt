@@ -7,7 +7,7 @@ import com.google.android.apps.muzei.api.provider.ProviderContract
 import io.nichijou.tujian.R
 import io.nichijou.tujian.base.BaseFragment
 import io.nichijou.tujian.ext.target
-import io.nichijou.tujian.func.muzei.ArtworkWorker
+import io.nichijou.tujian.common.muzei.ArtworkWorker
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

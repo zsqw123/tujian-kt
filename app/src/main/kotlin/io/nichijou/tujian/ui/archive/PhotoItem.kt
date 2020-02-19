@@ -10,12 +10,15 @@ import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.list.listItems
 import com.bumptech.glide.Glide
 import com.zzhoujay.richtext.RichText
 import io.nichijou.tujian.R
 import io.nichijou.tujian.Settings
 import io.nichijou.tujian.common.entity.Picture
+import io.nichijou.tujian.common.entity.setWallpaper
 import io.nichijou.tujian.common.ext.ViewHolder
+import io.nichijou.tujian.common.ext.shareString
 import io.nichijou.tujian.isDark
 import kotlinx.android.synthetic.main.photo_item_layout.view.*
 import kotlinx.android.synthetic.main.photo_item_viewpager_layout.*
@@ -36,9 +39,14 @@ class Viewpager2Adapter(private val data: ArrayList<Picture>) :
     photoView.scaleType = ImageView.ScaleType.CENTER_CROP
     Glide.with(item.context).load(getNewUrl(items[position])).into(photoView)
     photoView.setOnLongClickListener {
-      MaterialDialog(item.context).title(text = "保存原图").icon(R.mipmap.ic_launcher).show {
-        positiveButton(text = "保存") { items[position].download(item.context) }
-        negativeButton(text = "取消")
+      MaterialDialog(item.context).title(text = "图鉴日图").icon(R.mipmap.ic_launcher).show {
+        listItems(items = listOf("保存原图", "设置壁纸", "分享")) { _, index, _ ->
+          when (index) {
+            0 -> items[position].download(item.context)
+            1 -> setWallpaper(context, items[position])
+            2 -> context.shareString(items[position].share())
+          }
+        }
       }.cornerRadius(12f)
       return@setOnLongClickListener true
     }

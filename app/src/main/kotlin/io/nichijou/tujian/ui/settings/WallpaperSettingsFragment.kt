@@ -13,8 +13,8 @@ import io.nichijou.tujian.common.ext.asLiveData
 import io.nichijou.tujian.common.ext.setMarginTopPlusStatusBarHeight
 import io.nichijou.tujian.common.ext.toDateStr
 import io.nichijou.tujian.ext.target
-import io.nichijou.tujian.func.wallpaper.WallpaperConfig
-import io.nichijou.tujian.func.wallpaper.WallpaperWorker
+import io.nichijou.tujian.common.wallpaper.WallpaperConfig
+import io.nichijou.tujian.common.wallpaper.WallpaperWorker
 import kotlinx.android.synthetic.main.fragment_settings_wallpaper.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
