@@ -61,7 +61,7 @@ class TodayFragment : BaseFragment() {
   private fun initViewModel() {
     viewModel.getToday().observe(this, Observer(::bind2View))
     viewModel.msg.observe(this, Observer {
-      if (it != "old") toast(it)
+      if (it != "app_update") toast(it)
       else MaterialDialog(context!!).title(text = "检测更新").icon(R.mipmap.ic_launcher).show {
         cancelOnTouchOutside(false)
         cancelable(false)

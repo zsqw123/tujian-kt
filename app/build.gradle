@@ -7,6 +7,7 @@ apply plugin: 'AndResGuard'
 android {
   compileSdkVersion rootProject.versions.compilesdk
   buildToolsVersion rootProject.versions.buildtools
+
   defaultConfig {
     applicationId "cn.dailypics.tujian.r"
     minSdkVersion rootProject.versions.minsdk
@@ -14,11 +15,13 @@ android {
     versionCode 200219
     versionName "3.0.4"
     resConfigs "zh"
+
     def documentsProviderAuthority = "io.nichijou.tujian.localstorage.documents"
     manifestPlaceholders = [documentsProviderAuthority: documentsProviderAuthority]
     buildConfigField("String", "DOCUMENTS_PROVIDER_AUTHORITY", "\"${documentsProviderAuthority}\"")
     buildConfigField("String", "API_BUGLY", "\"${project['API_BUGLY']}\"")
   }
+
   buildTypes {
     release {
       ndk {
@@ -27,24 +30,30 @@ android {
       minifyEnabled false
       proguardFiles getDefaultProguardFile('proguard-android-optimize.txt') , 'proguard-rules.pro'
     }
+
     debug{
       minifyEnabled false
       proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
     }
   }
+
   compileOptions {
     sourceCompatibility = '1.8'
     targetCompatibility = '1.8'
   }
+
   kotlinOptions {
     jvmTarget = '1.8'
   }
+
   sourceSets {
     main.java.srcDirs += 'src/main/kotlin'
   }
+
   lintOptions {
     check 'Interoperability'
   }
+
   packagingOptions {
     exclude 'META-INF/DEPENDENCIES'
     exclude 'META-INF/LICENSE'
@@ -57,16 +66,29 @@ android {
     exclude 'META-INF/library_release.kotlin_module'
     exclude 'META-INF/library-core_release.kotlin_module'
   }
+
   androidExtensions {
     experimental = true
   }
+
+  flavorDimensions 'channel'
   productFlavors {
+    official {
+      dimension 'channel'
+    }
+
+    googlePlay {
+      dimension 'channel'
+      ndk.abiFilters 'arm64-v8a'
+    }
   }
+
   dexOptions {
     preDexLibraries true
     maxProcessCount 8
   }
 }
+
 kapt {
   useBuildCache = true
   correctErrorTypes = true
@@ -74,6 +96,7 @@ kapt {
     option("-Xmaxerrs", 500)
   }
 }
+
 dependencies {
   implementation project(path: ':sliding-root-nav')
   implementation project(path: ':boo')
