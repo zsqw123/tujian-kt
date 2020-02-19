@@ -70,9 +70,11 @@ fun Fragment.addFragment(
   fragment: Fragment,
   @IdRes wrapperIdRes: Int
 ) {
-  val transaction = childFragmentManager.beginTransaction()
-  val name = UUID.randomUUID().toString()
-  transaction.add(wrapperIdRes, fragment, name)
-    .addToBackStack(name)
-    .commitAllowingStateLoss()
-}
+  if (!childFragmentManager.isDestroyed){
+    val transaction = childFragmentManager.beginTransaction()
+    val name = UUID.randomUUID().toString()
+    transaction.add(wrapperIdRes, fragment, name)
+      .addToBackStack(name)
+      .commitAllowingStateLoss()
+  }
+ }

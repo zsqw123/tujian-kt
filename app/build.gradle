@@ -141,8 +141,6 @@ dependencies {
   implementation 'com.afollestad.material-dialogs:core:3.2.1'
   // 自定义View shape
   implementation 'com.github.florent37:shapeofview:1.4.7'
-  // 检测更新
-  implementation 'com.github.AlexLiuSheng:CheckVersionLib:2.2.3'
   // Debug by Chrome
   // implementation "com.facebook.stetho:stetho:${rootProject.versions.stetho}"
   // implementation "com.facebook.stetho:stetho-okhttp3:${rootProject.versions.stetho}"
