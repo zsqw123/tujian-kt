@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
   android:id="@+id/container"
-  android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:background="?android:windowBackground">
-
+  android:layout_width="match_parent">
+  <!--侧滑-->
   <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?android:windowBackground"
     android:orientation="vertical"
-    android:id="@+id/slide">
+    android:id="@+id/slide"
+    android:layout_gravity="start|end"
+    tools:ignore="UselessParent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
       android:layout_width="match_parent"
@@ -65,16 +68,12 @@
       android:paddingStart="24dp"
       android:paddingEnd="24dp">
 
-      <ImageView
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="14dp"
-        android:src="@drawable/ic_twotone_wb_sunny" />
-
       <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="34dp"
+        android:layout_marginStart="14dp"
+        android:drawableStart="@drawable/ic_twotone_wb_sunny"
+        android:drawablePadding="34dp"
         android:text="今日"
         android:textStyle="bold" />
 
@@ -89,16 +88,12 @@
       android:paddingStart="24dp"
       android:paddingEnd="24dp">
 
-      <ImageView
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="14dp"
-        android:src="@drawable/ic_twotone_loyalty" />
-
       <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="34dp"
+        android:layout_marginStart="14dp"
+        android:drawableStart="@drawable/ic_twotone_loyalty"
+        android:drawablePadding="34dp"
         android:text="归档"
         android:textStyle="bold" />
 
@@ -113,19 +108,57 @@
       android:paddingStart="24dp"
       android:paddingEnd="24dp">
 
-      <ImageView
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="14dp"
-        android:src="@drawable/ic_twotone_supervisor_account" />
-
       <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="34dp"
+        android:layout_marginStart="14dp"
+        android:drawableStart="@drawable/ic_twotone_supervisor_account"
+        android:drawablePadding="34dp"
         android:text="投稿"
         android:textStyle="bold" />
 
     </LinearLayout>
+    <!--  设置-->
+    <LinearLayout
+      android:id="@+id/slide_settings"
+      android:layout_width="match_parent"
+      android:layout_height="56dp"
+      android:layout_marginTop="56dp"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:paddingStart="24dp"
+      android:paddingEnd="24dp">
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:drawableStart="@drawable/ic_twotone_settings"
+        android:drawablePadding="34dp"
+        android:text="设置"
+        android:textStyle="bold" />
+
+    </LinearLayout>
+    <!--  关于-->
+    <LinearLayout
+      android:id="@+id/slide_info"
+      android:layout_width="match_parent"
+      android:layout_height="56dp"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:paddingStart="24dp"
+      android:paddingEnd="24dp">
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:drawableStart="@drawable/ic_twotone_info"
+        android:drawablePadding="34dp"
+        android:text="关于"
+        android:textStyle="bold" />
+
+    </LinearLayout>
   </LinearLayout>
+
 </FrameLayout>

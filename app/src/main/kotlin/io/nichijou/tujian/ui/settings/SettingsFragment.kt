@@ -104,7 +104,6 @@ class SettingsFragment : BaseFragment(), View.OnClickListener, SeekBar.OnSeekBar
   private fun initView() {
     applyOopsThemeStore {
       isDark.observe(this@SettingsFragment, Observer {
-        mainViewModel.barColor.postValue(if (it) Color.BLACK else Color.WHITE)
         icon_dark?.setImageDrawable(if (!it) target().drawableRes(R.drawable.ic_twotone_brightness_5) else target().drawableRes(R.drawable.ic_twotone_brightness_2))
       })
     }

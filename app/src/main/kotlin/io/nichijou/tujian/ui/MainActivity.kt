@@ -6,82 +6,73 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.SystemClock
 import android.view.MotionEvent
-import android.view.View
 import android.widget.FrameLayout
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.assent.Permission
 import com.afollestad.assent.askForPermissions
 import com.afollestad.materialdialogs.MaterialDialog
 import com.billy.android.swipe.SmartSwipe
+import com.billy.android.swipe.consumer.DrawerConsumer
 import com.billy.android.swipe.consumer.SlidingConsumer
 import com.larvalabs.boo.BooFragment
 import com.yarolegovich.slidingrootnav.SlidingDrawer
-import com.yarolegovich.slidingrootnav.menu.*
+import com.yarolegovich.slidingrootnav.menu.DrawerAdapter
 import com.zzhoujay.richtext.RichText
 import io.nichijou.oops.Oops
-import io.nichijou.oops.ext.*
+import io.nichijou.oops.OopsActivity
+import io.nichijou.oops.ext.Live2NonNull
+import io.nichijou.oops.ext.applyOopsThemeStore
+import io.nichijou.oops.ext.mediateLiveDataNonNull
+import io.nichijou.oops.ext.translucentStatusBar
 import io.nichijou.tujian.R
 import io.nichijou.tujian.Settings
-import io.nichijou.tujian.base.BaseActivity
 import io.nichijou.tujian.common.db.TujianStore
 import io.nichijou.tujian.common.ext.asLiveData
 import io.nichijou.tujian.ext.addFragmentToActivity
 import io.nichijou.tujian.ext.handleBackPress
 import io.nichijou.tujian.ext.replaceFragmentInActivity
 import io.nichijou.tujian.isDark
-import io.nichijou.tujian.ui.about.AboutFragment
-import io.nichijou.tujian.ui.archive.ArchiveFragment
 import io.nichijou.tujian.ui.settings.SettingsFragment
 import io.nichijou.tujian.ui.today.TodayFragment
-import io.nichijou.tujian.ui.upload.UploadFragment
-import io.nichijou.utils.bodyColor
-import io.nichijou.utils.isColorLight
-import io.nichijou.utils.titleColor
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.menu_left_drawer.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
 import org.jetbrains.anko.matchParent
 import org.jetbrains.anko.toast
 import org.koin.android.ext.android.inject
 import kotlin.system.exitProcess
 
-class MainActivity : BaseActivity() {
-  override fun getContentViewId(): Int = R.layout.activity_main
-
-  override fun handleOnCreate(savedInstanceState: Bundle?) {
-    translucentStatusBar(true)
+class MainActivity : OopsActivity(), CoroutineScope by MainScope() {
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContentView(R.layout.activity_main)
     if (Oops.immed().isFirstTime) {
       val def = ContextCompat.getColor(this@MainActivity, R.color.def)
       Oops.bulk {
         theme = R.style.AppTheme
         windowBackground = Color.WHITE
-        statusBarColor = Color.TRANSPARENT
+        statusBarColor = 0
         colorAccent = def
         textColorPrimary = Color.BLACK
         textColorSecondary = Color.DKGRAY
         toolbarIconColor = def
         toolbarTitleColor = def
-        snackbarBackgroundColor = def
-        snackbarTextColor = def.bodyColor()
-        snackbarActionColor = def.titleColor()
-        bottomNavigationViewNormalColor = Color.BLACK
-        bottomNavigationViewSelectedColor = def
         swipeRefreshLayoutBackgroundColor = Color.WHITE
-        disableAutoStatusBarColor<MainActivity>(true)
-        disableAutoNavBarColor<MainActivity>(true)
       }
     }
     if (Settings.enableFaceDetection) {
-      askForPermissions(Permission.CAMERA) {}
-    } else {
       askForPermissions(
         Permission.READ_EXTERNAL_STORAGE,
         Permission.WRITE_EXTERNAL_STORAGE,
         Permission.CAMERA) {}
+    } else {
+      askForPermissions(
+        Permission.READ_EXTERNAL_STORAGE,
+        Permission.WRITE_EXTERNAL_STORAGE) {}
     }
     if (savedInstanceState == null) {
       replaceFragmentInActivity(TodayFragment.newInstance())
@@ -110,9 +101,24 @@ class MainActivity : BaseActivity() {
     }
     val point = Point()
     windowManager.defaultDisplay.getRealSize(point)
-    val swipe = SmartSwipe.wrap(this).addConsumer(SlidingConsumer())
     slide.layoutParams = FrameLayout.LayoutParams(point.x * 3 / 4, matchParent)
-    swipe.setHorizontalDrawerView(slide).setScrimColor(Color.parseColor("#9A000000"))
+    swipeConsumer = SmartSwipe.wrap(this).addConsumer(SlidingConsumer())
+      .setHorizontalDrawerView(slide).setScrimColor(Color.parseColor("#9A000000"))// 侧滑
+    translucentStatusBar(true)// 状态栏沉浸
+    window.navigationBarColor = Color.TRANSPARENT
+  }
+
+  // 点击关屏保
+  override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+    if (enableScreenSaver) {
+      resetScreenSaverTimer()
+      if (ev?.action == MotionEvent.ACTION_DOWN) {
+        val fragment = supportFragmentManager.findFragmentByTag(getString(R.string.boo_tag))
+          ?: return super.dispatchTouchEvent(ev)
+        (fragment as BooFragment).exitBoo()
+      }
+    }
+    return super.dispatchTouchEvent(ev)
   }
 
   private var enableFaceDetection: Boolean = Settings.enableFaceDetection
@@ -126,31 +132,13 @@ class MainActivity : BaseActivity() {
 
   private val tujianStore by inject<TujianStore>()
 
-  private fun updateBarColor() {
-    setStatusBarColorCompat(fragmentStatusBarColor)
-    setNavBarColorCompat(fragmentStatusBarColor)
-    if (fragmentStatusBarColor == Color.TRANSPARENT) {
-      val dark = Oops.immed().isDark
-      setLightStatusBarCompat(!dark)
-      setLightNavBarCompat(!dark)
-    } else {
-      val light = fragmentStatusBarColor.isColorLight()
-      setLightStatusBarCompat(light)
-      setLightNavBarCompat(light)
-    }
-  }
-
   private var enableScreenSaver = false
 
   private fun bindLifecycle() {
-    mainViewModel.barColor.observe(this, Observer {
-      fragmentStatusBarColor = it
-      updateBarColor()
-    })
     mainViewModel.enableScreenSaver.observe(this, Observer {
       enableScreenSaver = it
       if (!it) {
-        stopScreenSaverTimer()
+        countDownTimer?.cancel()
       }
     })
     Settings.asLiveData(Settings::enableFaceDetection).observe(this, Observer {
@@ -188,6 +176,7 @@ class MainActivity : BaseActivity() {
 //    }
 //    adapter.notifyDataSetChanged()
   }
+
   private var countDownTimer: CountDownTimer? = null
   private var creatureNum = 10
 
@@ -223,12 +212,6 @@ class MainActivity : BaseActivity() {
     } ?: startScreenSaverTimer()
   }
 
-  private fun stopScreenSaverTimer() {
-    countDownTimer?.cancel()
-  }
-
-  private var fragmentStatusBarColor: Int = 0
-
   private lateinit var adapter: DrawerAdapter
   lateinit var drawer: SlidingDrawer
 
@@ -248,6 +231,15 @@ class MainActivity : BaseActivity() {
         }
       }
     }
+  }
+
+  override fun onDestroy() {
+    cancel()
+    super.onDestroy()
+  }
+
+  companion object {
+    var swipeConsumer: DrawerConsumer? = null
   }
 }
 
