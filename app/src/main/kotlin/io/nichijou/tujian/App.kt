@@ -23,7 +23,7 @@ import com.tencent.bugly.crashreport.CrashReport
 import io.nichijou.oops.Oops
 import io.nichijou.tujian.common.commonModule
 import io.nichijou.tujian.common.fresco.OkHttpNetworkFetcher
-import io.nichijou.tujian.func.shortcuts.ShortcutsController
+import io.nichijou.tujian.common.shortcuts.ShortcutsController
 import okhttp3.OkHttpClient
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext

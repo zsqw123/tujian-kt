@@ -12,7 +12,7 @@ import io.nichijou.tujian.common.ext.animateTo
 import io.nichijou.tujian.common.ext.asLiveData
 import io.nichijou.tujian.common.ext.toDateStr
 import io.nichijou.tujian.ext.target
-import io.nichijou.tujian.func.appwidget.HitokotoAppWidgetConfig
+import io.nichijou.tujian.common.appwidget.HitokotoAppWidgetConfig
 import kotlinx.android.synthetic.main.fragment_settings_appwidget_hitokoto.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

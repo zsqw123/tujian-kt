@@ -28,4 +28,7 @@ interface TujianService {
 
   @GET
   suspend fun bing(@Url url: String = C.API_BING): Response<BingResp>
+
+  @GET
+  suspend fun update(@Url url: String = C.API_UPDATE): Response<UpdateResp>
 }

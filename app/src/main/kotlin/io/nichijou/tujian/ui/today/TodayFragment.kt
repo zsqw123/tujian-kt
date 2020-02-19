@@ -1,10 +1,8 @@
 package io.nichijou.tujian.ui.today
 
-import android.app.WallpaperManager
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.Drawable
-import android.net.Uri
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.RelativeSizeSpan
@@ -16,51 +14,34 @@ import android.widget.ArrayAdapter
 import android.widget.ListPopupWindow
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
 import androidx.palette.graphics.Palette
 import androidx.viewpager2.widget.ViewPager2
+import com.afollestad.materialdialogs.MaterialDialog
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.SimpleResource
 import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
-import com.facebook.common.executors.UiThreadImmediateExecutorService
-import com.facebook.common.references.CloseableReference
-import com.facebook.datasource.DataSource
-import com.facebook.drawee.backends.pipeline.Fresco
-import com.facebook.imagepipeline.common.ImageDecodeOptions
-import com.facebook.imagepipeline.common.Priority
-import com.facebook.imagepipeline.common.RotationOptions
-import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber
-import com.facebook.imagepipeline.image.CloseableImage
 import com.facebook.imagepipeline.request.ImageRequest
-import com.facebook.imagepipeline.request.ImageRequestBuilder
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.material.tabs.TabLayoutMediator
+import com.squareup.moshi.Json
 import com.zzhoujay.richtext.RichText
 import io.nichijou.tujian.R
 import io.nichijou.tujian.base.BaseFragment
 import io.nichijou.tujian.common.entity.Picture
+import io.nichijou.tujian.common.entity.setWallpaper
 import io.nichijou.tujian.common.ext.*
 import io.nichijou.tujian.common.fresco.getPalette
 import io.nichijou.tujian.ext.target
-import io.nichijou.tujian.func.wallpaper.WallpaperConfig
 import io.nichijou.tujian.getThemeColor
+import io.nichijou.tujian.isDark
 import io.nichijou.tujian.ui.ColorAdapter
 import io.nichijou.tujian.ui.MainViewModel
 import io.nichijou.tujian.ui.archive.getNewUrl
-import jp.wasabeef.fresco.processors.BlurPostprocessor
-import jp.wasabeef.fresco.processors.CombinePostProcessors
-import jp.wasabeef.fresco.processors.gpu.PixelationFilterPostprocessor
 import jp.wasabeef.recyclerview.animators.LandingAnimator
 import kotlinx.android.synthetic.main.fragment_today.*
-import kotlinx.android.synthetic.main.view_today_item.*
-import kotlinx.coroutines.launch
-import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.support.v4.toast
-import org.jetbrains.anko.uiThread
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 import kotlin.collections.set
@@ -79,7 +60,20 @@ class TodayFragment : BaseFragment() {
   private fun initViewModel() {
     viewModel.getToday().observe(this, Observer(::bind2View))
     viewModel.msg.observe(this, Observer {
-      toast(it)
+      if (it != "old") toast(it)
+      else MaterialDialog(context!!).title(text = "检测更新").icon(R.mipmap.ic_launcher).show {
+        cancelOnTouchOutside(false)
+        cancelable(false)
+        val mdText = "检测到新版本: ${UpdateTujian.name}  \n更新时间: ${UpdateTujian.time}  \n" +
+          "更新内容: ${UpdateTujian.log}  \n\n[跳转下载](${UpdateTujian.url})"
+        message(text = UpdateTujian.name) {
+          val tv = messageTextView
+          RichText.fromMarkdown(mdText).linkFix { holder ->
+            holder!!.color = getThemeColor()
+            holder.isUnderLine = false
+          }.into(tv)
+        }
+      }
     })
   }
 
@@ -243,7 +237,7 @@ class TodayFragment : BaseFragment() {
             })
           }
           2 -> {
-            setWallpaper()
+            setWallpaper(target(), currentPicture!!)
           }
         }
         dismiss()
@@ -255,45 +249,17 @@ class TodayFragment : BaseFragment() {
     }
   }
 
-  private fun setWallpaper() = lifecycleScope.launch {
-    val local = getNewUrl(currentPicture) ?: return@launch
-    val uri = Uri.parse(local) ?: return@launch
-    val builder = ImageRequestBuilder.newBuilderWithSource(uri)
-      .setRotationOptions(RotationOptions.autoRotate())
-      .setRequestPriority(Priority.HIGH)
-      .setImageDecodeOptions(ImageDecodeOptions.newBuilder().setBitmapConfig(Bitmap.Config.ARGB_8888).build())
-    val blur = WallpaperConfig.blur
-    val pixel = WallpaperConfig.pixel
-    if (blur || pixel) {
-      val processorBuilder = CombinePostProcessors.Builder()
-      if (blur) processorBuilder.add(BlurPostprocessor(target(), WallpaperConfig.blurValue))
-      if (pixel) processorBuilder.add(PixelationFilterPostprocessor(target(), WallpaperConfig.pixelValue.toFloat()))
-      builder.postprocessor = processorBuilder.build()
-    }
-    toast(R.string.start_set_wallpaper)
-    val imageRequest = builder.build()
-    val dataSource = Fresco.getImagePipeline().fetchDecodedImage(imageRequest, null)
-    dataSource.subscribe(object : BaseBitmapDataSubscriber() {
-      override fun onFailureImpl(dataSource: DataSource<CloseableReference<CloseableImage>>) {
-        toast(R.string.set_wallpaper_failure)
-      }
-
-      override fun onNewResultImpl(bitmap: Bitmap?) {
-        if (bitmap != null) {
-          doAsync {
-            WallpaperManager.getInstance(target()).setBitmap(bitmap)
-            uiThread {
-              toast(R.string.set_wallpaper_success)
-            }
-          }
-        }
-      }
-    }, UiThreadImmediateExecutorService.getInstance())
-  }
-
   companion object {
     fun newInstance() = TodayFragment()
   }
 }
 
-
+class UpdateTujian {
+  companion object {
+    var code: Int = 0
+    var name: String = ""
+    var url: String = ""
+    var log: String = ""
+    var time: String = ""
+  }
+}
