@@ -66,7 +66,10 @@ class UploadFragment : BaseFragment() {
       target().application.toast(it.toString())
     })
     submit?.setOnClickListener {
-      if (!Settings.feiHua) return@setOnClickListener;target().application.toast("未同意许可协议，无法投稿")
+      if (!Settings.feiHua) {
+        target().application.toast("未同意许可协议，无法投稿")
+        return@setOnClickListener
+      }
       val url = uploadViewModel.url.value
       if (url.isNullOrBlank()) {
         target().application.toast("请先选择待上传图片")
