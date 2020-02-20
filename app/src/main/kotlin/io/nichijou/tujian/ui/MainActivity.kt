@@ -23,10 +23,7 @@ import com.yarolegovich.slidingrootnav.menu.DrawerAdapter
 import com.zzhoujay.richtext.RichText
 import io.nichijou.oops.Oops
 import io.nichijou.oops.OopsActivity
-import io.nichijou.oops.ext.Live2NonNull
-import io.nichijou.oops.ext.applyOopsThemeStore
-import io.nichijou.oops.ext.mediateLiveDataNonNull
-import io.nichijou.oops.ext.translucentStatusBar
+import io.nichijou.oops.ext.*
 import io.nichijou.tujian.R
 import io.nichijou.tujian.Settings
 import io.nichijou.tujian.common.db.TujianStore
@@ -46,6 +43,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import org.jetbrains.anko.matchParent
+import org.jetbrains.anko.textColor
 import org.jetbrains.anko.toast
 import org.koin.android.ext.android.inject
 import kotlin.system.exitProcess
@@ -184,10 +182,14 @@ class MainActivity : OopsActivity(), CoroutineScope by MainScope() {
   }
 
   private fun updateDrawerColor(color: ThemeColor) {
-//    adapter.items.forEach { i ->
-//      updateItemColor(i, color)
-//    }
-//    adapter.notifyDataSetChanged()
+    val accent = color.accent
+    val textColor = color.primaryText
+    listOf(slide_today_icon, slide_save_icon, slide_settings_icon, slide_upload_icon, slide_info_icon).forEach {
+      it.tint(accent)
+    }
+    listOf(slide_today_text, slide_save_text, slide_upload_text, slide_info_text, slide_settings_text).forEach {
+      it.textColor = textColor
+    }
   }
 
   private var countDownTimer: CountDownTimer? = null
@@ -226,21 +228,22 @@ class MainActivity : OopsActivity(), CoroutineScope by MainScope() {
   }
 
   private lateinit var adapter: DrawerAdapter
-  lateinit var drawer: SlidingDrawer
 
   private var current = R.drawable.ic_twotone_wb_sunny
 
   private val mHints = LongArray(2)
   override fun onBackPressed() {
-    if (drawer.isMenuOpened()) {
-      drawer.closeMenu()
-    } else {
-      if (!handleBackPress()) {
-        System.arraycopy(mHints, 1, mHints, 0, mHints.size - 1)
-        mHints[mHints.size - 1] = SystemClock.uptimeMillis()
-        toast(R.string.repress_exit)
-        if (SystemClock.uptimeMillis() - mHints[0] <= 1600) {
-          exitProcess(0)
+    if (swipeConsumer != null) {
+      if (swipeConsumer!!.isOpened) {
+        swipeConsumer!!.smoothClose()
+      } else {
+        if (!handleBackPress()) {
+          System.arraycopy(mHints, 1, mHints, 0, mHints.size - 1)
+          mHints[mHints.size - 1] = SystemClock.uptimeMillis()
+          toast(R.string.repress_exit)
+          if (SystemClock.uptimeMillis() - mHints[0] <= 1600) {
+            exitProcess(0)
+          }
         }
       }
     }
