@@ -13,8 +13,6 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/boo" />
             <option value="$PROJECT_DIR$/common" />
-            <option value="$PROJECT_DIR$/sliding-root-nav" />
-            <option value="$PROJECT_DIR$/viewer" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
