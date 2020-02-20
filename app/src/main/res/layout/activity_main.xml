@@ -3,16 +3,16 @@
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:id="@+id/container"
-  android:layout_height="match_parent"
-  android:layout_width="match_parent">
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
   <!--侧滑-->
   <LinearLayout
+    android:id="@+id/slide"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="start|end"
     android:background="?android:windowBackground"
     android:orientation="vertical"
-    android:id="@+id/slide"
-    android:layout_gravity="start|end"
     tools:ignore="UselessParent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -68,12 +68,18 @@
       android:paddingStart="24dp"
       android:paddingEnd="24dp">
 
-      <TextView
+      <ImageView
+        android:id="@+id/slide_today_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="14dp"
-        android:drawableStart="@drawable/ic_twotone_wb_sunny"
-        android:drawablePadding="34dp"
+        android:src="@drawable/ic_twotone_wb_sunny" />
+
+      <TextView
+        android:id="@+id/slide_today_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="34dp"
         android:text="今日"
         android:textStyle="bold" />
 
@@ -88,12 +94,18 @@
       android:paddingStart="24dp"
       android:paddingEnd="24dp">
 
-      <TextView
+      <ImageView
+        android:id="@+id/slide_save_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="14dp"
-        android:drawableStart="@drawable/ic_twotone_loyalty"
-        android:drawablePadding="34dp"
+        android:src="@drawable/ic_twotone_loyalty" />
+
+      <TextView
+        android:id="@+id/slide_save_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="34dp"
         android:text="归档"
         android:textStyle="bold" />
 
@@ -108,12 +120,18 @@
       android:paddingStart="24dp"
       android:paddingEnd="24dp">
 
-      <TextView
+      <ImageView
+        android:id="@+id/slide_upload_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="14dp"
-        android:drawableStart="@drawable/ic_twotone_supervisor_account"
-        android:drawablePadding="34dp"
+        android:src="@drawable/ic_twotone_supervisor_account" />
+
+      <TextView
+        android:id="@+id/slide_upload_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="34dp"
         android:text="投稿"
         android:textStyle="bold" />
 
@@ -129,12 +147,18 @@
       android:paddingStart="24dp"
       android:paddingEnd="24dp">
 
-      <TextView
+      <ImageView
+        android:id="@+id/slide_settings_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="14dp"
-        android:drawableStart="@drawable/ic_twotone_settings"
-        android:drawablePadding="34dp"
+        android:src="@drawable/ic_twotone_settings" />
+
+      <TextView
+        android:id="@+id/slide_settings_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="34dp"
         android:text="设置"
         android:textStyle="bold" />
 
@@ -149,16 +173,20 @@
       android:paddingStart="24dp"
       android:paddingEnd="24dp">
 
-      <TextView
+      <ImageView
+        android:id="@+id/slide_info_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="14dp"
-        android:drawableStart="@drawable/ic_twotone_info"
-        android:drawablePadding="34dp"
+        android:src="@drawable/ic_twotone_loyalty" />
+
+      <TextView
+        android:id="@+id/slide_info_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="34dp"
         android:text="关于"
         android:textStyle="bold" />
-
     </LinearLayout>
   </LinearLayout>
-
 </FrameLayout>
