@@ -42,7 +42,7 @@ class SearchFragment : BaseFragment() {
     toggleAnimEnterExit(true)
   }
 
-  override fun interceptBackPressed(): Boolean {
+  override fun onBackPressed(): Boolean {
     toggleAnimEnterExit(false) {
       content_wrapper?.alpha = 0f
       close()

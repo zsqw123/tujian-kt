@@ -24,8 +24,6 @@ class BingFragment : BaseFragment() {
     initViewModel()
   }
 
-  override fun needClearMenu(): Boolean = false
-
   private fun initViewModel() {
     bingViewModel.getBing().observe(this@BingFragment, Observer(adapter::submitList))
   }

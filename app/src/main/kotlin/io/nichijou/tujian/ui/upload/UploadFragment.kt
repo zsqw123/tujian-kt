@@ -2,7 +2,7 @@ package io.nichijou.tujian.ui.upload
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Color
+import android.os.Looper
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
@@ -66,30 +66,34 @@ class UploadFragment : BaseFragment() {
       target().application.toast(it.toString())
     })
     submit?.setOnClickListener {
-      if (Settings.feiHua) return@setOnClickListener
+      if (!Settings.feiHua) return@setOnClickListener;target().application.toast("未同意许可协议，无法投稿")
       val url = uploadViewModel.url.value
       if (url.isNullOrBlank()) {
         target().application.toast("请先选择待上传图片")
         return@setOnClickListener
       }
-      val title = field_title?.text
-      if (title.isNullOrBlank()) {
+      val title = field_title.text.toString()
+      if (title.isBlank()) {
         target().application.toast("请填写标题")
         return@setOnClickListener
       }
-      val desc = field_desc?.text
-      if (desc.isNullOrBlank()) {
+      val desc = field_desc.text.toString()
+      if (desc.isBlank()) {
         target().application.toast("请填写描述")
         return@setOnClickListener
       }
-      val poster = field_poster?.text
-      if (poster.isNullOrBlank()) {
+      val poster = field_poster.text.toString()
+      if (poster.isBlank()) {
         target().application.toast("请填写投稿人")
         return@setOnClickListener
       }
-      val posterEmail = field_poster_email?.text
+      val posterEmail = field_poster_email.text.toString()
       val upload = Upload(title, desc, url, poster, "4ac1c07f-a9f7-11e8-a8ea-0202761b0892", posterEmail)
-      uploadViewModel.post(upload, { _, _ -> toast("投稿成功") })
+      uploadViewModel.post(upload, { _, _ ->
+        run { Looper.prepare();toast("投稿成功");Looper.loop() }
+      }, { _, _ ->
+        run { Looper.prepare();toast("投稿失败");Looper.loop() }
+      })
     }
   }
 

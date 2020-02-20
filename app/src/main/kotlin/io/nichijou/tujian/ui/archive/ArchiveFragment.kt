@@ -1,6 +1,8 @@
 package io.nichijou.tujian.ui.archive
 
 import android.graphics.Point
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -8,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.billy.android.swipe.SwipeConsumer
 import com.google.android.material.tabs.TabLayoutMediator
 import io.nichijou.oops.ext.setPaddingTopPlusStatusBarHeight
 import io.nichijou.tujian.R
@@ -15,6 +18,8 @@ import io.nichijou.tujian.base.BaseFragment
 import io.nichijou.tujian.common.entity.Category
 import io.nichijou.tujian.common.ext.postApply
 import io.nichijou.tujian.ext.addFragmentToActivity
+import io.nichijou.tujian.ext.target
+import io.nichijou.tujian.ui.MainActivity
 import io.nichijou.tujian.ui.MainViewModel
 import io.nichijou.tujian.ui.bing.BingFragment
 import io.nichijou.tujian.ui.history.HistoryFragment
@@ -31,10 +36,19 @@ class ArchiveFragment : BaseFragment() {
   }
 
   private val mainViewModel by activityViewModels<MainViewModel>()
-
   override fun getFragmentViewId(): Int = R.layout.fragment_archive
-  override fun getMenuResId(): Int = R.menu.menu_archive
-  override fun onMenuItemSelected(item: MenuItem) {
+  override fun handleOnCreateView(view: View) {
+    setHasOptionsMenu(true)
+    super.handleOnCreateView(view)
+  }
+
+  override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    menu.clear()
+    inflater.inflate(R.menu.menu_archive, menu)
+    super.onCreateOptionsMenu(menu, inflater)
+  }
+
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
     toolbar?.postApply {
       val menu = findViewById<View>(item.itemId)
       val location = IntArray(2)
@@ -48,11 +62,16 @@ class ArchiveFragment : BaseFragment() {
 //        }
       }
     }
+    return super.onOptionsItemSelected(item)
   }
 
   override fun handleOnViewCreated() {
     top_bar.setPaddingTopPlusStatusBarHeight()
-    setupDrawerWithToolbar(toolbar)
+    val activity = target()
+    activity.setSupportActionBar(toolbar)
+    toolbar.setNavigationOnClickListener {
+      MainActivity.swipeConsumer!!.open(true, SwipeConsumer.DIRECTION_LEFT)
+    }
     mainViewModel.enableScreenSaver.postValue(true)
     initViewModel()
   }
