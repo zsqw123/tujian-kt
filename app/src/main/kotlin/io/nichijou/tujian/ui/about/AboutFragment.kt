@@ -1,6 +1,5 @@
 package io.nichijou.tujian.ui.about
 
-import android.graphics.Color
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -55,7 +54,7 @@ class AboutFragment : BaseFragment() {
   override fun handleOnViewCreated() {
     mainViewModel.enableScreenSaver.postValue(false)
     toolbar.setMarginTopPlusStatusBarHeight()
-    toolbar.setNavigationOnClickListener { (target() as MainActivity).drawer.openMenu() }
+    toolbar.setNavigationOnClickListener { MainActivity.swipeConsumer!!.smoothLeftOpen()}
     aboutViewModel.lastPicture.observe(this, Observer {
       if (it != null) {
         banner?.load(it.local, postprocessor = GaussianBlurPostprocessor(target(), 1f))
