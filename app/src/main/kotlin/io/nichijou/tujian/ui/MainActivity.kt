@@ -33,6 +33,7 @@ import io.nichijou.tujian.common.db.TujianStore
 import io.nichijou.tujian.common.ext.asLiveData
 import io.nichijou.tujian.ext.addFragmentToActivity
 import io.nichijou.tujian.ext.handleBackPress
+import io.nichijou.tujian.ext.initFragmentActivity
 import io.nichijou.tujian.ext.replaceFragmentInActivity
 import io.nichijou.tujian.isDark
 import io.nichijou.tujian.ui.about.AboutFragment
@@ -78,6 +79,8 @@ class MainActivity : OopsActivity(), CoroutineScope by MainScope() {
         Permission.WRITE_EXTERNAL_STORAGE) {}
     }
     if (savedInstanceState == null) {
+      initFragmentActivity(listOf(TodayFragment.newInstance(), ArchiveFragment.newInstance(), UploadFragment.newInstance(),
+        SettingsFragment.newInstance(), AboutFragment.newInstance()))
       replaceFragmentInActivity(TodayFragment.newInstance())
       val newFragment = BooFragment.newInstance(Oops.immed().isDark, isIntro = true, enableFace = enableFaceDetection, enableFuckBoo = enableFuckBoo)
       newFragment.setOnExitedListener {

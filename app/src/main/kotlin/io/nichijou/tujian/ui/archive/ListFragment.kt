@@ -32,7 +32,6 @@ class ListFragment : BaseFragment() {
     initViewModel()
   }
 
-  override fun needClearMenu(): Boolean = false
   private lateinit var result: Listing<Picture>
 
   private fun initViewModel() {

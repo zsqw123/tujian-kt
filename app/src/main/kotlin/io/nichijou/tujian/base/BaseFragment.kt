@@ -11,8 +11,6 @@ import io.nichijou.tujian.ext.FragmentBackHandler
 import io.nichijou.tujian.ext.handleBackPress
 import io.nichijou.tujian.ext.target
 import io.nichijou.tujian.ui.MainActivity
-import kotlinx.android.synthetic.main.activity_main.*
-import org.jetbrains.anko.support.v4.toast
 
 abstract class BaseFragment : Fragment(), FragmentBackHandler {
   protected abstract fun getFragmentViewId(): Int
