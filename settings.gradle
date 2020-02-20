@@ -1,2 +1,2 @@
-include ':app', ':boo', ':common', ':sliding-root-nav', ':viewer'
+include ':app', ':boo', ':common'
 rootProject.name = 'tujian'
