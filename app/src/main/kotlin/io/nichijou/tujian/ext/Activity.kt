@@ -8,6 +8,7 @@ import com.billy.android.swipe.SwipeConsumer
 import com.billy.android.swipe.listener.SwipeListener
 import io.nichijou.tujian.R
 import io.nichijou.tujian.ui.MainActivity
+import io.nichijou.tujian.ui.today.TodayFragment
 import java.util.*
 
 
@@ -15,23 +16,37 @@ fun AppCompatActivity.replaceFragmentInActivity(
   targetFragment: Fragment,
   @IdRes wrapperIdRes: Int = R.id.container
 ) {
-  if (MainActivity.swipeConsumer != null && MainActivity.swipeConsumer!!.isOpened) {
-    MainActivity.swipeConsumer!!.smoothClose()
-  }
-  MainActivity.swipeConsumer!!.addListener(object : SwipeListener {
-    override fun onSwipeStart(wrapper: SmartSwipeWrapper?, consumer: SwipeConsumer?, direction: Int) {}
-    override fun onSwipeProcess(wrapper: SmartSwipeWrapper?, consumer: SwipeConsumer?, direction: Int, settling: Boolean, progress: Float) {}
-    override fun onConsumerAttachedToWrapper(wrapper: SmartSwipeWrapper?, consumer: SwipeConsumer?) {}
-    override fun onConsumerDetachedFromWrapper(wrapper: SmartSwipeWrapper?, consumer: SwipeConsumer?) {}
-    override fun onSwipeStateChanged(wrapper: SmartSwipeWrapper?, consumer: SwipeConsumer?, state: Int, direction: Int, progress: Float) {}
-    override fun onSwipeRelease(wrapper: SmartSwipeWrapper?, consumer: SwipeConsumer?, direction: Int, progress: Float, xVelocity: Float, yVelocity: Float) {}
-    override fun onSwipeOpened(wrapper: SmartSwipeWrapper?, consumer: SwipeConsumer?, direction: Int) {}
-    override fun onSwipeClosed(wrapper: SmartSwipeWrapper?, consumer: SwipeConsumer?, direction: Int) {
-      supportFragmentManager.beginTransaction().replace(wrapperIdRes, targetFragment)
-        .commitAllowingStateLoss()
-      MainActivity.swipeConsumer!!.removeAllListeners()
-    }
-  })
+  val transaction = supportFragmentManager.beginTransaction()
+//  if (!targetFragment.isAdded) {
+//    transaction
+//      .hide(MainActivity.nowFragment)
+//      .add(wrapperIdRes, targetFragment)
+//      .commit()
+//    println("还没添加呢")
+//  } else {
+//    transaction
+//      .hide(MainActivity.nowFragment)
+//      .show(targetFragment)
+//      .commit()
+//    println("添加了( ⊙o⊙ )哇")
+//  }
+  transaction.replace(wrapperIdRes,targetFragment)
+  MainActivity.nowFragment = targetFragment
+  if (MainActivity.swipeConsumer != null && MainActivity.swipeConsumer!!.isOpened) MainActivity.swipeConsumer!!.smoothClose()
+//  MainActivity.swipeConsumer!!.addListener(object : SwipeListener {
+//    override fun onSwipeStart(wrapper: SmartSwipeWrapper?, consumer: SwipeConsumer?, direction: Int) {}
+//    override fun onSwipeProcess(wrapper: SmartSwipeWrapper?, consumer: SwipeConsumer?, direction: Int, settling: Boolean, progress: Float) {}
+//    override fun onConsumerAttachedToWrapper(wrapper: SmartSwipeWrapper?, consumer: SwipeConsumer?) {}
+//    override fun onConsumerDetachedFromWrapper(wrapper: SmartSwipeWrapper?, consumer: SwipeConsumer?) {}
+//    override fun onSwipeStateChanged(wrapper: SmartSwipeWrapper?, consumer: SwipeConsumer?, state: Int, direction: Int, progress: Float) {}
+//    override fun onSwipeRelease(wrapper: SmartSwipeWrapper?, consumer: SwipeConsumer?, direction: Int, progress: Float, xVelocity: Float, yVelocity: Float) {}
+//    override fun onSwipeOpened(wrapper: SmartSwipeWrapper?, consumer: SwipeConsumer?, direction: Int) {}
+//    override fun onSwipeClosed(wrapper: SmartSwipeWrapper?, consumer: SwipeConsumer?, direction: Int) {
+//      supportFragmentManager.beginTransaction().replace(wrapperIdRes, targetFragment)
+//        .commitAllowingStateLoss()
+//      MainActivity.swipeConsumer!!.removeAllListeners()
+//    }
+//  })
 }
 
 fun AppCompatActivity.addFragmentToActivity(
