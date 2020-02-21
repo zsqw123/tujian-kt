@@ -9,8 +9,8 @@ import android.view.MotionEvent
 import android.widget.FrameLayout
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.afollestad.assent.Permission
@@ -68,7 +68,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
     }
     Oops.bulk {
       statusBarColor = 0// 设置状态栏颜色
-      navBarColor=0
+      navBarColor = 0
       setLightStatusBarCompat(isDark)
     }
     if (Settings.enableFaceDetection) {
@@ -112,13 +112,13 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
     swipeConsumer = SmartSwipe.wrap(this).addConsumer(SlidingConsumer())
       .setHorizontalDrawerView(slide).setScrimColor(Color.parseColor("#9A000000"))// 侧滑
     translucentStatusBar(true)// 状态栏沉浸
-    replaceFragmentInActivity(TodayFragment.newInstance())
+    replaceFragmentInActivity(TodayFragment())
 
-    slide_today.setOnClickListener { replaceFragmentInActivity(TodayFragment.newInstance()) }
-    slide_save.setOnClickListener { replaceFragmentInActivity(ArchiveFragment.newInstance()) }
-    slide_upload.setOnClickListener { replaceFragmentInActivity(UploadFragment.newInstance()) }
-    slide_settings.setOnClickListener { replaceFragmentInActivity(SettingsFragment.newInstance()) }
-    slide_info.setOnClickListener { replaceFragmentInActivity(AboutFragment.newInstance()) }
+    slide_today.setOnClickListener { replaceFragmentInActivity(TodayFragment()) }
+    slide_save.setOnClickListener { replaceFragmentInActivity(ArchiveFragment()) }
+    slide_upload.setOnClickListener { replaceFragmentInActivity(UploadFragment()) }
+    slide_settings.setOnClickListener { replaceFragmentInActivity(SettingsFragment()) }
+    slide_info.setOnClickListener { replaceFragmentInActivity(AboutFragment()) }
   }
 
   // 点击关屏保
@@ -256,6 +256,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
 
   companion object {
     var swipeConsumer: DrawerConsumer? = null
+    var nowFragment: Fragment = TodayFragment.newInstance()
   }
 }
 
