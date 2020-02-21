@@ -67,7 +67,7 @@ class SettingsFragment : BaseFragment(), View.OnClickListener, SeekBar.OnSeekBar
               theme = R.style.AppThemeDark
               isDark = true
               windowBackground = Color.BLACK
-              statusBarColor = Color.BLACK
+              statusBarColor = 0
               textColorPrimary = Color.WHITE
               textColorSecondary = Color.LTGRAY
               bottomNavigationViewNormalColor = Color.WHITE
@@ -78,7 +78,7 @@ class SettingsFragment : BaseFragment(), View.OnClickListener, SeekBar.OnSeekBar
               theme = R.style.AppTheme
               isDark = false
               windowBackground = Color.WHITE
-              statusBarColor = Color.WHITE
+              statusBarColor = 0
               textColorPrimary = Color.BLACK
               textColorSecondary = Color.DKGRAY
               bottomNavigationViewNormalColor = Color.BLACK
