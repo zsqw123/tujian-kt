@@ -3,6 +3,8 @@ package io.nichijou.tujian.ui.settings
 import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.graphics.Color
+import android.os.Build
+import android.os.Bundle
 import android.view.View
 import android.widget.SeekBar
 import androidx.fragment.app.activityViewModels
@@ -11,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import io.nichijou.oops.Oops
 import io.nichijou.oops.ext.applyOopsThemeStore
 import io.nichijou.oops.ext.drawableRes
+import io.nichijou.oops.ext.setLightStatusBarCompat
 import io.nichijou.oops.ext.setPaddingTopPlusStatusBarHeight
 import io.nichijou.tujian.App
 import io.nichijou.tujian.R
@@ -21,6 +24,8 @@ import io.nichijou.tujian.common.ext.dp2px
 import io.nichijou.tujian.common.ext.setMarginTopPlusStatusBarHeight
 import io.nichijou.tujian.ext.addFragmentToActivity
 import io.nichijou.tujian.ext.target
+import io.nichijou.tujian.isDark
+import io.nichijou.tujian.ui.MainActivity
 import io.nichijou.tujian.ui.MainViewModel
 import kotlinx.android.synthetic.main.fragment_settings.*
 import kotlinx.coroutines.Dispatchers
@@ -44,7 +49,7 @@ class SettingsFragment : BaseFragment(), View.OnClickListener, SeekBar.OnSeekBar
 
   companion object {
     fun newInstance() = SettingsFragment()
-    fun switchTheme(darkInt: Int) {
+    fun switchTheme(activity: MainActivity,darkInt: Int) {
       var dark = false
       when (darkInt) {
         0 -> dark = true
@@ -85,6 +90,7 @@ class SettingsFragment : BaseFragment(), View.OnClickListener, SeekBar.OnSeekBar
               swipeRefreshLayoutBackgroundColor = Color.WHITE
             }
           }
+          activity.setLightStatusBarCompat(dark)
         }
       }
     }
@@ -92,7 +98,8 @@ class SettingsFragment : BaseFragment(), View.OnClickListener, SeekBar.OnSeekBar
 
   override fun getFragmentViewId(): Int = R.layout.fragment_settings
 
-  override fun handleOnViewCreated() {
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
     setupDrawerWithToolbar(toolbar)
     top_bar.setMarginTopPlusStatusBarHeight()
     menu_wrapper.setPaddingTopPlusStatusBarHeight()
@@ -103,7 +110,7 @@ class SettingsFragment : BaseFragment(), View.OnClickListener, SeekBar.OnSeekBar
   @SuppressLint("SetTextI18n")
   private fun initView() {
     applyOopsThemeStore {
-      isDark.observe(this@SettingsFragment, Observer {
+      isDark.observe(viewLifecycleOwner, Observer {
         icon_dark?.setImageDrawable(if (!it) target().drawableRes(R.drawable.ic_twotone_brightness_5) else target().drawableRes(R.drawable.ic_twotone_brightness_2))
       })
     }

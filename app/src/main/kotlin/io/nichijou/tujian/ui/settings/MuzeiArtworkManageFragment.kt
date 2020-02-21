@@ -16,9 +16,6 @@ class MuzeiArtworkManageFragment : BaseFragment() {
 
   override fun getFragmentViewId(): Int = R.layout.fragment_settings_muzei
 
-  override fun handleOnViewCreated() {
-  }
-
   private fun queryArtwork() {
     lifecycleScope.launch(Dispatchers.IO) {
       val contentUri = ProviderContract.getContentUri(ArtworkWorker.getMuzeiAuthority(target()))

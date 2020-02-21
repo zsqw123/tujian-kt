@@ -2,15 +2,19 @@ package io.nichijou.tujian.ui.today
 
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
+import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.RelativeSizeSpan
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
+import android.view.View.NO_ID
+import android.view.ViewGroup
 import android.view.animation.OvershootInterpolator
 import android.widget.ArrayAdapter
 import android.widget.ListPopupWindow
+import androidx.core.view.children
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.palette.graphics.Palette
@@ -39,6 +43,7 @@ import io.nichijou.tujian.ui.archive.getNewUrl
 import jp.wasabeef.recyclerview.animators.LandingAnimator
 import kotlinx.android.synthetic.main.fragment_today.*
 import org.jetbrains.anko.support.v4.toast
+import org.jetbrains.anko.windowManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 import kotlin.collections.set
@@ -49,15 +54,16 @@ class TodayFragment : BaseFragment() {
 
   override fun getFragmentViewId(): Int = R.layout.fragment_today
 
-  override fun handleOnViewCreated() {
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
     initView()
     getAppVersionCode(context!!)
     initViewModel()
   }
 
   private fun initViewModel() {
-    viewModel.getToday().observe(this, Observer(::bind2View))
-    viewModel.msg.observe(this, Observer {
+    viewModel.getToday().observe(viewLifecycleOwner, Observer(::bind2View))
+    viewModel.msg.observe(viewLifecycleOwner, Observer {
       if (it != "old") toast(it)
       else MaterialDialog(context!!).title(text = "检测更新").icon(R.mipmap.ic_launcher).show {
         cancelOnTouchOutside(false)
@@ -98,6 +104,7 @@ class TodayFragment : BaseFragment() {
     TabLayoutMediator(tab, view_pager) { tab, position ->
       tab.text = pictures[position].category
     }.attach()
+    content_overlay
   }
 
   private fun bindInfo() {
@@ -165,6 +172,14 @@ class TodayFragment : BaseFragment() {
       singleGestureDetector.onTouchEvent(event)
       view_pager.dispatchTouchEvent(event)
       true
+    }
+
+    val vp = activity!!.window.decorView as ViewGroup
+    for (i in vp.children) {
+      i.context.packageName;
+      if (i.id != NO_ID && "navigationBarBackground" == activity!!.resources.getResourceEntryName(i.id)) {
+        content_overlay.setMarginBottomPlusNavBarHeight()
+      }
     }
   }
 

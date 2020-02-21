@@ -24,6 +24,7 @@ import io.nichijou.oops.Oops
 import io.nichijou.tujian.common.commonModule
 import io.nichijou.tujian.common.fresco.OkHttpNetworkFetcher
 import io.nichijou.tujian.common.shortcuts.ShortcutsController
+import me.yokeyword.fragmentation.Fragmentation
 import okhttp3.OkHttpClient
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
@@ -54,6 +55,7 @@ class App : Application() {
     initFresco()
     ShortcutsController.updateShortcuts(this)
     Oops.init(this)
+    Fragmentation.builder().debug(BuildConfig.DEBUG).install()
   }
 
   override fun onLowMemory() {

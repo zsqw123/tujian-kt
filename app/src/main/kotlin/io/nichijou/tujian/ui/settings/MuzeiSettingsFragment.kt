@@ -1,5 +1,7 @@
 package io.nichijou.tujian.ui.settings
 
+import android.os.Bundle
+import android.view.View
 import android.widget.CompoundButton
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
@@ -21,7 +23,8 @@ class MuzeiSettingsFragment : BaseFragment(), CompoundButton.OnCheckedChangeList
 
   override fun getFragmentViewId(): Int = R.layout.fragment_settings_muzei
 
-  override fun handleOnViewCreated() {
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
     setupDrawerWithToolbar(toolbar)
     top_bar.setMarginTopPlusStatusBarHeight()
     menu_wrapper.setPaddingTopPlusStatusBarHeight()
@@ -29,22 +32,22 @@ class MuzeiSettingsFragment : BaseFragment(), CompoundButton.OnCheckedChangeList
   }
 
   private fun initView() {
-    MuzeiConfig.asLiveData(MuzeiConfig::requiresBatteryNotLow).observe(this, Observer {
+    MuzeiConfig.asLiveData(MuzeiConfig::requiresBatteryNotLow).observe(viewLifecycleOwner, Observer {
       view_requires_battery_not_low?.isChecked = it
       val drawableRes = if (it) R.drawable.ic_twotone_battery_90 else R.drawable.ic_twotone_battery_20
       icon_requires_battery_not_low?.setImageDrawable(target().drawableRes(drawableRes))
     })
-    MuzeiConfig.asLiveData(MuzeiConfig::requiresCharging).observe(this, Observer {
+    MuzeiConfig.asLiveData(MuzeiConfig::requiresCharging).observe(viewLifecycleOwner, Observer {
       view_requires_charging?.isChecked = it
       val drawableRes = if (it) R.drawable.ic_twotone_battery_charging_50 else R.drawable.ic_twotone_battery_std
       icon_requires_charging?.setImageDrawable(target().drawableRes(drawableRes))
     })
-    MuzeiConfig.asLiveData(MuzeiConfig::requiresDeviceIdle).observe(this, Observer {
+    MuzeiConfig.asLiveData(MuzeiConfig::requiresDeviceIdle).observe(viewLifecycleOwner, Observer {
       view_requires_device_idle?.isChecked = it
       val drawableRes = if (it) R.drawable.ic_twotone_mobile_friendly else R.drawable.ic_twotone_videogame_asset
       icon_requires_device_idle?.setImageDrawable(target().drawableRes(drawableRes))
     })
-    MuzeiConfig.asLiveData(MuzeiConfig::requiresStorageNotLow).observe(this, Observer {
+    MuzeiConfig.asLiveData(MuzeiConfig::requiresStorageNotLow).observe(viewLifecycleOwner, Observer {
       view_requires_storage_not_low?.isChecked = it
       val drawableRes = if (it) R.drawable.ic_twotone_sd_storage else R.drawable.ic_twotone_disc_full
       icon_requires_storage_not_low?.setImageDrawable(target().drawableRes(drawableRes))

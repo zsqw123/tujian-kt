@@ -2,10 +2,12 @@ package io.nichijou.tujian.ui
 
 import android.graphics.Color
 import android.graphics.Point
+import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.SystemClock
 import android.view.MotionEvent
+import android.view.View
 import android.widget.FrameLayout
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
@@ -40,6 +42,9 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
+import me.yokeyword.fragmentation.ISupportFragment
+import me.yokeyword.fragmentation.SupportActivity
+import me.yokeyword.fragmentation.SupportFragment
 import org.jetbrains.anko.matchParent
 import org.jetbrains.anko.textColor
 import org.jetbrains.anko.toast
@@ -47,7 +52,7 @@ import org.koin.android.ext.android.inject
 import kotlin.system.exitProcess
 
 
-class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
+class MainActivity : SupportActivity(), CoroutineScope by MainScope() {
   override fun onCreate(savedInstanceState: Bundle?) {
     Oops.attach(this)
     super.onCreate(savedInstanceState)
@@ -67,9 +72,8 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
       }
     }
     Oops.bulk {
-      statusBarColor = 0// 设置状态栏颜色
+      statusBarColor = 0
       navBarColor = 0
-      setLightStatusBarCompat(isDark)
     }
     if (Settings.enableFaceDetection) {
       askForPermissions(
@@ -112,13 +116,27 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
     swipeConsumer = SmartSwipe.wrap(this).addConsumer(SlidingConsumer())
       .setHorizontalDrawerView(slide).setScrimColor(Color.parseColor("#9A000000"))// 侧滑
     translucentStatusBar(true)// 状态栏沉浸
-    replaceFragmentInActivity(TodayFragment())
+    if (!supportFragmentManager.fragments.contains(TodayFragment.newInstance())) {
+      val mFragments = arrayOf<SupportFragment>(TodayFragment.newInstance(), ArchiveFragment.newInstance(), UploadFragment.newInstance(),
+        SettingsFragment.newInstance(), AboutFragment.newInstance())
+      loadMultipleRootFragment(R.id.container, 0, mFragments[0], mFragments[1], mFragments[2], mFragments[3], mFragments[4])
+    }
 
-    slide_today.setOnClickListener { replaceFragmentInActivity(TodayFragment()) }
-    slide_save.setOnClickListener { replaceFragmentInActivity(ArchiveFragment()) }
-    slide_upload.setOnClickListener { replaceFragmentInActivity(UploadFragment()) }
-    slide_settings.setOnClickListener { replaceFragmentInActivity(SettingsFragment()) }
-    slide_info.setOnClickListener { replaceFragmentInActivity(AboutFragment()) }
+    fun showHideListener(fragment: SupportFragment) {
+      start(fragment)
+      showHideFragment(fragment, topFragment)
+//      if (topFragment != fragment) {
+//        if (!fragment.isStateSaved) start(fragment)
+//        else
+////        start(fragment)
+//      }
+      swipeConsumer!!.smoothClose()
+    }
+    slide_today.setOnClickListener { showHideListener(TodayFragment.newInstance()) }
+    slide_save.setOnClickListener { showHideListener(ArchiveFragment.newInstance()) }
+    slide_upload.setOnClickListener { showHideListener(UploadFragment.newInstance()) }
+    slide_settings.setOnClickListener { showHideListener(SettingsFragment.newInstance()) }
+    slide_info.setOnClickListener { showHideListener(AboutFragment.newInstance()) }
   }
 
   // 点击关屏保
@@ -172,7 +190,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
     })
     Settings.asLiveData(Settings::darkModeInt).observe(this, Observer {
       darkMode = it
-      SettingsFragment.switchTheme(darkMode)
+      SettingsFragment.switchTheme(this, darkMode)
     })
     applyOopsThemeStore {
       mediateLiveDataNonNull(
@@ -229,10 +247,10 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
     } ?: startScreenSaverTimer()
   }
 
-  private var current = R.drawable.ic_twotone_wb_sunny
 
   private val mHints = LongArray(2)
-  override fun onBackPressed() {
+  override fun onBackPressedSupport() {
+    super.onBackPressedSupport()
     if (swipeConsumer != null) {
       if (swipeConsumer!!.isOpened) {
         swipeConsumer!!.smoothClose()
@@ -256,7 +274,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
 
   companion object {
     var swipeConsumer: DrawerConsumer? = null
-    var nowFragment: Fragment = TodayFragment.newInstance()
+    var nowFragment: SupportFragment = TodayFragment.newInstance()
   }
 }
 

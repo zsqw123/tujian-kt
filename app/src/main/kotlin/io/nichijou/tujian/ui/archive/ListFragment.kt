@@ -1,5 +1,7 @@
 package io.nichijou.tujian.ui.archive
 
+import android.os.Bundle
+import android.view.View
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -26,7 +28,8 @@ class ListFragment : BaseFragment() {
 
   private val listViewModel by viewModel<ListViewModel>()
 
-  override fun handleOnViewCreated() {
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
     initView()
     initViewModel()
   }
@@ -40,8 +43,8 @@ class ListFragment : BaseFragment() {
       return
     }
     result = listViewModel.get(cid)
-    result.loadState.observe(this, Observer(::requestState))
-    result.pagedList.observe(this, Observer {
+    result.loadState.observe(viewLifecycleOwner, Observer(::requestState))
+    result.pagedList.observe(viewLifecycleOwner, Observer {
       adapter.submitList(it)
     })
   }

@@ -1,5 +1,7 @@
 package io.nichijou.tujian.ui.about
 
+import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -51,11 +53,12 @@ class AboutFragment : BaseFragment() {
   private val mainViewModel by activityViewModels<MainViewModel>()
   private val aboutViewModel by viewModel<AboutViewModel>()
 
-  override fun handleOnViewCreated() {
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
     mainViewModel.enableScreenSaver.postValue(false)
     toolbar.setMarginTopPlusStatusBarHeight()
     toolbar.setNavigationOnClickListener { MainActivity.swipeConsumer!!.smoothLeftOpen()}
-    aboutViewModel.lastPicture.observe(this, Observer {
+    aboutViewModel.lastPicture.observe(viewLifecycleOwner, Observer {
       if (it != null) {
         banner?.load(it.local, postprocessor = GaussianBlurPostprocessor(target(), 1f))
         ImageRequest.fromUri(it.local)?.getPalette { p ->
@@ -118,12 +121,12 @@ class AboutFragment : BaseFragment() {
         if (url.length > 7) browse(url)
       }
     }
-    aboutViewModel.getTeam().observe(this, Observer {
+    aboutViewModel.getTeam().observe(viewLifecycleOwner, Observer {
       if (!it.isNullOrEmpty()) {
         team_recycler_view.addNew(it)
       }
     })
-    aboutViewModel.getOSL().observe(this, Observer {
+    aboutViewModel.getOSL().observe(viewLifecycleOwner, Observer {
       if (!it.isNullOrEmpty()) {
         osl_recycler_view.addNew(it)
       }

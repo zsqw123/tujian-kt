@@ -1,5 +1,7 @@
 package io.nichijou.tujian.ui.settings
 
+import android.os.Bundle
+import android.view.View
 import android.widget.CompoundButton
 import android.widget.SeekBar
 import androidx.lifecycle.Observer
@@ -28,29 +30,30 @@ class HitokotoAppWidgetSettingsFragment : BaseFragment(), CompoundButton.OnCheck
 
   override fun getFragmentViewId(): Int = R.layout.fragment_settings_appwidget_hitokoto
 
-  override fun handleOnViewCreated() {
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
     menu_wrapper.setPaddingTopPlusStatusBarHeight()
-    HitokotoAppWidgetConfig.asLiveData(HitokotoAppWidgetConfig::requiresBatteryNotLow).observe(this, Observer {
+    HitokotoAppWidgetConfig.asLiveData(HitokotoAppWidgetConfig::requiresBatteryNotLow).observe(viewLifecycleOwner, Observer {
       view_requires_battery_not_low?.isChecked = it
       val drawableRes = if (it) R.drawable.ic_twotone_battery_90 else R.drawable.ic_twotone_battery_20
       icon_requires_battery_not_low?.setImageDrawable(target().drawableRes(drawableRes))
     })
-    HitokotoAppWidgetConfig.asLiveData(HitokotoAppWidgetConfig::requiresCharging).observe(this, Observer {
+    HitokotoAppWidgetConfig.asLiveData(HitokotoAppWidgetConfig::requiresCharging).observe(viewLifecycleOwner, Observer {
       view_requires_charging?.isChecked = it
       val drawableRes = if (it) R.drawable.ic_twotone_battery_charging_50 else R.drawable.ic_twotone_battery_std
       icon_requires_charging?.setImageDrawable(target().drawableRes(drawableRes))
     })
-    HitokotoAppWidgetConfig.asLiveData(HitokotoAppWidgetConfig::requiresDeviceIdle).observe(this, Observer {
+    HitokotoAppWidgetConfig.asLiveData(HitokotoAppWidgetConfig::requiresDeviceIdle).observe(viewLifecycleOwner, Observer {
       view_requires_device_idle?.isChecked = it
       val drawableRes = if (it) R.drawable.ic_twotone_mobile_friendly else R.drawable.ic_twotone_videogame_asset
       icon_requires_device_idle?.setImageDrawable(target().drawableRes(drawableRes))
     })
-    HitokotoAppWidgetConfig.asLiveData(HitokotoAppWidgetConfig::notification).observe(this, Observer {
+    HitokotoAppWidgetConfig.asLiveData(HitokotoAppWidgetConfig::notification).observe(viewLifecycleOwner, Observer {
       view_enable_notification?.isChecked = it
       val drawableRes = if (it) R.drawable.ic_twotone_notifications_active else R.drawable.ic_twotone_notifications_off
       icon_enable_notification?.setImageDrawable(target().drawableRes(drawableRes))
     })
-    HitokotoAppWidgetConfig.asLiveData(HitokotoAppWidgetConfig::autoTextColor).observe(this, Observer {
+    HitokotoAppWidgetConfig.asLiveData(HitokotoAppWidgetConfig::autoTextColor).observe(viewLifecycleOwner, Observer {
       view_auto_text_color?.isChecked = it
       val drawableRes = if (it) R.drawable.ic_twotone_invert_colors else R.drawable.ic_twotone_invert_colors_off
       icon_auto_text_color?.setImageDrawable(target().drawableRes(drawableRes))

@@ -2,6 +2,8 @@ package io.nichijou.tujian.ui.search
 
 import android.graphics.Color
 import android.graphics.Point
+import android.os.Bundle
+import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.core.animation.addListener
@@ -34,7 +36,8 @@ class SearchFragment : BaseFragment() {
   private val mainViewModel by activityViewModels<MainViewModel>()
   override fun getFragmentViewId(): Int = R.layout.fragment_history
   private val historyViewModel by viewModel<HistoryViewModel>()
-  override fun handleOnViewCreated() {
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
     startPoint = arguments?.getParcelable(START_POINT)
       ?: throw IllegalStateException("start point is NULL")
     initView()
@@ -71,7 +74,7 @@ class SearchFragment : BaseFragment() {
   }
 
   private fun initViewModel() {
-    historyViewModel.getHistory().observe(this@SearchFragment, Observer {
+    historyViewModel.getHistory().observe(viewLifecycleOwner, Observer {
       //      recycler_view?.adapter = ListAdapter(it)
     })
   }

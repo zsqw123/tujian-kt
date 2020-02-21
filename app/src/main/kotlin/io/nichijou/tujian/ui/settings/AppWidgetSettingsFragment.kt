@@ -1,5 +1,7 @@
 package io.nichijou.tujian.ui.settings
 
+import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -28,7 +30,8 @@ class AppWidgetSettingsFragment : BaseFragment() {
     }
   }
 
-  override fun handleOnViewCreated() {
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
     top_bar.setMarginTopPlusStatusBarHeight()
     setupDrawerWithToolbar(toolbar)
     mainViewModel.enableScreenSaver.postValue(true)
