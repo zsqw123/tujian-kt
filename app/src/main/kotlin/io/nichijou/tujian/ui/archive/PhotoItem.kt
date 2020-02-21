@@ -1,5 +1,6 @@
 package io.nichijou.tujian.ui.archive
 
+import android.content.Context
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
@@ -39,36 +40,12 @@ class Viewpager2Adapter(private val data: ArrayList<Picture>) :
     photoView.scaleType = ImageView.ScaleType.CENTER_CROP
     Glide.with(item.context).load(getNewUrl(items[position])).into(photoView)
     photoView.setOnLongClickListener {
-      MaterialDialog(item.context).title(text = "图鉴日图").icon(R.mipmap.ic_launcher).show {
-        listItems(items = listOf("保存原图", "设置壁纸", "分享")) { _, index, _ ->
-          when (index) {
-            0 -> items[position].download(item.context)
-            1 -> setWallpaper(context, items[position])
-            2 -> context.shareString(items[position].share())
-          }
-        }
-      }.cornerRadius(12f)
+      toolDialog(item.context, items[position])
       return@setOnLongClickListener true
     }
   }
 
   override fun getItemCount() = data.size
-
-  fun add(newData: ArrayList<Picture>, reset: Boolean = false) {
-    if (reset) {
-      reset(newData)
-    } else {
-      val size = data.size
-      data.addAll(newData)
-      notifyItemRangeInserted(size, newData.size)
-    }
-  }
-
-  private fun reset(newData: ArrayList<Picture>) {
-    data.clear()
-    data.addAll(newData)
-    notifyDataSetChanged()
-  }
 }
 
 class PhotoItem(val list: ArrayList<Picture>, private val nowPos: Int) : DialogFragment() {
@@ -100,4 +77,16 @@ class PhotoItem(val list: ArrayList<Picture>, private val nowPos: Int) : DialogF
 //    photo_item_viewpager.layoutParams = FrameLayout.LayoutParams(matchParent, wrapContent)
     photo_item_viewpager.currentItem = nowPos
   }
+}
+
+fun toolDialog(context: Context, picture: Picture): MaterialDialog {
+  return MaterialDialog(context).title(text = "图鉴日图").icon(R.mipmap.ic_launcher).show {
+    listItems(items = listOf("保存原图", "设置壁纸", "分享")) { _, index, _ ->
+      when (index) {
+        0 -> picture.download(context)
+        1 -> setWallpaper(context, picture)
+        2 -> context.shareString(picture.share())
+      }
+    }
+  }.cornerRadius(12f)
 }

@@ -2,10 +2,7 @@ package io.nichijou.tujian.ui.archive
 
 import android.graphics.Point
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -38,11 +35,12 @@ class ArchiveFragment : BaseFragment() {
 
   private val mainViewModel by activityViewModels<MainViewModel>()
   override fun getFragmentViewId(): Int = R.layout.fragment_archive
-  override fun handleOnCreateView(view: View) {
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    val view = inflater.inflate(getFragmentViewId(), container, false)
+    view.setOnTouchListener { _, _ -> true }
     setHasOptionsMenu(true)
-    super.handleOnCreateView(view)
+    return view
   }
-
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     menu.clear()
     inflater.inflate(R.menu.menu_archive, menu)

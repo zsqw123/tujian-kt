@@ -27,6 +27,7 @@ import io.nichijou.oops.Oops
 import io.nichijou.oops.ext.*
 import io.nichijou.tujian.R
 import io.nichijou.tujian.Settings
+import io.nichijou.tujian.base.BaseFragment
 import io.nichijou.tujian.common.db.TujianStore
 import io.nichijou.tujian.common.ext.asLiveData
 import io.nichijou.tujian.ext.addFragmentToActivity
@@ -87,9 +88,7 @@ class MainActivity : SupportActivity(), CoroutineScope by MainScope() {
     }
     if (savedInstanceState == null) {
       val newFragment = BooFragment.newInstance(Oops.immed().isDark, isIntro = true, enableFace = enableFaceDetection, enableFuckBoo = enableFuckBoo)
-      newFragment.setOnExitedListener {
-        resetScreenSaverTimer()
-      }
+      newFragment.setOnExitedListener { resetScreenSaverTimer() }
       if (!enableFuckBoo) addFragmentToActivity(newFragment, tag = getString(R.string.boo_tag))
     }
     bindLifecycle()
@@ -116,27 +115,30 @@ class MainActivity : SupportActivity(), CoroutineScope by MainScope() {
     swipeConsumer = SmartSwipe.wrap(this).addConsumer(SlidingConsumer())
       .setHorizontalDrawerView(slide).setScrimColor(Color.parseColor("#9A000000"))// 侧滑
     translucentStatusBar(true)// 状态栏沉浸
-    if (!supportFragmentManager.fragments.contains(TodayFragment.newInstance())) {
-      val mFragments = arrayOf<SupportFragment>(TodayFragment.newInstance(), ArchiveFragment.newInstance(), UploadFragment.newInstance(),
+    var mFragments = arrayOfNulls<SupportFragment>(5)
+    if (findFragment(TodayFragment::class.java) == null) {
+      mFragments = arrayOf(TodayFragment.newInstance(),
+        ArchiveFragment.newInstance(), UploadFragment.newInstance(),
         SettingsFragment.newInstance(), AboutFragment.newInstance())
       loadMultipleRootFragment(R.id.container, 0, mFragments[0], mFragments[1], mFragments[2], mFragments[3], mFragments[4])
+    } else {
+      mFragments[0] = findFragment(TodayFragment::class.java)
+      mFragments[1] = findFragment(ArchiveFragment::class.java)
+      mFragments[2] = findFragment(UploadFragment::class.java)
+      mFragments[3] = findFragment(SettingsFragment::class.java)
+      mFragments[4] = findFragment(AboutFragment::class.java)
     }
 
     fun showHideListener(fragment: SupportFragment) {
-      start(fragment)
-      showHideFragment(fragment, topFragment)
-//      if (topFragment != fragment) {
-//        if (!fragment.isStateSaved) start(fragment)
-//        else
-////        start(fragment)
-//      }
+      showHideFragment(fragment, nowFragment)
+      nowFragment = fragment
       swipeConsumer!!.smoothClose()
     }
-    slide_today.setOnClickListener { showHideListener(TodayFragment.newInstance()) }
-    slide_save.setOnClickListener { showHideListener(ArchiveFragment.newInstance()) }
-    slide_upload.setOnClickListener { showHideListener(UploadFragment.newInstance()) }
-    slide_settings.setOnClickListener { showHideListener(SettingsFragment.newInstance()) }
-    slide_info.setOnClickListener { showHideListener(AboutFragment.newInstance()) }
+    slide_today.setOnClickListener { showHideListener(mFragments[0]!!) }
+    slide_save.setOnClickListener { showHideListener(mFragments[1]!!) }
+    slide_upload.setOnClickListener { showHideListener(mFragments[2]!!) }
+    slide_settings.setOnClickListener { showHideListener(mFragments[3]!!) }
+    slide_info.setOnClickListener { showHideListener(mFragments[4]!!) }
   }
 
   // 点击关屏保
