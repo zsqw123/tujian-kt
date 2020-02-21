@@ -4,6 +4,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import io.nichijou.tujian.common.entity.Picture
 import io.nichijou.tujian.ui.archive.getNewUrl
+import io.nichijou.tujian.ui.archive.toolDialog
+import kotlinx.android.synthetic.main.view_today_item.view.*
 
 class TodayAdapter(private val items: List<Picture>) : RecyclerView.Adapter<TodayAdapter.ViewHolder>() {
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -16,6 +18,10 @@ class TodayAdapter(private val items: List<Picture>) : RecyclerView.Adapter<Toda
 
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val path = getNewUrl(items[position])
+    holder.itemView.actual_view.setOnLongClickListener {
+      toolDialog(holder.itemView.context, items[position])
+      return@setOnLongClickListener true
+    }
     return (holder.itemView as TodayItemView).updateUrl(path!!)
   }
 

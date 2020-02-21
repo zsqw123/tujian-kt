@@ -18,6 +18,7 @@ import io.nichijou.tujian.base.TopBarOnScrollListener
 import io.nichijou.tujian.common.ext.getRadiusByCenterPoint
 import io.nichijou.tujian.common.ext.postApply
 import io.nichijou.tujian.common.ext.setMarginTopPlusStatusBarHeight
+import io.nichijou.tujian.ext.target
 import io.nichijou.tujian.ui.MainViewModel
 import io.nichijou.tujian.ui.history.HistoryViewModel
 import jp.wasabeef.recyclerview.animators.LandingAnimator
@@ -48,7 +49,7 @@ class SearchFragment : BaseFragment() {
   override fun onBackPressed(): Boolean {
     toggleAnimEnterExit(false) {
       content_wrapper?.alpha = 0f
-      close()
+      target().supportFragmentManager.popBackStack()
     }
     return true
   }
