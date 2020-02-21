@@ -8,7 +8,8 @@ import android.os.SystemClock
 import android.view.MotionEvent
 import android.widget.FrameLayout
 import androidx.annotation.ColorInt
-import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.afollestad.assent.Permission
@@ -18,11 +19,8 @@ import com.billy.android.swipe.SmartSwipe
 import com.billy.android.swipe.consumer.DrawerConsumer
 import com.billy.android.swipe.consumer.SlidingConsumer
 import com.larvalabs.boo.BooFragment
-import com.yarolegovich.slidingrootnav.SlidingDrawer
-import com.yarolegovich.slidingrootnav.menu.DrawerAdapter
 import com.zzhoujay.richtext.RichText
 import io.nichijou.oops.Oops
-import io.nichijou.oops.OopsActivity
 import io.nichijou.oops.ext.*
 import io.nichijou.tujian.R
 import io.nichijou.tujian.Settings
@@ -30,7 +28,6 @@ import io.nichijou.tujian.common.db.TujianStore
 import io.nichijou.tujian.common.ext.asLiveData
 import io.nichijou.tujian.ext.addFragmentToActivity
 import io.nichijou.tujian.ext.handleBackPress
-import io.nichijou.tujian.ext.initFragmentActivity
 import io.nichijou.tujian.ext.replaceFragmentInActivity
 import io.nichijou.tujian.isDark
 import io.nichijou.tujian.ui.about.AboutFragment
@@ -48,24 +45,25 @@ import org.jetbrains.anko.toast
 import org.koin.android.ext.android.inject
 import kotlin.system.exitProcess
 
-class MainActivity : OopsActivity(), CoroutineScope by MainScope() {
+
+class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
-    if (Oops.immed().isFirstTime) {
-      val def = ContextCompat.getColor(this@MainActivity, R.color.def)
-      Oops.bulk {
-        theme = R.style.AppTheme
-        windowBackground = Color.WHITE
-        statusBarColor = 0
-        colorAccent = def
-        textColorPrimary = Color.BLACK
-        textColorSecondary = Color.DKGRAY
-        toolbarIconColor = def
-        toolbarTitleColor = def
-        swipeRefreshLayoutBackgroundColor = Color.WHITE
-      }
-    }
+//    if (Oops.immed().isFirstTime) {
+//      val def = ContextCompat.getColor(this@MainActivity, R.color.def)
+//      Oops.bulk {
+//        theme = R.style.AppTheme
+//        windowBackground = Color.WHITE
+//        statusBarColor = 0
+//        colorAccent = def
+//        textColorPrimary = Color.BLACK
+//        textColorSecondary = Color.DKGRAY
+//        toolbarIconColor = def
+//        toolbarTitleColor = def
+//        swipeRefreshLayoutBackgroundColor = Color.WHITE
+//      }
+//    }
     if (Settings.enableFaceDetection) {
       askForPermissions(
         Permission.READ_EXTERNAL_STORAGE,
@@ -77,9 +75,6 @@ class MainActivity : OopsActivity(), CoroutineScope by MainScope() {
         Permission.WRITE_EXTERNAL_STORAGE) {}
     }
     if (savedInstanceState == null) {
-      initFragmentActivity(listOf(TodayFragment.newInstance(), ArchiveFragment.newInstance(), UploadFragment.newInstance(),
-        SettingsFragment.newInstance(), AboutFragment.newInstance()))
-      replaceFragmentInActivity(TodayFragment.newInstance())
       val newFragment = BooFragment.newInstance(Oops.immed().isDark, isIntro = true, enableFace = enableFaceDetection, enableFuckBoo = enableFuckBoo)
       newFragment.setOnExitedListener {
         resetScreenSaverTimer()
@@ -111,6 +106,7 @@ class MainActivity : OopsActivity(), CoroutineScope by MainScope() {
       .setHorizontalDrawerView(slide).setScrimColor(Color.parseColor("#9A000000"))// 侧滑
     translucentStatusBar(true)// 状态栏沉浸
     window.navigationBarColor = Color.TRANSPARENT
+    replaceFragmentInActivity(TodayFragment.newInstance())
 
     slide_today.setOnClickListener { replaceFragmentInActivity(TodayFragment.newInstance()) }
     slide_save.setOnClickListener { replaceFragmentInActivity(ArchiveFragment.newInstance()) }
@@ -226,8 +222,6 @@ class MainActivity : OopsActivity(), CoroutineScope by MainScope() {
       start()
     } ?: startScreenSaverTimer()
   }
-
-  private lateinit var adapter: DrawerAdapter
 
   private var current = R.drawable.ic_twotone_wb_sunny
 
