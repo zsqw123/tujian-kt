@@ -30,8 +30,8 @@ fun AppCompatActivity.replaceFragmentInActivity(
 //      .commit()
 //    println("添加了( ⊙o⊙ )哇")
 //  }
-  transaction.replace(wrapperIdRes,targetFragment)
-  MainActivity.nowFragment = targetFragment
+  transaction.replace(wrapperIdRes,targetFragment).commitAllowingStateLoss()
+//  MainActivity.nowFragment = targetFragment
   if (MainActivity.swipeConsumer != null && MainActivity.swipeConsumer!!.isOpened) MainActivity.swipeConsumer!!.smoothClose()
 //  MainActivity.swipeConsumer!!.addListener(object : SwipeListener {
 //    override fun onSwipeStart(wrapper: SmartSwipeWrapper?, consumer: SwipeConsumer?, direction: Int) {}

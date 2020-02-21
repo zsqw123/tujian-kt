@@ -1,6 +1,7 @@
 package io.nichijou.tujian.ui.archive
 
 import android.graphics.Point
+import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -65,7 +66,8 @@ class ArchiveFragment : BaseFragment() {
     return super.onOptionsItemSelected(item)
   }
 
-  override fun handleOnViewCreated() {
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
     top_bar.setPaddingTopPlusStatusBarHeight()
     val activity = target()
     activity.setSupportActionBar(toolbar)
@@ -98,7 +100,7 @@ class ArchiveFragment : BaseFragment() {
   private val categoryViewModel by viewModel<ArchiveViewModel>()
 
   private fun initViewModel() {
-    categoryViewModel.categories.observe(this, Observer {
+    categoryViewModel.categories.observe(viewLifecycleOwner, Observer {
       lifecycleScope.launch {
         if (it.isNullOrEmpty()) {
           return@launch

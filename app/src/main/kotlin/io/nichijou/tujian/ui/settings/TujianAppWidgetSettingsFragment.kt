@@ -1,5 +1,7 @@
 package io.nichijou.tujian.ui.settings
 
+import android.os.Bundle
+import android.view.View
 import android.widget.CompoundButton
 import android.widget.SeekBar
 import androidx.lifecycle.Observer
@@ -28,44 +30,45 @@ class TujianAppWidgetSettingsFragment : BaseFragment(), CompoundButton.OnChecked
 
   override fun getFragmentViewId(): Int = R.layout.fragment_settings_appwidget_tujian
 
-  override fun handleOnViewCreated() {
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
     menu_wrapper.setPaddingTopPlusStatusBarHeight()
-    TujianAppWidgetConfig.asLiveData(TujianAppWidgetConfig::requiresBatteryNotLow).observe(this, Observer {
+    TujianAppWidgetConfig.asLiveData(TujianAppWidgetConfig::requiresBatteryNotLow).observe(viewLifecycleOwner, Observer {
       view_requires_battery_not_low?.isChecked = it
       val drawableRes = if (it) R.drawable.ic_twotone_battery_90 else R.drawable.ic_twotone_battery_20
       icon_requires_battery_not_low?.setImageDrawable(target().drawableRes(drawableRes))
     })
-    TujianAppWidgetConfig.asLiveData(TujianAppWidgetConfig::requiresCharging).observe(this, Observer {
+    TujianAppWidgetConfig.asLiveData(TujianAppWidgetConfig::requiresCharging).observe(viewLifecycleOwner, Observer {
       view_requires_charging?.isChecked = it
       val drawableRes = if (it) R.drawable.ic_twotone_battery_charging_50 else R.drawable.ic_twotone_battery_std
       icon_requires_charging?.setImageDrawable(target().drawableRes(drawableRes))
     })
-    TujianAppWidgetConfig.asLiveData(TujianAppWidgetConfig::requiresDeviceIdle).observe(this, Observer {
+    TujianAppWidgetConfig.asLiveData(TujianAppWidgetConfig::requiresDeviceIdle).observe(viewLifecycleOwner, Observer {
       view_requires_device_idle?.isChecked = it
       val drawableRes = if (it) R.drawable.ic_twotone_mobile_friendly else R.drawable.ic_twotone_videogame_asset
       icon_requires_device_idle?.setImageDrawable(target().drawableRes(drawableRes))
     })
-    TujianAppWidgetConfig.asLiveData(TujianAppWidgetConfig::requiresStorageNotLow).observe(this, Observer {
+    TujianAppWidgetConfig.asLiveData(TujianAppWidgetConfig::requiresStorageNotLow).observe(viewLifecycleOwner, Observer {
       view_requires_storage_not_low?.isChecked = it
       val drawableRes = if (it) R.drawable.ic_twotone_sd_storage else R.drawable.ic_twotone_disc_full
       icon_requires_storage_not_low?.setImageDrawable(target().drawableRes(drawableRes))
     })
-    TujianAppWidgetConfig.asLiveData(TujianAppWidgetConfig::blur).observe(this, Observer {
+    TujianAppWidgetConfig.asLiveData(TujianAppWidgetConfig::blur).observe(viewLifecycleOwner, Observer {
       view_enable_blur?.isChecked = it
       val drawableRes = if (it) R.drawable.ic_twotone_blur_on else R.drawable.ic_twotone_blur_off
       icon_enable_blur?.setImageDrawable(target().drawableRes(drawableRes))
     })
-    TujianAppWidgetConfig.asLiveData(TujianAppWidgetConfig::pixel).observe(this, Observer {
+    TujianAppWidgetConfig.asLiveData(TujianAppWidgetConfig::pixel).observe(viewLifecycleOwner, Observer {
       view_enable_pixel?.isChecked = it
       val drawableRes = if (it) R.drawable.ic_twotone_gradient else R.drawable.ic_twotone_image
       icon_enable_pixel?.setImageDrawable(target().drawableRes(drawableRes))
     })
-    TujianAppWidgetConfig.asLiveData(TujianAppWidgetConfig::notification).observe(this, Observer {
+    TujianAppWidgetConfig.asLiveData(TujianAppWidgetConfig::notification).observe(viewLifecycleOwner, Observer {
       view_enable_notification?.isChecked = it
       val drawableRes = if (it) R.drawable.ic_twotone_notifications_active else R.drawable.ic_twotone_notifications_off
       icon_enable_notification?.setImageDrawable(target().drawableRes(drawableRes))
     })
-    TujianAppWidgetConfig.asLiveData(TujianAppWidgetConfig::autoTextColor).observe(this, Observer {
+    TujianAppWidgetConfig.asLiveData(TujianAppWidgetConfig::autoTextColor).observe(viewLifecycleOwner, Observer {
       view_auto_text_color?.isChecked = it
       val drawableRes = if (it) R.drawable.ic_twotone_invert_colors else R.drawable.ic_twotone_invert_colors_off
       icon_auto_text_color?.setImageDrawable(target().drawableRes(drawableRes))

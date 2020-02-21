@@ -2,7 +2,9 @@ package io.nichijou.tujian.ui.upload
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Bundle
 import android.os.Looper
+import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
@@ -31,7 +33,8 @@ class UploadFragment : BaseFragment() {
   private val mainViewModel by activityViewModels<MainViewModel>()
   private val uploadViewModel by viewModel<UploadViewModel>()
 
-  override fun handleOnViewCreated() {
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
     mainViewModel.enableScreenSaver.postValue(false)
     toolbar.setMarginTopPlusStatusBarHeight()
     lifecycleScope.launch(Dispatchers.IO) {
@@ -50,8 +53,8 @@ class UploadFragment : BaseFragment() {
       intent.type = "image/*"
       startActivityForResult(intent, REQUEST_CODE)
     }
-    uploadViewModel.msg.observe(this, Observer { target().application.toast(it) })
-    uploadViewModel.url.observe(this, Observer {
+    uploadViewModel.msg.observe(viewLifecycleOwner, Observer { target().application.toast(it) })
+    uploadViewModel.url.observe(viewLifecycleOwner, Observer {
       if (it.isNullOrBlank()) {
         field_url_wrapper?.makeGone()
         field_url?.setText(null)
@@ -62,7 +65,7 @@ class UploadFragment : BaseFragment() {
         overlay_progress.makeGone()
       }
     })
-    uploadViewModel.result.observe(this, Observer {
+    uploadViewModel.result.observe(viewLifecycleOwner, Observer {
       target().application.toast(it.toString())
     })
     submit?.setOnClickListener {

@@ -1,5 +1,7 @@
 package io.nichijou.tujian.ui.settings
 
+import android.os.Bundle
+import android.view.View
 import android.widget.CompoundButton
 import android.widget.SeekBar
 import androidx.lifecycle.Observer
@@ -30,7 +32,8 @@ class WallpaperSettingsFragment : BaseFragment(), CompoundButton.OnCheckedChange
 
   override fun getFragmentViewId(): Int = R.layout.fragment_settings_wallpaper
 
-  override fun handleOnViewCreated() {
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
     setupDrawerWithToolbar(toolbar)
     top_bar.setMarginTopPlusStatusBarHeight()
     menu_wrapper.setPaddingTopPlusStatusBarHeight()
@@ -38,42 +41,42 @@ class WallpaperSettingsFragment : BaseFragment(), CompoundButton.OnCheckedChange
   }
 
   private fun initView() {
-    WallpaperConfig.asLiveData(WallpaperConfig::enable).observe(this, Observer {
+    WallpaperConfig.asLiveData(WallpaperConfig::enable).observe(viewLifecycleOwner, Observer {
       view_enable_wallpaper?.isChecked = it
       val drawableRes = target().drawableRes(if (it) R.drawable.ic_twotone_check_circle else R.drawable.ic_twotone_check_circle_outline)
       icon_enable_wallpaper?.setImageDrawable(drawableRes)
     })
-    WallpaperConfig.asLiveData(WallpaperConfig::requiresBatteryNotLow).observe(this, Observer {
+    WallpaperConfig.asLiveData(WallpaperConfig::requiresBatteryNotLow).observe(viewLifecycleOwner, Observer {
       view_requires_battery_not_low?.isChecked = it
       val drawableRes = if (it) R.drawable.ic_twotone_battery_90 else R.drawable.ic_twotone_battery_20
       icon_requires_battery_not_low?.setImageDrawable(target().drawableRes(drawableRes))
     })
-    WallpaperConfig.asLiveData(WallpaperConfig::requiresCharging).observe(this, Observer {
+    WallpaperConfig.asLiveData(WallpaperConfig::requiresCharging).observe(viewLifecycleOwner, Observer {
       view_requires_charging?.isChecked = it
       val drawableRes = if (it) R.drawable.ic_twotone_battery_charging_50 else R.drawable.ic_twotone_battery_std
       icon_requires_charging?.setImageDrawable(target().drawableRes(drawableRes))
     })
-    WallpaperConfig.asLiveData(WallpaperConfig::requiresDeviceIdle).observe(this, Observer {
+    WallpaperConfig.asLiveData(WallpaperConfig::requiresDeviceIdle).observe(viewLifecycleOwner, Observer {
       view_requires_device_idle?.isChecked = it
       val drawableRes = if (it) R.drawable.ic_twotone_mobile_friendly else R.drawable.ic_twotone_videogame_asset
       icon_requires_device_idle?.setImageDrawable(target().drawableRes(drawableRes))
     })
-    WallpaperConfig.asLiveData(WallpaperConfig::requiresStorageNotLow).observe(this, Observer {
+    WallpaperConfig.asLiveData(WallpaperConfig::requiresStorageNotLow).observe(viewLifecycleOwner, Observer {
       view_requires_storage_not_low?.isChecked = it
       val drawableRes = if (it) R.drawable.ic_twotone_sd_storage else R.drawable.ic_twotone_disc_full
       icon_requires_storage_not_low?.setImageDrawable(target().drawableRes(drawableRes))
     })
-    WallpaperConfig.asLiveData(WallpaperConfig::blur).observe(this, Observer {
+    WallpaperConfig.asLiveData(WallpaperConfig::blur).observe(viewLifecycleOwner, Observer {
       view_enable_blur?.isChecked = it
       val drawableRes = if (it) R.drawable.ic_twotone_blur_on else R.drawable.ic_twotone_blur_off
       icon_enable_blur?.setImageDrawable(target().drawableRes(drawableRes))
     })
-    WallpaperConfig.asLiveData(WallpaperConfig::pixel).observe(this, Observer {
+    WallpaperConfig.asLiveData(WallpaperConfig::pixel).observe(viewLifecycleOwner, Observer {
       view_enable_pixel?.isChecked = it
       val drawableRes = if (it) R.drawable.ic_twotone_gradient else R.drawable.ic_twotone_image
       icon_enable_pixel?.setImageDrawable(target().drawableRes(drawableRes))
     })
-    WallpaperConfig.asLiveData(WallpaperConfig::notification).observe(this, Observer {
+    WallpaperConfig.asLiveData(WallpaperConfig::notification).observe(viewLifecycleOwner, Observer {
       view_enable_notification?.isChecked = it
       val drawableRes = if (it) R.drawable.ic_twotone_notifications_active else R.drawable.ic_twotone_notifications_off
       icon_enable_notification?.setImageDrawable(target().drawableRes(drawableRes))

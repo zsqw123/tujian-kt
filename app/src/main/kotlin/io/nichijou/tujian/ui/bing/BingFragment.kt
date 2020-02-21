@@ -1,5 +1,7 @@
 package io.nichijou.tujian.ui.bing
 
+import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,13 +21,14 @@ class BingFragment : BaseFragment() {
 
   private val bingViewModel by viewModel<BingViewModel>()
 
-  override fun handleOnViewCreated() {
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
     initView()
     initViewModel()
   }
 
   private fun initViewModel() {
-    bingViewModel.getBing().observe(this@BingFragment, Observer(adapter::submitList))
+    bingViewModel.getBing().observe(viewLifecycleOwner, Observer(adapter::submitList))
   }
 
   private val adapter by lazy(LazyThreadSafetyMode.NONE) { BingAdapter() }
