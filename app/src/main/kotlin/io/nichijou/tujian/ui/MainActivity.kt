@@ -10,6 +10,7 @@ import android.widget.FrameLayout
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.afollestad.assent.Permission
@@ -48,22 +49,28 @@ import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
   override fun onCreate(savedInstanceState: Bundle?) {
+    Oops.attach(this)
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
-//    if (Oops.immed().isFirstTime) {
-//      val def = ContextCompat.getColor(this@MainActivity, R.color.def)
-//      Oops.bulk {
-//        theme = R.style.AppTheme
-//        windowBackground = Color.WHITE
-//        statusBarColor = 0
-//        colorAccent = def
-//        textColorPrimary = Color.BLACK
-//        textColorSecondary = Color.DKGRAY
-//        toolbarIconColor = def
-//        toolbarTitleColor = def
-//        swipeRefreshLayoutBackgroundColor = Color.WHITE
-//      }
-//    }
+    if (Oops.immed().isFirstTime) {
+      val def = ContextCompat.getColor(this@MainActivity, R.color.def)
+      Oops.bulk {
+        theme = R.style.AppTheme
+        windowBackground = Color.WHITE
+        statusBarColor = 0
+        colorAccent = def
+        textColorPrimary = Color.BLACK
+        textColorSecondary = Color.DKGRAY
+        toolbarIconColor = def
+        toolbarTitleColor = def
+        swipeRefreshLayoutBackgroundColor = Color.WHITE
+      }
+    }
+    Oops.bulk {
+      statusBarColor = 0// 设置状态栏颜色
+      navBarColor=0
+      setLightStatusBarCompat(isDark)
+    }
     if (Settings.enableFaceDetection) {
       askForPermissions(
         Permission.READ_EXTERNAL_STORAGE,
@@ -105,7 +112,6 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
     swipeConsumer = SmartSwipe.wrap(this).addConsumer(SlidingConsumer())
       .setHorizontalDrawerView(slide).setScrimColor(Color.parseColor("#9A000000"))// 侧滑
     translucentStatusBar(true)// 状态栏沉浸
-    window.navigationBarColor = Color.TRANSPARENT
     replaceFragmentInActivity(TodayFragment.newInstance())
 
     slide_today.setOnClickListener { replaceFragmentInActivity(TodayFragment.newInstance()) }

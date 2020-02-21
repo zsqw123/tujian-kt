@@ -3,13 +3,11 @@ package io.nichijou.tujian.ext
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_FADE
 import com.billy.android.swipe.SmartSwipeWrapper
 import com.billy.android.swipe.SwipeConsumer
 import com.billy.android.swipe.listener.SwipeListener
 import io.nichijou.tujian.R
 import io.nichijou.tujian.ui.MainActivity
-import io.nichijou.tujian.ui.today.TodayFragment
 import java.util.*
 
 
