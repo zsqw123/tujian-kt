@@ -6,7 +6,6 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.billy.android.swipe.SwipeConsumer
-import com.yarolegovich.slidingrootnav.util.DrawerToggleListenerAdapter
 import io.nichijou.tujian.ext.FragmentBackHandler
 import io.nichijou.tujian.ext.handleBackPress
 import io.nichijou.tujian.ext.target
@@ -66,7 +65,6 @@ abstract class BaseFragment : Fragment(), FragmentBackHandler {
     return false
   }
 
-  private lateinit var drawerToggleListenerAdapter: DrawerToggleListenerAdapter
   private lateinit var toggle: ActionBarDrawerToggle
 
   protected fun setupDrawerWithToolbar(toolbar: Toolbar) {
@@ -74,8 +72,6 @@ abstract class BaseFragment : Fragment(), FragmentBackHandler {
     activity.setSupportActionBar(toolbar)
     toolbar.setNavigationOnClickListener {
       MainActivity.swipeConsumer!!.open(true, SwipeConsumer.DIRECTION_LEFT)
-    }
-    if (activity is MainActivity) {
     }
   }
 
@@ -85,8 +81,6 @@ abstract class BaseFragment : Fragment(), FragmentBackHandler {
 
   override fun onDestroyView() {
     val activity = target()
-    if (activity is MainActivity && ::drawerToggleListenerAdapter.isInitialized) {
-    }
     super.onDestroyView()
   }
 }

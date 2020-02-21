@@ -9,7 +9,6 @@ import io.nichijou.tujian.common.entity.Picture
 import io.nichijou.tujian.common.ext.sbl
 import io.nichijou.tujian.paging.LoadState
 import io.nichijou.tujian.paging.Status
-import io.nichijou.viewer.Viewer
 import jp.wasabeef.recyclerview.animators.LandingAnimator
 import kotlinx.android.synthetic.main.fragment_list.*
 import org.jetbrains.anko.support.v4.toast
@@ -53,7 +52,6 @@ class ListFragment : BaseFragment() {
       Status.SUCCESS,
       Status.FINISHED -> {
         refresh_layout.isRefreshing = false
-        viewer?.updateImages(adapter.currentList)
       }
       Status.FAILED -> {
         refresh_layout?.sbl("${state.msg}\n是否重试", "重试", {
@@ -64,8 +62,6 @@ class ListFragment : BaseFragment() {
       }
     }
   }
-
-  private var viewer: Viewer<Picture>? = null
 
   private val adapter by lazy(LazyThreadSafetyMode.NONE) {
     ListAdapter { _, a, pos ->
