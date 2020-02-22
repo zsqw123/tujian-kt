@@ -8,6 +8,8 @@ import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.list.listItems
 import io.nichijou.oops.Oops
 import io.nichijou.oops.ext.setMarginTopPlusStatusBarHeight
 import io.nichijou.tujian.R
@@ -63,6 +65,7 @@ class UploadFragment : BaseFragment() {
         field_url?.setText(it)
         toast("图片已上传 请填写信息")
         overlay_progress.makeGone()
+        overlay.makeVisible()
       }
     })
     uploadViewModel.result.observe(viewLifecycleOwner, Observer {
@@ -94,12 +97,23 @@ class UploadFragment : BaseFragment() {
         return@setOnClickListener
       }
       val posterEmail = field_poster_email.text.toString()
-      val upload = Upload(title, desc, url, poster, "4ac1c07f-a9f7-11e8-a8ea-0202761b0892", posterEmail)
-      uploadViewModel.post(upload, { _, _ ->
-        run { Looper.prepare();toast("投稿成功");Looper.loop() }
-      }, { _, _ ->
-        run { Looper.prepare();toast("投稿失败");Looper.loop() }
-      })
+      MaterialDialog(target()).title(text = "投稿分类").icon(R.mipmap.ic_launcher).show {
+        listItems(items = listOf("摄影", "插画", "桌面")) { _, i, _ ->
+          val sort = when (i) {
+            0 -> "5398f27b-a9f7-11e8-a8ea-0202761b0892"
+            2 -> "e5771003-b4ed-11e8-a8ea-0202761b0892"
+            else -> "4ac1c07f-a9f7-11e8-a8ea-0202761b0892"
+          }
+          val upload = Upload(title, desc, url, poster, sort, posterEmail)
+          target().application.toast("开始投稿")
+          uploadViewModel.post(upload, { _, _ ->
+            run { Looper.prepare();toast("投稿成功");Looper.loop() }
+          }, { _, _ ->
+            run { Looper.prepare();toast("投稿失败,可尝试切换分类");Looper.loop() }
+          })
+        }
+      }
+
     }
   }
 
@@ -113,6 +127,7 @@ class UploadFragment : BaseFragment() {
           field_url?.text = null
           toast("正在上传图片")
           overlay_progress.makeVisible()
+          overlay.makeGone()
           uploadViewModel.upload(uri)
         }
         Activity.RESULT_CANCELED -> {

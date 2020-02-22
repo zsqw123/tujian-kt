@@ -106,7 +106,6 @@ class SettingsFragment : BaseFragment(), View.OnClickListener, SeekBar.OnSeekBar
     initView()
   }
 
-  private val mainViewModel by activityViewModels<MainViewModel>()
   @SuppressLint("SetTextI18n")
   private fun initView() {
     applyOopsThemeStore {

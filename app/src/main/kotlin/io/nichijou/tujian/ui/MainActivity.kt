@@ -2,17 +2,13 @@ package io.nichijou.tujian.ui
 
 import android.graphics.Color
 import android.graphics.Point
-import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.SystemClock
 import android.view.MotionEvent
-import android.view.View
 import android.widget.FrameLayout
 import androidx.annotation.ColorInt
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.afollestad.assent.Permission
@@ -27,12 +23,10 @@ import io.nichijou.oops.Oops
 import io.nichijou.oops.ext.*
 import io.nichijou.tujian.R
 import io.nichijou.tujian.Settings
-import io.nichijou.tujian.base.BaseFragment
 import io.nichijou.tujian.common.db.TujianStore
 import io.nichijou.tujian.common.ext.asLiveData
 import io.nichijou.tujian.ext.addFragmentToActivity
 import io.nichijou.tujian.ext.handleBackPress
-import io.nichijou.tujian.ext.replaceFragmentInActivity
 import io.nichijou.tujian.isDark
 import io.nichijou.tujian.ui.about.AboutFragment
 import io.nichijou.tujian.ui.archive.ArchiveFragment
@@ -43,7 +37,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
-import me.yokeyword.fragmentation.ISupportFragment
 import me.yokeyword.fragmentation.SupportActivity
 import me.yokeyword.fragmentation.SupportFragment
 import org.jetbrains.anko.matchParent
