@@ -25,6 +25,7 @@ import io.nichijou.tujian.R
 import io.nichijou.tujian.Settings
 import io.nichijou.tujian.common.db.TujianStore
 import io.nichijou.tujian.common.ext.asLiveData
+import io.nichijou.tujian.common.ext.isNavigationBarEnabled
 import io.nichijou.tujian.ext.addFragmentToActivity
 import io.nichijou.tujian.ext.handleBackPress
 import io.nichijou.tujian.isDark
