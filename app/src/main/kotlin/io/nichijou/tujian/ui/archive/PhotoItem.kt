@@ -23,6 +23,7 @@ import io.nichijou.tujian.common.ext.shareString
 import io.nichijou.tujian.isDark
 import kotlinx.android.synthetic.main.photo_item_layout.view.*
 import kotlinx.android.synthetic.main.photo_item_viewpager_layout.*
+import org.jetbrains.anko.isSelectable
 import org.jetbrains.anko.toast
 
 class Viewpager2Adapter(private val data: ArrayList<Picture>) :
@@ -68,6 +69,7 @@ class PhotoItem(val list: ArrayList<Picture>, private val nowPos: Int) : DialogF
     photo_item_viewpager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
       override fun onPageSelected(position: Int) {
         super.onPageSelected(position)
+        photo_item_desc.isSelectable = false
         RichText.fromMarkdown(list[position].desc.replace("\n", "  \n")).linkFix { linkHolder ->
           linkHolder!!.color = if (isDark()) Color.parseColor("#22EB4F") else Color.parseColor("#DD14B0")
           linkHolder.isUnderLine = false
