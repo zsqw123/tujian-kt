@@ -43,4 +43,13 @@
     <item name="android:textStyle">bold</item>
     <item name="android:textSize">18sp</item>
   </style>
+
+  <style name="SplashTheme" parent="AppTheme">
+    <item name="android:windowTranslucentStatus">false</item>
+    <item name="android:windowFullscreen">true</item>
+  </style>
+  <style name="SplashThemeDark" parent="AppTheme">
+    <item name="android:windowTranslucentStatus">false</item>
+    <item name="android:windowFullscreen">true</item>
+  </style>
 </resources>

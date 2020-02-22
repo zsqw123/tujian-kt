@@ -25,7 +25,6 @@ import io.nichijou.tujian.R
 import io.nichijou.tujian.Settings
 import io.nichijou.tujian.common.db.TujianStore
 import io.nichijou.tujian.common.ext.asLiveData
-import io.nichijou.tujian.common.ext.isNavigationBarEnabled
 import io.nichijou.tujian.ext.addFragmentToActivity
 import io.nichijou.tujian.ext.handleBackPress
 import io.nichijou.tujian.isDark
@@ -40,6 +39,7 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import me.yokeyword.fragmentation.SupportActivity
 import me.yokeyword.fragmentation.SupportFragment
+import org.jetbrains.anko.dip
 import org.jetbrains.anko.matchParent
 import org.jetbrains.anko.textColor
 import org.jetbrains.anko.toast
@@ -108,6 +108,8 @@ class MainActivity : SupportActivity(), CoroutineScope by MainScope() {
     slide.layoutParams = FrameLayout.LayoutParams(point.x * 3 / 4, matchParent)
     swipeConsumer = SmartSwipe.wrap(this).addConsumer(SlidingConsumer())
       .setHorizontalDrawerView(slide).setScrimColor(Color.parseColor("#9A000000"))// 侧滑
+    swipeConsumer!!.edgeSize = dip(20)
+    swipeConsumer!!.openDistance = dip(10)
     translucentStatusBar(true)// 状态栏沉浸
     var mFragments = arrayOfNulls<SupportFragment>(5)
     if (findFragment(TodayFragment::class.java) == null) {
