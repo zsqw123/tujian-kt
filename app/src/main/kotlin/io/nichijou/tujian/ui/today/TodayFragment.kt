@@ -9,12 +9,9 @@ import android.text.style.RelativeSizeSpan
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
-import android.view.View.NO_ID
-import android.view.ViewGroup
 import android.view.animation.OvershootInterpolator
 import android.widget.ArrayAdapter
 import android.widget.ListPopupWindow
-import androidx.core.view.children
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.palette.graphics.Palette
@@ -42,6 +39,7 @@ import io.nichijou.tujian.ui.MainViewModel
 import io.nichijou.tujian.ui.archive.getNewUrl
 import jp.wasabeef.recyclerview.animators.LandingAnimator
 import kotlinx.android.synthetic.main.fragment_today.*
+import org.jetbrains.anko.isSelectable
 import org.jetbrains.anko.support.v4.toast
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
@@ -72,6 +70,7 @@ class TodayFragment : BaseFragment() {
           "更新内容: ${UpdateTujian.log}  \n\n[跳转下载](${UpdateTujian.url})"
         message(text = UpdateTujian.name) {
           val tv = messageTextView
+          tv.isSelectable = false
           RichText.fromMarkdown(mdText).linkFix { holder ->
             holder!!.color = getThemeColor()
             holder.isUnderLine = false
@@ -109,6 +108,7 @@ class TodayFragment : BaseFragment() {
   private fun bindInfo() {
     currentPicture?.let {
       toolbar.title = it.title
+      desc.isSelectable = false
       RichText.fromMarkdown(it.desc.replace("\n", "  \n")).linkFix { holder ->
         holder!!.color = getThemeColor()
         holder.isUnderLine = false

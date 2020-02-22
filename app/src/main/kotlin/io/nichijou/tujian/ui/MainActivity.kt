@@ -39,10 +39,7 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import me.yokeyword.fragmentation.SupportActivity
 import me.yokeyword.fragmentation.SupportFragment
-import org.jetbrains.anko.dip
-import org.jetbrains.anko.matchParent
-import org.jetbrains.anko.textColor
-import org.jetbrains.anko.toast
+import org.jetbrains.anko.*
 import org.koin.android.ext.android.inject
 import kotlin.system.exitProcess
 
@@ -92,6 +89,7 @@ class MainActivity : SupportActivity(), CoroutineScope by MainScope() {
         cancelable(false)
         message(R.string.fei_hua) {
           val text = messageTextView
+          text.isSelectable = false
           RichText.fromMarkdown(getString(R.string.fei_hua)).linkFix { holder ->
             holder!!.color = if (isDark()) Color.parseColor("#22EB4F") else Color.parseColor("#DD14B0")
             holder.isUnderLine = false
@@ -109,7 +107,6 @@ class MainActivity : SupportActivity(), CoroutineScope by MainScope() {
     swipeConsumer = SmartSwipe.wrap(this).addConsumer(SlidingConsumer())
       .setHorizontalDrawerView(slide).setScrimColor(Color.parseColor("#9A000000"))// 侧滑
     swipeConsumer!!.edgeSize = dip(20)
-    swipeConsumer!!.openDistance = dip(10)
     translucentStatusBar(true)// 状态栏沉浸
     var mFragments = arrayOfNulls<SupportFragment>(5)
     if (findFragment(TodayFragment::class.java) == null) {
