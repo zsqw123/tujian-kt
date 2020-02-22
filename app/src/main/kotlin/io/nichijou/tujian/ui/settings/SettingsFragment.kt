@@ -3,11 +3,9 @@ package io.nichijou.tujian.ui.settings
 import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.SeekBar
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import io.nichijou.oops.Oops
@@ -24,9 +22,7 @@ import io.nichijou.tujian.common.ext.dp2px
 import io.nichijou.tujian.common.ext.setMarginTopPlusStatusBarHeight
 import io.nichijou.tujian.ext.addFragmentToActivity
 import io.nichijou.tujian.ext.target
-import io.nichijou.tujian.isDark
 import io.nichijou.tujian.ui.MainActivity
-import io.nichijou.tujian.ui.MainViewModel
 import kotlinx.android.synthetic.main.fragment_settings.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

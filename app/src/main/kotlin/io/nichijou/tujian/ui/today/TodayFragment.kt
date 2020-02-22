@@ -43,7 +43,6 @@ import io.nichijou.tujian.ui.archive.getNewUrl
 import jp.wasabeef.recyclerview.animators.LandingAnimator
 import kotlinx.android.synthetic.main.fragment_today.*
 import org.jetbrains.anko.support.v4.toast
-import org.jetbrains.anko.windowManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 import kotlin.collections.set
@@ -173,7 +172,7 @@ class TodayFragment : BaseFragment() {
       view_pager.dispatchTouchEvent(event)
       true
     }
-
+    if (context!!.isNavigationBarEnabled()) content_overlay.setMarginBottomPlusNavBarHeight()
     val vp = activity!!.window.decorView as ViewGroup
     for (i in vp.children) {
       i.context.packageName;
