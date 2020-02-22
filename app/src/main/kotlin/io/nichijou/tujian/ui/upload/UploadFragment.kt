@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.Looper
+import android.text.Editable
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -14,8 +15,10 @@ import io.nichijou.oops.Oops
 import io.nichijou.oops.ext.setMarginTopPlusStatusBarHeight
 import io.nichijou.tujian.R
 import io.nichijou.tujian.Settings
+import io.nichijou.tujian.UserData
 import io.nichijou.tujian.base.BaseFragment
 import io.nichijou.tujian.common.entity.Upload
+import io.nichijou.tujian.common.ext.asLiveData
 import io.nichijou.tujian.common.ext.makeGone
 import io.nichijou.tujian.common.ext.makeVisible
 import io.nichijou.tujian.common.fresco.load
@@ -71,6 +74,8 @@ class UploadFragment : BaseFragment() {
     uploadViewModel.result.observe(viewLifecycleOwner, Observer {
       target().application.toast(it.toString())
     })
+    field_poster.setText(UserData.name)
+    field_poster_email.setText(UserData.email)
     submit?.setOnClickListener {
       if (!Settings.feiHua) {
         target().application.toast("未同意许可协议，无法投稿")
@@ -92,11 +97,13 @@ class UploadFragment : BaseFragment() {
         return@setOnClickListener
       }
       val poster = field_poster.text.toString()
+      UserData.name = poster
       if (poster.isBlank()) {
         target().application.toast("请填写投稿人")
         return@setOnClickListener
       }
       val posterEmail = field_poster_email.text.toString()
+      UserData.email = posterEmail
       MaterialDialog(target()).title(text = "投稿分类").icon(R.mipmap.ic_launcher).show {
         listItems(items = listOf("摄影", "插画", "桌面")) { _, i, _ ->
           val sort = when (i) {
