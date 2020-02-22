@@ -16,5 +16,6 @@ class C {
     const val API_TODAY = "/today"
     const val API_UPLOAD = "https://img.dpic.dev/upload"
     const val API_UPDATE = "https://aus.nowtime.cc/api/query/update?appid=11943"
+    const val API_SPLASH = "https://v2.api.dailypics.cn/app/splash"
   }
 }

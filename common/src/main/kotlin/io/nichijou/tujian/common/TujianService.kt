@@ -31,4 +31,7 @@ interface TujianService {
 
   @GET
   suspend fun update(@Url url: String = C.API_UPDATE): Response<UpdateResp>
+
+  @GET
+  suspend fun splash(@Url url: String = C.API_SPLASH): Response<SplashResp>
 }

@@ -44,6 +44,7 @@ import jp.wasabeef.recyclerview.animators.LandingAnimator
 import kotlinx.android.synthetic.main.fragment_today.*
 import org.jetbrains.anko.support.v4.toast
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.set
 
@@ -103,7 +104,6 @@ class TodayFragment : BaseFragment() {
     TabLayoutMediator(tab, view_pager) { tab, position ->
       tab.text = pictures[position].category
     }.attach()
-    content_overlay
   }
 
   private fun bindInfo() {
@@ -166,20 +166,15 @@ class TodayFragment : BaseFragment() {
         return true
       }
     })
+
     content_overlay.setOnTouchListener { v, event ->
       if (event.action == MotionEvent.ACTION_UP) v.performClick()
       singleGestureDetector.onTouchEvent(event)
       view_pager.dispatchTouchEvent(event)
       true
     }
+    date.text = SimpleDateFormat("MM-dd", Locale.CHINA).format(Date())
     if (context!!.isNavigationBarEnabled()) content_overlay.setMarginBottomPlusNavBarHeight()
-    val vp = activity!!.window.decorView as ViewGroup
-    for (i in vp.children) {
-      i.context.packageName;
-      if (i.id != NO_ID && "navigationBarBackground" == activity!!.resources.getResourceEntryName(i.id)) {
-        content_overlay.setMarginBottomPlusNavBarHeight()
-      }
-    }
   }
 
   private fun applyPalette(palette: Palette) {
