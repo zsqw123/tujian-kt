@@ -22,6 +22,11 @@ object Settings : KotprefModel() {
   var feiHua: Boolean by booleanPref(false)// 是否同意废话
 }
 
+object UserData : KotprefModel() {
+  var email: String by stringPref()
+  var name: String by stringPref()
+}
+
 fun isDark(): Boolean {
   return when (Settings.darkModeInt) {
     0 -> true
