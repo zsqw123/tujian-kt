@@ -17,7 +17,14 @@
     android:layout_gravity="bottom"
     android:background="#9E000000"
     android:text="5555"
+    android:maxLines="9"
     android:textSize="16sp"
     android:textColor="#A0FFFFFF"
     android:textStyle="bold" />
+
+  <io.nichijou.oops.widget.ProgressBar
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/photo_item_progress"
+   android:layout_gravity="center"/>
 </FrameLayout>
