@@ -1,22 +1,11 @@
 package io.nichijou.tujian
 
-import android.graphics.Bitmap
-import android.graphics.Color
-import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.view.Gravity
-import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.load.resource.SimpleResource
-import com.bumptech.glide.request.Request
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.SizeReadyCallback
-import com.bumptech.glide.request.target.Target
-import com.bumptech.glide.request.transition.Transition
+import com.bumptech.glide.TransitionOptions
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.chibatching.kotpref.Kotpref
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -50,14 +39,11 @@ class SplashActivity : AppCompatActivity() {
     Oops.init(this)
     Kotpref.init(appContext)
     val isDark: Boolean = isDark()
+    val imgID: Int = if (isDark) R.mipmap.splash_night else R.mipmap.splash
     frameLayout {
-      textView("图鉴\n日图"){
-        textSize = sp(40).toFloat()
-        gravity=Gravity.CENTER
-      }
       imageView {
+        imageResource = imgID
         id = R.id.splash
-        visibility = View.INVISIBLE
         scaleType = ImageView.ScaleType.CENTER_CROP
       }.lparams(matchParent, matchParent)
     }
@@ -91,7 +77,7 @@ class SplashActivity : AppCompatActivity() {
       .addConverterFactory(MoshiConverterFactory.create(Moshi.Builder()
         .add(BingUrlAdapter()).add(KotlinJsonAdapterFactory()).build())).build()
     val splahService = retrofit.create(SplahService::class.java)
-    GlobalScope.launch() {
+    GlobalScope.launch {
       val call = splahService.splash()
       if (call.isSuccessful) {
         val body = call.body()
@@ -101,13 +87,8 @@ class SplashActivity : AppCompatActivity() {
         } else {
           runOnUiThread {
             val view = findViewById<ImageView>(R.id.splash)
-            Glide.with(this@SplashActivity).load(url).listener(object : RequestListener<Drawable> {
-              override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean = false
-              override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                view.visibility = View.VISIBLE
-                return false
-              }
-            }).into(view)
+            Glide.with(this@SplashActivity).load(url).placeholder(imgID)
+              .transition(DrawableTransitionOptions.withCrossFade(300)).into(view)
           }
         }
       }
