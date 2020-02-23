@@ -2,8 +2,8 @@ package io.nichijou.tujian.ui.archive
 
 import android.content.Context
 import android.graphics.Color
-import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.*
 import android.widget.ImageView
@@ -13,20 +13,25 @@ import androidx.viewpager2.widget.ViewPager2
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItems
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.zzhoujay.richtext.RichText
 import io.nichijou.tujian.R
-import io.nichijou.tujian.Settings
 import io.nichijou.tujian.common.entity.Picture
 import io.nichijou.tujian.common.entity.setWallpaper
 import io.nichijou.tujian.common.ext.ViewHolder
+import io.nichijou.tujian.common.ext.makeGone
+import io.nichijou.tujian.common.ext.makeVisible
 import io.nichijou.tujian.common.ext.shareString
 import io.nichijou.tujian.isDark
 import kotlinx.android.synthetic.main.photo_item_layout.view.*
 import kotlinx.android.synthetic.main.photo_item_viewpager_layout.*
+import kotlinx.android.synthetic.main.photo_item_viewpager_layout.view.*
 import org.jetbrains.anko.isSelectable
-import org.jetbrains.anko.toast
 
-class Viewpager2Adapter(private val data: ArrayList<Picture>) :
+class Viewpager2Adapter(private val data: ArrayList<Picture>, val parentView: View) :
   RecyclerView.Adapter<RecyclerView.ViewHolder>() {
   private var items: ArrayList<Picture> = data
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -39,7 +44,14 @@ class Viewpager2Adapter(private val data: ArrayList<Picture>) :
     val photoView = item.photo_item
     photoView.enable()
     photoView.scaleType = ImageView.ScaleType.CENTER_CROP
-    Glide.with(item.context).load(getNewUrl(items[position])).into(photoView)
+    Glide.with(item.context).load(getNewUrl(items[position]) + "!w1080").listener(object : RequestListener<Drawable> {
+      override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean) = false
+      override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+        val view = parentView.photo_item_progress
+        view?.makeGone()
+        return false
+      }
+    }).into(photoView)
     photoView.setOnLongClickListener {
       toolDialog(item.context, items[position])
       return@setOnLongClickListener true
@@ -65,10 +77,11 @@ class PhotoItem(val list: ArrayList<Picture>, private val nowPos: Int) : DialogF
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     photo_item_viewpager_layout.background = ColorDrawable(Color.TRANSPARENT)
-    photo_item_viewpager.adapter = Viewpager2Adapter(list)
+    photo_item_viewpager.adapter = Viewpager2Adapter(list, view)
     photo_item_viewpager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
       override fun onPageSelected(position: Int) {
         super.onPageSelected(position)
+        photo_item_progress.makeVisible()
         photo_item_desc.isSelectable = false
         RichText.fromMarkdown(list[position].desc.replace("\n", "  \n")).linkFix { linkHolder ->
           linkHolder!!.color = if (isDark()) Color.parseColor("#22EB4F") else Color.parseColor("#DD14B0")
