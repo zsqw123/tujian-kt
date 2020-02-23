@@ -88,7 +88,6 @@ class TodayFragment : BaseFragment() {
       return
     }
     if (content == null) return
-    content.makeVisible()
     fab.makeVisible()
     currentPicture = pictures[0]
     bindInfo()// bind once
