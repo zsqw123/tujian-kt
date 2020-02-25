@@ -82,9 +82,9 @@
             android:layout_marginEnd="5dp"
             android:background="@drawable/conner_view"
             android:textColor="#FFFFFF"
-            android:visibility="invisible"
             android:textSize="12sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:visibility="invisible" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -105,10 +105,10 @@
           android:layout_marginTop="8dp"
           android:layout_marginEnd="16dp"
           android:layout_marginBottom="8dp"
+          android:text="正在加载今日图片..."
           android:textColor="?android:textColorSecondary"
           android:textIsSelectable="true"
           android:textSize="14sp"
-          android:text="正在加载今日图片..."
           android:textStyle="bold" />
 
         <com.google.android.material.tabs.TabLayout

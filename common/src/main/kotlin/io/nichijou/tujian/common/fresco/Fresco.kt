@@ -75,7 +75,7 @@ fun SimpleDraweeView.load(
 ) {
   if (uri == null) return
   if (headers != null) {
-    OkHttpNetworkFetcher.HEADERS[uri.toString()] = headers
+//    OkHttpNetworkFetcher.HEADERS[uri.toString()] = headers
   }
   val hierarchyBuilder = GenericDraweeHierarchyBuilder.newInstance(context.resources)
     .setFadeDuration(fadeDuration)

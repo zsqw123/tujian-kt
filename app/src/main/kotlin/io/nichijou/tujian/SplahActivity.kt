@@ -19,6 +19,7 @@ import io.nichijou.tujian.ui.MainActivity
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import me.jessyan.progressmanager.ProgressManager
 import me.yokeyword.fragmentation.Fragmentation
 import okhttp3.OkHttpClient
 import org.jetbrains.anko.*
@@ -30,6 +31,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Url
+import java.lang.Exception
 
 class SplashActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,6 +48,7 @@ class SplashActivity : AppCompatActivity() {
         scaleType = ImageView.ScaleType.CENTER_CROP
       }.lparams(matchParent, matchParent)
     }
+    Oops.bulk { navBarColor = 0 }
 
     // Activity init
     GlobalScope.launch {
@@ -86,8 +89,10 @@ class SplashActivity : AppCompatActivity() {
         } else {
           runOnUiThread {
             val view = findViewById<ImageView>(R.id.splash)
-            Glide.with(this@SplashActivity).load(url).placeholder(imgID)
-              .transition(DrawableTransitionOptions.withCrossFade(300)).into(view)
+            try {
+              Glide.with(this@SplashActivity).load(url).placeholder(imgID)
+                .transition(DrawableTransitionOptions.withCrossFade(300)).into(view)
+            }catch (e:Exception){}
           }
         }
       }

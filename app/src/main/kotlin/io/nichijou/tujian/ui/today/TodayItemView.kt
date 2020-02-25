@@ -1,30 +1,27 @@
 package io.nichijou.tujian.ui.today
 
 import android.content.Context
-import android.net.Uri
+import android.graphics.drawable.Drawable
 import android.widget.FrameLayout
+import androidx.core.graphics.drawable.toBitmap
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.davemorrissey.labs.subscaleview.ImageSource
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
-import com.facebook.common.executors.UiThreadImmediateExecutorService
-import com.facebook.datasource.BaseDataSubscriber
-import com.facebook.datasource.DataSource
-import com.facebook.drawee.backends.pipeline.Fresco
-import com.facebook.imagepipeline.common.Priority
-import com.facebook.imagepipeline.request.ImageRequest
 import io.nichijou.tujian.R
 import io.nichijou.tujian.common.ext.getScreenHeight
 import io.nichijou.tujian.common.ext.getScreenWidth
 import io.nichijou.tujian.common.ext.makeGone
 import io.nichijou.tujian.common.ext.makeVisible
-import io.nichijou.tujian.common.fresco.getFileFromDiskCache
 import kotlinx.android.synthetic.main.view_today_item.view.*
+import org.jetbrains.anko.runOnUiThread
 import org.jetbrains.anko.toast
 
 class TodayItemView(context: Context) : FrameLayout(context), SubsamplingScaleImageView.OnImageEventListener {
 
   private var onImageDownloaded: (() -> Unit)? = null
   private var downloaded = false
-  private var dataSource: DataSource<Void>? = null
   private var hasAttachedWindow = false
   private val screenWidth by lazy(LazyThreadSafetyMode.NONE) { context.getScreenWidth().toFloat() }
   private val screenHeight by lazy(LazyThreadSafetyMode.NONE) { context.getScreenHeight().toFloat() }
@@ -85,7 +82,6 @@ class TodayItemView(context: Context) : FrameLayout(context), SubsamplingScaleIm
 
   fun updateUrl(url: String) {
     progress_wrapper?.makeVisible()
-    progress?.text = "0"
     if (this.tag != url) {
       actual_view?.recycle()
       actual_view?.invalidate()
@@ -95,48 +91,15 @@ class TodayItemView(context: Context) : FrameLayout(context), SubsamplingScaleIm
   }
 
   private fun loadActual(url: String) {
-    downloaded = false
-    val request = ImageRequest.fromUri(Uri.parse(url)) ?: return
-    val cached = request.getFileFromDiskCache()
-    if (cached != null && cached.exists()) {
-      actual_view?.setImage(ImageSource.uri(Uri.fromFile(cached)))
-      downloaded = true
-      onImageDownloaded?.invoke()
-      return
+    context.runOnUiThread {
+      Glide.with(context).load(url).into(object : CustomTarget<Drawable>() {
+        override fun onLoadCleared(placeholder: Drawable?) {}
+        override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
+          actual_view.setImage(ImageSource.bitmap(resource.toBitmap()))
+          onImageDownloaded?.invoke()
+        }
+      })
     }
-    val pipeline = Fresco.getImagePipeline()
-    dataSource = pipeline.prefetchToDiskCache(request, null, Priority.HIGH)
-    dataSource?.subscribe(object : BaseDataSubscriber<Void>() {
-      override fun onProgressUpdate(dataSource: DataSource<Void>) {
-        if (hasAttachedWindow) {
-          progress?.text = (dataSource.progress * 100).toInt().toString()
-        }
-      }
-
-      override fun onFailureImpl(dataSource: DataSource<Void>) {
-        showMsg(dataSource.failureCause?.message)
-        if (hasAttachedWindow) {
-          progress_wrapper?.makeGone()
-        }
-      }
-
-      override fun onNewResultImpl(dataSource: DataSource<Void>) {
-        if (dataSource.isFinished) {
-          loadFromCacheFile = {
-            val file = ImageRequest.fromUri(Uri.parse(url))?.getFileFromDiskCache()
-            if (file != null && file.exists() && hasAttachedWindow) {
-              actual_view?.setImage(ImageSource.uri(Uri.fromFile(file)))
-              downloaded = true
-              onImageDownloaded?.invoke()
-            } else {
-              progress_wrapper?.makeGone()
-              showMsg("file have not been loaded yet.")
-            }
-          }
-          postDelayed(loadFromCacheFile, 360)
-        }
-      }
-    }, UiThreadImmediateExecutorService.getInstance())
   }
 
   private fun showMsg(msg: String?) {
@@ -151,7 +114,6 @@ class TodayItemView(context: Context) : FrameLayout(context), SubsamplingScaleIm
   override fun onDetachedFromWindow() {
     hasAttachedWindow = false
     removeCallbacks(loadFromCacheFile)
-    dataSource?.close()
     super.onDetachedFromWindow()
   }
 }

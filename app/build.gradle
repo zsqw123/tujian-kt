@@ -87,15 +87,15 @@ dependencies {
   implementation 'androidx.palette:palette:1.0.0'
   implementation "com.google.android.material:material:${rootProject.versions.material}"
   implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta4'
-  implementation 'androidx.fragment:fragment:1.2.1'
-  implementation 'androidx.fragment:fragment-ktx:1.2.1'
+  implementation "androidx.fragment:fragment:${rootProject.versions.fragment}"
+  implementation "androidx.fragment:fragment-ktx:${rootProject.versions.fragment}"
   implementation "androidx.lifecycle:lifecycle-common-java8:${rootProject.versions.lifecycle}"
   implementation "androidx.lifecycle:lifecycle-extensions:${rootProject.versions.lifecycle}"
   implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${rootProject.versions.lifecycle}"
   implementation "androidx.lifecycle:lifecycle-runtime-ktx:${rootProject.versions.lifecycle}"
   implementation "androidx.lifecycle:lifecycle-livedata-ktx:${rootProject.versions.lifecycle}"
   implementation "androidx.paging:paging-runtime-ktx:2.1.1"
-  implementation 'androidx.work:work-runtime-ktx:2.3.1'
+  implementation 'androidx.work:work-runtime-ktx:2.3.2'
   implementation "androidx.room:room-runtime:${rootProject.versions.room}"
   kapt "androidx.room:room-compiler:${rootProject.versions.room}"
   implementation "androidx.room:room-ktx:${rootProject.versions.room}"
@@ -117,8 +117,6 @@ dependencies {
   implementation "com.github.bumptech.glide:glide:${rootProject.versions.glide}"
   implementation "com.github.bumptech.glide:okhttp3-integration:${rootProject.versions.glide}"
   kapt 'com.github.bumptech.glide:compiler:4.11.0'
-  implementation 'me.jessyan:progressmanager:1.5.0'//glide进度
-
   // PhotoView
   implementation "com.bm.photoview:library:${rootProject.versions.photoview}"
   // Runtime Permissions
@@ -141,9 +139,10 @@ dependencies {
   implementation 'com.github.florent37:shapeofview:1.4.7'
   // 侧滑
   implementation 'com.billy.android:smart-swipe:1.1.2'
-  // fragment管理
+  // fragment 管理
   implementation 'me.xuexuan:fragmentationx:1.0.4'
-
+  // Glide 加载监听
+  implementation 'me.jessyan:progressmanager:1.5.0'
   // Debug by Chrome
   // implementation "com.facebook.stetho:stetho:${rootProject.versions.stetho}"
   // implementation "com.facebook.stetho:stetho-okhttp3:${rootProject.versions.stetho}"

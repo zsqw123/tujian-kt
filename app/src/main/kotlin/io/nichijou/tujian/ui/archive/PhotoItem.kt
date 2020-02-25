@@ -29,7 +29,13 @@ import io.nichijou.tujian.isDark
 import kotlinx.android.synthetic.main.photo_item_layout.view.*
 import kotlinx.android.synthetic.main.photo_item_viewpager_layout.*
 import kotlinx.android.synthetic.main.photo_item_viewpager_layout.view.*
+import me.jessyan.progressmanager.ProgressListener
+import me.jessyan.progressmanager.ProgressManager
+import me.jessyan.progressmanager.body.ProgressInfo
+import okhttp3.OkHttpClient
 import org.jetbrains.anko.isSelectable
+import org.jetbrains.anko.toast
+import java.lang.Exception
 
 class Viewpager2Adapter(private val data: ArrayList<Picture>, val parentView: View) :
   RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -44,7 +50,17 @@ class Viewpager2Adapter(private val data: ArrayList<Picture>, val parentView: Vi
     val photoView = item.photo_item
     photoView.enable()
     photoView.scaleType = ImageView.ScaleType.CENTER_CROP
-    Glide.with(item.context).load(getNewUrl(items[position]) + "!w1080").listener(object : RequestListener<Drawable> {
+    val pic1080: String = getNewUrl(items[position]) + "!w1080"
+
+//    ProgressManager.getInstance().with(OkHttpClient.Builder()).build()
+    ProgressManager.getInstance().addRequestListener(pic1080, object : ProgressListener {
+      override fun onProgress(progressInfo: ProgressInfo) {
+        println("proText")
+      }
+      override fun onError(id: Long, e: Exception?) {}
+    })
+
+    Glide.with(item.context).load(pic1080).listener(object : RequestListener<Drawable> {
       override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean) = false
       override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
         val view = parentView.photo_item_progress
@@ -52,6 +68,7 @@ class Viewpager2Adapter(private val data: ArrayList<Picture>, val parentView: Vi
         return false
       }
     }).into(photoView)
+
     photoView.setOnLongClickListener {
       toolDialog(item.context, items[position])
       return@setOnLongClickListener true
