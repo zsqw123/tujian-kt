@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.Looper
-import android.text.Editable
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -18,7 +17,6 @@ import io.nichijou.tujian.Settings
 import io.nichijou.tujian.UserData
 import io.nichijou.tujian.base.BaseFragment
 import io.nichijou.tujian.common.entity.Upload
-import io.nichijou.tujian.common.ext.asLiveData
 import io.nichijou.tujian.common.ext.makeGone
 import io.nichijou.tujian.common.ext.makeVisible
 import io.nichijou.tujian.common.fresco.load

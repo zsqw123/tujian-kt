@@ -6,14 +6,21 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
+import android.media.ThumbnailUtils
 import android.os.Build
 import androidx.core.app.NotificationCompat
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.facebook.imagepipeline.request.ImageRequest
 import io.nichijou.tujian.common.R
 import io.nichijou.tujian.common.appwidget.*
 import io.nichijou.tujian.common.entity.Bing
 import io.nichijou.tujian.common.entity.Hitokoto
 import io.nichijou.tujian.common.entity.Picture
+import io.nichijou.tujian.common.entity.getNewUrl
 import io.nichijou.tujian.common.ext.ContentUriImageLoader
 import io.nichijou.tujian.common.ext.toURI
 import io.nichijou.tujian.common.fresco.getFileFromDiskCache
@@ -194,57 +201,61 @@ class NotificationController : BroadcastReceiver() {
       val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager?
         ?: return@launch
       createTujianAppWidgetNotificationChannel(context, notificationManager)
-      val pic = ImageRequest.fromUri(picture.local)?.getFileFromDiskCache() ?: return@launch
-      if (!pic.exists()) return@launch
       val largeIconHeight = context.resources.getDimensionPixelSize(android.R.dimen.notification_large_icon_height)
-      val uri = (pic.toURI(context) ?: return@launch)
-      val imageLoader = ContentUriImageLoader(context.contentResolver, uri)
-      val largeIcon = imageLoader.decode(largeIconHeight) ?: return@launch
-      val bigPicture = imageLoader.decode(400) ?: return@launch
-      val title = picture.title + " via " + picture.user
-      val style = NotificationCompat.BigPictureStyle()
-        .bigLargeIcon(null)
-        .setBigContentTitle(title)
-        .setSummaryText(picture.desc)
-        .bigPicture(bigPicture)
-      val notifyBuilder = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_TUJIAN)
-        .setAutoCancel(true)
-        .setPriority(NotificationCompat.PRIORITY_MAX)
-        .setGroup(NOTIFICATION_GROUP_TUJIAN)
-        .setTicker(context.getString(R.string.tujian_appwidget_updated))
-        .setSmallIcon(R.drawable.ic_tujian)
-        .setDefaults(NotificationCompat.DEFAULT_ALL)
-        .setLargeIcon(largeIcon)
-        .setContentTitle(title)
-        .setContentText(picture.desc)
-        .setStyle(style)
-      val nextPendingIntent = PendingIntent.getBroadcast(context, 0, Intent(context, NotificationController::class.java).setAction(ACTION_TUJIAN_NEXT), PendingIntent.FLAG_UPDATE_CURRENT)
-      val nextAction = NotificationCompat.Action.Builder(R.drawable.ic_round_navigate_next, context.getString(R.string.next), nextPendingIntent).build()
-      notifyBuilder.addAction(nextAction)
-      val copyIntent = Intent(context, NotificationController::class.java).setAction(ACTION_TUJIAN_COPY).putExtra("picture", picture)
-      val copyPendingIntent = PendingIntent.getBroadcast(context, 0, copyIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-      val copyAction = NotificationCompat.Action.Builder(R.drawable.ic_round_file_copy, context.getString(R.string.copy), copyPendingIntent).build()
-      notifyBuilder.addAction(copyAction)
-      val downloadIntent = Intent(context, NotificationController::class.java).setAction(ACTION_TUJIAN_DOWNLOAD).putExtra("picture", picture)
-      val downloadPendingIntent = PendingIntent.getBroadcast(context, 0, downloadIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-      val downloadAction = NotificationCompat.Action.Builder(R.drawable.ic_round_save_alt, context.getString(R.string.download), downloadPendingIntent).build()
-      notifyBuilder.addAction(downloadAction)
-      val copyHitokotoIntent = Intent(context, NotificationController::class.java).setAction(ACTION_TUJIAN_COPY_HITOKOTO).putExtra("hitokoto", hitokoto)
-      val copyHitokotoPendingIntent = PendingIntent.getBroadcast(context, 0, copyHitokotoIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-      val copyHitokotoAction = NotificationCompat.Action.Builder(R.drawable.ic_round_subtitles, context.getString(R.string.copy_hitokoto), copyHitokotoPendingIntent).build()
-      notifyBuilder.addAction(copyHitokotoAction)
-      val summaryNotification = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_TUJIAN)
-        .setContentTitle(context.getString(R.string.tujian_appwidget_updated))
-        .setContentText(context.getString(R.string.following_switched_tujian_appwidget))
-        .setSmallIcon(R.drawable.ic_tujian)
-        .setStyle(NotificationCompat.InboxStyle()
-          .setBigContentTitle(context.getString(R.string.following_switched_tujian_appwidget))
-          .setSummaryText(context.getString(R.string.already_switched_tujian_appwidget)))
-        .setGroup(NOTIFICATION_GROUP_TUJIAN)
-        .setGroupSummary(true)
-        .build()
-      notificationManager.notify(("${picture.pid}<=>$NOTIFICATION_CHANNEL_TUJIAN").hashCode(), notifyBuilder.build())
-      notificationManager.notify(NOTIFICATION_ID_TUJIAN, summaryNotification)
+
+      var glideBitmap: Bitmap?
+      Glide.with(context).asBitmap().load(getNewUrl(picture) + "!w480").into(object : CustomTarget<Bitmap>() {
+        override fun onLoadCleared(placeholder: Drawable?) {}
+        override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+          glideBitmap = resource
+
+          val title = picture.title + " via " + picture.user
+          val style = NotificationCompat.BigPictureStyle()
+            .bigLargeIcon(null)
+            .setBigContentTitle(title)
+            .setSummaryText(picture.desc)
+            .bigPicture(glideBitmap)
+          val notifyBuilder = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_TUJIAN)
+            .setAutoCancel(true)
+            .setPriority(NotificationCompat.PRIORITY_MAX)
+            .setGroup(NOTIFICATION_GROUP_TUJIAN)
+            .setTicker(context.getString(R.string.tujian_appwidget_updated))
+            .setSmallIcon(R.drawable.ic_tujian)
+            .setDefaults(NotificationCompat.DEFAULT_ALL)
+            .setLargeIcon(ThumbnailUtils.extractThumbnail(glideBitmap, largeIconHeight, largeIconHeight))
+            .setContentTitle(title)
+            .setContentText(picture.desc)
+            .setStyle(style)
+          val nextPendingIntent = PendingIntent.getBroadcast(context, 0, Intent(context, NotificationController::class.java).setAction(ACTION_TUJIAN_NEXT), PendingIntent.FLAG_UPDATE_CURRENT)
+          val nextAction = NotificationCompat.Action.Builder(R.drawable.ic_round_navigate_next, context.getString(R.string.next), nextPendingIntent).build()
+          notifyBuilder.addAction(nextAction)
+          val copyIntent = Intent(context, NotificationController::class.java).setAction(ACTION_TUJIAN_COPY).putExtra("picture", picture)
+          val copyPendingIntent = PendingIntent.getBroadcast(context, 0, copyIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+          val copyAction = NotificationCompat.Action.Builder(R.drawable.ic_round_file_copy, context.getString(R.string.copy), copyPendingIntent).build()
+          notifyBuilder.addAction(copyAction)
+          val downloadIntent = Intent(context, NotificationController::class.java).setAction(ACTION_TUJIAN_DOWNLOAD).putExtra("picture", picture)
+          val downloadPendingIntent = PendingIntent.getBroadcast(context, 0, downloadIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+          val downloadAction = NotificationCompat.Action.Builder(R.drawable.ic_round_save_alt, context.getString(R.string.download), downloadPendingIntent).build()
+          notifyBuilder.addAction(downloadAction)
+          val copyHitokotoIntent = Intent(context, NotificationController::class.java).setAction(ACTION_TUJIAN_COPY_HITOKOTO).putExtra("hitokoto", hitokoto)
+          val copyHitokotoPendingIntent = PendingIntent.getBroadcast(context, 0, copyHitokotoIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+          val copyHitokotoAction = NotificationCompat.Action.Builder(R.drawable.ic_round_subtitles, context.getString(R.string.copy_hitokoto), copyHitokotoPendingIntent).build()
+          notifyBuilder.addAction(copyHitokotoAction)
+          val summaryNotification = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_TUJIAN)
+            .setContentTitle(context.getString(R.string.tujian_appwidget_updated))
+            .setContentText(context.getString(R.string.following_switched_tujian_appwidget))
+            .setSmallIcon(R.drawable.ic_tujian)
+            .setStyle(NotificationCompat.InboxStyle()
+              .setBigContentTitle(context.getString(R.string.following_switched_tujian_appwidget))
+              .setSummaryText(context.getString(R.string.already_switched_tujian_appwidget)))
+            .setGroup(NOTIFICATION_GROUP_TUJIAN)
+            .setGroupSummary(true)
+            .build()
+          notificationManager.notify(("${picture.pid}<=>$NOTIFICATION_CHANNEL_TUJIAN").hashCode(), notifyBuilder.build())
+          notificationManager.notify(NOTIFICATION_ID_TUJIAN, summaryNotification)
+        }
+      })
+
     }
 
     private fun createWallpaperNotificationChannel(context: Context, notificationManager: NotificationManager) {
@@ -296,7 +307,7 @@ class NotificationController : BroadcastReceiver() {
     GlobalScope.launch {
       when (intent?.action) {
         ACTION_WALLPAPER_NEXT -> WallpaperWorker.enqueueLoad()
-        ACTION_TUJIAN_NEXT -> TujianAppWidgetWorker.enqueueLoad()
+        ACTION_TUJIAN_NEXT -> TujianAppWidgetWorker.enqueueLoad(context)
         ACTION_BING_NEXT -> BingAppWidgetWorker.enqueueLoad()
         ACTION_HITOKOTO_NEXT -> HitokotoAppWidgetWorker.enqueueLoad()
         ACTION_WALLPAPER_COPY, ACTION_TUJIAN_COPY -> {

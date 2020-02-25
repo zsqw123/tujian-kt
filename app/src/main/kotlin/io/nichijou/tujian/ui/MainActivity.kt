@@ -5,7 +5,6 @@ import android.graphics.Point
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
-import android.os.SystemClock
 import android.view.KeyEvent
 import android.view.MotionEvent
 import android.widget.FrameLayout
@@ -28,7 +27,6 @@ import io.nichijou.tujian.Settings
 import io.nichijou.tujian.common.db.TujianStore
 import io.nichijou.tujian.common.ext.asLiveData
 import io.nichijou.tujian.ext.addFragmentToActivity
-import io.nichijou.tujian.ext.handleBackPress
 import io.nichijou.tujian.isDark
 import io.nichijou.tujian.ui.about.AboutFragment
 import io.nichijou.tujian.ui.archive.ArchiveFragment
