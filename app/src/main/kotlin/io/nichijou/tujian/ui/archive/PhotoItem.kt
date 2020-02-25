@@ -29,13 +29,7 @@ import io.nichijou.tujian.isDark
 import kotlinx.android.synthetic.main.photo_item_layout.view.*
 import kotlinx.android.synthetic.main.photo_item_viewpager_layout.*
 import kotlinx.android.synthetic.main.photo_item_viewpager_layout.view.*
-import me.jessyan.progressmanager.ProgressListener
-import me.jessyan.progressmanager.ProgressManager
-import me.jessyan.progressmanager.body.ProgressInfo
-import okhttp3.OkHttpClient
 import org.jetbrains.anko.isSelectable
-import org.jetbrains.anko.toast
-import java.lang.Exception
 
 class Viewpager2Adapter(private val data: ArrayList<Picture>, val parentView: View) :
   RecyclerView.Adapter<RecyclerView.ViewHolder>() {
