@@ -6,6 +6,13 @@ import android.content.ComponentCallbacks2
 import android.content.Context
 import android.graphics.Bitmap
 import android.os.Environment
+import com.bumptech.glide.Glide
+import com.bumptech.glide.GlideBuilder
+import com.bumptech.glide.Registry
+import com.bumptech.glide.annotation.GlideModule
+import com.bumptech.glide.integration.okhttp3.OkHttpUrlLoader
+import com.bumptech.glide.load.model.GlideUrl
+import com.bumptech.glide.module.AppGlideModule
 import com.facebook.cache.disk.DiskCacheConfig
 import com.facebook.common.disk.NoOpDiskTrimmableRegistry
 import com.facebook.common.internal.Supplier
@@ -19,14 +26,19 @@ import com.facebook.imagepipeline.decoder.ProgressiveJpegConfig
 import com.facebook.imagepipeline.image.ImmutableQualityInfo
 import com.facebook.imagepipeline.image.QualityInfo
 import io.nichijou.tujian.common.fresco.OkHttpNetworkFetcher
+import me.jessyan.progressmanager.ProgressManager
 import okhttp3.OkHttpClient
 import java.io.File
+import java.io.InputStream
 
 class App : Application() {
 
+  var glideOkHttpClient: OkHttpClient? = null
   override fun onCreate() {
     super.onCreate()
     context = applicationContext
+    glideOkHttpClient = ProgressManager.getInstance().with(OkHttpClient.Builder())
+      .build()
   }
 
   override fun onLowMemory() {
@@ -98,8 +110,9 @@ class App : Application() {
         .setBitmapMemoryCacheParamsSupplier(bitmapMemoryCacheParamsSupplier)
         .setMemoryTrimmableRegistry(memoryRegistry)
         .setProgressiveJpegConfig(progressiveJpegConfig)
-        .setNetworkFetcher(OkHttpNetworkFetcher(okHttpClient))
         .build()
+//        .setNetworkFetcher(OkHttpNetworkFetcher(okHttpClient))
+
       Fresco.initialize(context, imagePipelineConfig)
     }
 
@@ -127,5 +140,19 @@ class App : Application() {
     private const val MAX_DISK_CACHE_SIZE = Long.MAX_VALUE
     private const val MAX_DISK_CACHE_LOW_SIZE = (300 * ByteConstants.MB).toLong()
     private const val MAX_DISK_CACHE_VERY_LOW_SIZE = (100 * ByteConstants.MB).toLong()
+  }
+}
+
+@GlideModule
+class GlideConfiguration : AppGlideModule() {
+  override fun applyOptions(context: Context, builder: GlideBuilder) {}
+  override fun registerComponents(context: Context, glide: Glide, registry: Registry) {
+    val application = context.applicationContext as App
+    //Glide 底层默认使用 HttpConnection 进行网络请求,这里替换为 Okhttp 后才能使用本框架,进行 Glide 的加载进度监听
+    registry.replace(GlideUrl::class.java, InputStream::class.java, OkHttpUrlLoader.Factory(application.glideOkHttpClient!!))
+  }
+
+  override fun isManifestParsingEnabled(): Boolean {
+    return false
   }
 }

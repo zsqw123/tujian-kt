@@ -55,7 +55,7 @@ class TodayFragment : BaseFragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     initView()
-    getAppVersionCode(context!!)
+    getAppVersionCode(requireContext())
     initViewModel()
   }
 
@@ -63,7 +63,7 @@ class TodayFragment : BaseFragment() {
     viewModel.getToday().observe(viewLifecycleOwner, Observer(::bind2View))
     viewModel.msg.observe(viewLifecycleOwner, Observer {
       if (it != "old") toast(it)
-      else MaterialDialog(context!!).title(text = "检测更新").icon(R.mipmap.ic_launcher).show {
+      else MaterialDialog(requireContext()).title(text = "检测更新").icon(R.mipmap.ic_launcher).show {
         cancelOnTouchOutside(false)
         cancelable(false)
         val mdText = "检测到新版本: ${UpdateTujian.name}  \n更新时间: ${UpdateTujian.time}  \n" +
@@ -111,7 +111,7 @@ class TodayFragment : BaseFragment() {
       RichText.fromMarkdown(it.desc.replace("\n", "  \n")).linkFix { holder ->
         holder!!.color = getThemeColor()
         holder.isUnderLine = false
-      }.into(desc)
+      }.noImage(true).into(desc)
       val dat = if (it.from == Picture.FROM_BING) it.date else it.date.substring(5)
       val user = " via ${it.user}"
       val result = dat + user
@@ -173,7 +173,7 @@ class TodayFragment : BaseFragment() {
       true
     }
     date.text = SimpleDateFormat("MM-dd", Locale.CHINA).format(Date())
-    if (context!!.isNavigationBarEnabled()) content_overlay.setMarginBottomPlusNavBarHeight()
+    if (requireContext().isNavigationBarEnabled()) content_overlay.setMarginBottomPlusNavBarHeight()
   }
 
   private fun applyPalette(palette: Palette) {
@@ -235,7 +235,7 @@ class TodayFragment : BaseFragment() {
           1 -> {
             toast("开始保存...")
             val name = currentPicture?.title + Date()
-            Glide.with(context!!).asBitmap().load(getNewUrl(currentPicture)).into(object : CustomTarget<Bitmap>() {
+            Glide.with(requireContext()).asBitmap().load(getNewUrl(currentPicture)).into(object : CustomTarget<Bitmap>() {
               override fun onLoadCleared(placeholder: Drawable?) {}
               override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
                 resource.saveToAlbum(context!!, name)

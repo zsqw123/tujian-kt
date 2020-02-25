@@ -112,4 +112,6 @@ dependencies {
   implementation "com.bm.photoview:library:${rootProject.versions.photoview}"
   // Glide
   implementation "com.github.bumptech.glide:glide:${rootProject.versions.glide}"
+  // Glide 加载监听
+  implementation 'me.jessyan:progressmanager:1.5.0'
 }
