@@ -53,7 +53,7 @@ class ListAdapter(
     holder.itemView.list_item_thumbnail.setOnClickListener {
       draweeClicked.invoke(it, this, position)
     }
-    holder.bind(picture)
+    holder.bind(picture,position)
   }
 
   private fun bindColors(holder: ViewHolder, colors: List<Palette.Swatch>) {
@@ -66,12 +66,16 @@ class ListAdapter(
   }
 
   class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    fun bind(picture: Picture?) {
+    fun bind(picture: Picture?, position: Int) {
       if (picture == null) return
       itemView.title.text = picture.title
       itemView.date.text = picture.date
       val newUrl = getNewUrl(picture) + "!w360"
-      itemView.list_item_thumbnail.ratio = picture.height.toFloat() / picture.width.toFloat()
+      if (position==0){
+        itemView.list_item_thumbnail.ratio = 1.0F
+      }else{
+        itemView.list_item_thumbnail.ratio = 1.618F
+      }
       if (isDark()) Glide.with(itemView).load(newUrl).placeholder(R.mipmap.placeholder_night).into(itemView.list_item_thumbnail)
       else Glide.with(itemView).load(newUrl).placeholder(R.mipmap.placeholder).into(itemView.list_item_thumbnail)
     }

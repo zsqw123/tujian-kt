@@ -4,7 +4,9 @@ import android.graphics.Color
 import android.graphics.Point
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.os.Handler
 import android.os.SystemClock
+import android.view.KeyEvent
 import android.view.MotionEvent
 import android.widget.FrameLayout
 import androidx.annotation.ColorInt
@@ -242,24 +244,24 @@ class MainActivity : SupportActivity(), CoroutineScope by MainScope() {
     } ?: startScreenSaverTimer()
   }
 
-
-  private val mHints = LongArray(2)
-  override fun onBackPressedSupport() {
-    super.onBackPressedSupport()
-    if (swipeConsumer != null) {
+  private var isExit = false
+  override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+    if (keyCode == KeyEvent.KEYCODE_BACK || swipeConsumer != null) {
       if (swipeConsumer!!.isOpened) {
         swipeConsumer!!.smoothClose()
       } else {
-        if (!handleBackPress()) {
-          System.arraycopy(mHints, 1, mHints, 0, mHints.size - 1)
-          mHints[mHints.size - 1] = SystemClock.uptimeMillis()
-          toast(R.string.repress_exit)
-          if (SystemClock.uptimeMillis() - mHints[0] <= 1600) {
-            exitProcess(0)
-          }
+        // 双击退出
+        if (!isExit) {
+          isExit = true
+          longToast("再按一次退出图鉴日图")
+          Handler().postDelayed({ isExit = false }, 2000)
+        } else {
+          finish()
+          exitProcess(0)
         }
       }
     }
+    return false
   }
 
   override fun onDestroy() {
