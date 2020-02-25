@@ -1,6 +1,7 @@
 package io.nichijou.tujian
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
@@ -59,12 +60,16 @@ class SplashActivity : AppCompatActivity() {
           CrashReport.initCrashReport(appContext, BuildConfig.API_BUGLY, false)
         }
       }
-      startKoin {
-        if (BuildConfig.DEBUG) {
-          printLogger()
+      try {
+        startKoin {
+          if (BuildConfig.DEBUG) {
+            printLogger()
+          }
+          androidContext(appContext)
+          modules(normalModule, commonModule)
         }
-        androidContext(appContext)
-        modules(normalModule, commonModule)
+      } catch (e: Exception) {
+        Log.e("restartApp", "KoinException")
       }
       val okHttpClient: OkHttpClient by inject()
       App.initFresco(okHttpClient)
@@ -92,7 +97,8 @@ class SplashActivity : AppCompatActivity() {
             try {
               Glide.with(this@SplashActivity).load(url).placeholder(imgID)
                 .transition(DrawableTransitionOptions.withCrossFade(300)).into(view)
-            }catch (e:Exception){}
+            } catch (e: Exception) {
+            }
           }
         }
       }

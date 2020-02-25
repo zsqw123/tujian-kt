@@ -52,14 +52,6 @@ class Viewpager2Adapter(private val data: ArrayList<Picture>, val parentView: Vi
     photoView.scaleType = ImageView.ScaleType.CENTER_CROP
     val pic1080: String = getNewUrl(items[position]) + "!w1080"
 
-//    ProgressManager.getInstance().with(OkHttpClient.Builder()).build()
-    ProgressManager.getInstance().addRequestListener(pic1080, object : ProgressListener {
-      override fun onProgress(progressInfo: ProgressInfo) {
-        println("proText")
-      }
-      override fun onError(id: Long, e: Exception?) {}
-    })
-
     Glide.with(item.context).load(pic1080).listener(object : RequestListener<Drawable> {
       override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean) = false
       override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
