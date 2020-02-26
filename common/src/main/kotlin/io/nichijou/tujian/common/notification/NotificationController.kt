@@ -307,7 +307,7 @@ class NotificationController : BroadcastReceiver() {
     GlobalScope.launch {
       when (intent?.action) {
         ACTION_WALLPAPER_NEXT -> WallpaperWorker.enqueueLoad()
-        ACTION_TUJIAN_NEXT -> TujianAppWidgetWorker.enqueueLoad(context)
+        ACTION_TUJIAN_NEXT -> TujianAppWidgetWorker.enqueueLoad()
         ACTION_BING_NEXT -> BingAppWidgetWorker.enqueueLoad()
         ACTION_HITOKOTO_NEXT -> HitokotoAppWidgetWorker.enqueueLoad()
         ACTION_WALLPAPER_COPY, ACTION_TUJIAN_COPY -> {

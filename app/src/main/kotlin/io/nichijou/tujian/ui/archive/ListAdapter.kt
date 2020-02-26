@@ -53,7 +53,7 @@ class ListAdapter(
     holder.itemView.list_item_thumbnail.setOnClickListener {
       draweeClicked.invoke(it, this, position)
     }
-    holder.bind(picture,position)
+    holder.bind(picture, position)
   }
 
   private fun bindColors(holder: ViewHolder, colors: List<Palette.Swatch>) {
@@ -71,12 +71,12 @@ class ListAdapter(
       itemView.title.text = picture.title
       itemView.date.text = picture.date
       val newUrl = getNewUrl(picture) + "!w360"
-      if (position==0){
+      if (position == 0) {
         itemView.list_item_thumbnail.ratio = 1.0F
-      }else{
+      } else {
         itemView.list_item_thumbnail.ratio = 1.618F
       }
-      if (isDark()) Glide.with(itemView).load(newUrl).placeholder(R.mipmap.placeholder_night).into(itemView.list_item_thumbnail)
+      if (isDark()) Glide.with(itemView).load(newUrl).placeholder(R.mipmap.placeholder_n).into(itemView.list_item_thumbnail)
       else Glide.with(itemView).load(newUrl).placeholder(R.mipmap.placeholder).into(itemView.list_item_thumbnail)
     }
   }

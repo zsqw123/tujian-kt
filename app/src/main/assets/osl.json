@@ -7,6 +7,62 @@
     "website": "https://github.com/aosp-mirror"
   },
   {
+    "name": "Anko",
+    "desc": "Pleasant Android application development",
+    "license": "Apache-2.0",
+    "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0",
+    "website": "https://github.com/Kotlin/anko"
+  },
+  {
+    "name": "Assent",
+    "desc": "\uD83D\uDE4FAndroid Runtime Permissions made easy and compact, for Kotlin and AndroidX.",
+    "license": "Apache-2.0",
+    "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0",
+    "website": "https://github.com/afollestad/assent"
+  },
+  {
+    "name": "Fragmentation",
+    "desc": "A powerful library that manage Fragment for Android",
+    "license": "Apache-2.0",
+    "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0",
+    "website": "https://github.com/JantHsueh/Fragmentation"
+  },
+  {
+    "name": "Fresco",
+    "desc": "An Android library for managing images and the memory they use.",
+    "license": "Apache-2.0",
+    "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0",
+    "website": "https://github.com/facebook/fresco"
+  },
+  {
+    "name": "Fresco-processors",
+    "desc": "An Android image processor library providing a variety of image transformations for Fresco.",
+    "license": "Apache-2.0",
+    "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0",
+    "website": "https://github.com/wasabeef/fresco-processors"
+  },
+  {
+    "name": "Glide",
+    "desc": "\uD83D\uDE4FAndroid Runtime Permissions made easy and compact, for Kotlin and AndroidX.",
+    "license": "Mainly BSD",
+    "licenseUrl": "https://github.com/bumptech/glide/blob/master/LICENSE",
+    "website": "https://github.com/afollestad/assent"
+  },
+  {
+    "name": "Koin",
+    "desc": "KOIN - a pragmatic lightweight dependency injection framework for Kotlin.",
+    "license": "Apache-2.0",
+    "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0",
+    "website": "https://github.com/InsertKoinIO/koin"
+  },
+  {
+    "name": "Kotpref",
+    "desc": "Kotpref - Android SharedPreferences delegation library for Kotlin.",
+    "license": "Apache-2.0",
+    "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0",
+    "website": "https://github.com/chibatching/Kotpref"
+  },
+  {
     "name": "Kotlin",
     "desc": "The Kotlin Programming Language",
     "license": "Apache-2.0",
@@ -21,32 +77,11 @@
     "website": "https://github.com/Kotlin/kotlinx.coroutines"
   },
   {
-    "name": "Oops",
-    "desc": "A dynamic theme engine. Powered by LiveData & ViewModel.",
+    "name": "material-dialogs",
+    "desc": "😍 A beautiful, fluid, and extensible dialogs API for Kotlin & Android. https://af.codes",
     "license": "Apache-2.0",
     "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0",
-    "website": "https://github.com/iota9star/oops-android-kt"
-  },
-  {
-    "name": "Okhttp4",
-    "desc": "An HTTP client for Android, Kotlin, and Java.",
-    "license": "Apache-2.0",
-    "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0",
-    "website": "https://github.com/square/okhttp"
-  },
-  {
-    "name": "Retrofit",
-    "desc": "Type-safe HTTP client for Android and Java by Square, Inc.",
-    "license": "Apache-2.0",
-    "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0",
-    "website": "https://github.com/square/retrofit"
-  },
-  {
-    "name": "Fresco",
-    "desc": "An Android library for managing images and the memory they use.",
-    "license": "Apache-2.0",
-    "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0",
-    "website": "https://github.com/facebook/fresco"
+    "website": "https://github.com/afollestad/material-dialogs"
   },
   {
     "name": "Moshi",
@@ -56,34 +91,6 @@
     "website": "https://github.com/square/moshi"
   },
   {
-    "name": "Kotpref",
-    "desc": "Kotpref - Android SharedPreferences delegation library for Kotlin.",
-    "license": "Apache-2.0",
-    "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0",
-    "website": "https://github.com/chibatching/Kotpref"
-  },
-  {
-    "name": "Koin",
-    "desc": "KOIN - a pragmatic lightweight dependency injection framework for Kotlin.",
-    "license": "Apache-2.0",
-    "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0",
-    "website": "https://github.com/InsertKoinIO/koin"
-  },
-  {
-    "name": "Subsampling-scale-image-view",
-    "desc": "Android library (AAR). Highly configurable, easily extendable deep zoom view for displaying huge images without loss of detail. Perfect for photo galleries, maps, building plans etc.",
-    "license": "Apache-2.0",
-    "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0",
-    "website": "https://github.com/davemorrissey/subsampling-scale-image-view"
-  },
-  {
-    "name": "Assent",
-    "desc": "\uD83D\uDE4FAndroid Runtime Permissions made easy and compact, for Kotlin and AndroidX.",
-    "license": "Apache-2.0",
-    "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0",
-    "website": "https://github.com/afollestad/assent"
-  },
-  {
     "name": "Muzei-api",
     "desc": "Muzei Live Wallpaper for Android.",
     "license": "Apache-2.0",
@@ -91,11 +98,31 @@
     "website": "https://github.com/romannurik/muzei"
   },
   {
-    "name": "Fresco-processors",
-    "desc": "An Android image processor library providing a variety of image transformations for Fresco.",
+    "name": "Okhttp4",
+    "desc": "An HTTP client for Android, Kotlin, and Java.",
     "license": "Apache-2.0",
     "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0",
-    "website": "https://github.com/wasabeef/fresco-processors"
+    "website": "https://github.com/square/okhttp"
+  },
+  {
+    "name": "Oops",
+    "desc": "A dynamic theme engine. Powered by LiveData & ViewModel.",
+    "license": "Apache-2.0",
+    "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0",
+    "website": "https://github.com/iota9star/oops-android-kt"
+  },
+  {
+    "name": "PhotoView",
+    "desc": "图片浏览缩放控件",
+    "license": "No LICENSE",
+    "licenseUrl": "https://github.com/bm-x/PhotoView",
+    "website": "https://github.com/bm-x/PhotoView"
+  },{
+    "name": "ProgressManager",
+    "desc": "⏳ Listen the progress of downloading and uploading in Okhttp, compatible Retrofit and Glide (一行代码即可监听 App 中所有网络链接的上传以及下载进度, 包括 Glide 的图片加载进度).",
+    "license": "Apache-2.0",
+    "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0",
+    "website": "https://github.com/JessYanCoding/ProgressManager"
   },
   {
     "name": "Recyclerview-animators",
@@ -103,5 +130,40 @@
     "license": "Apache-2.0",
     "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0",
     "website": "https://github.com/wasabeef/recyclerview-animators"
+  },
+  {
+    "name": "Retrofit",
+    "desc": "Type-safe HTTP client for Android and Java by Square, Inc.",
+    "license": "Apache-2.0",
+    "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0",
+    "website": "https://github.com/square/retrofit"
+  },
+  {
+    "name": "RichText",
+    "desc": "Android平台下的富文本解析器，支持Html和Markdown",
+    "license": "MIT",
+    "licenseUrl": "https://github.com/zzhoujay/RichText/blob/master/LICENSE",
+    "website": "https://github.com/zzhoujay/RichText"
+  },
+  {
+    "name": "ShapeOfView",
+    "desc": "Give a custom shape to any android view, Material Design 2 ready",
+    "license": "Apache-2.0",
+    "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0",
+    "website": "https://github.com/florent37/ShapeOfView"
+  },
+  {
+    "name": "SmartSwipe",
+    "desc": "An android library to make swipe more easier and more powerful. 关于侧滑，有这一个就够了",
+    "license": "Apache-2.0",
+    "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0",
+    "website": "https://github.com/luckybilly/SmartSwipe"
+  },
+  {
+    "name": "Subsampling-scale-image-view",
+    "desc": "Android library (AAR). Highly configurable, easily extendable deep zoom view for displaying huge images without loss of detail. Perfect for photo galleries, maps, building plans etc.",
+    "license": "Apache-2.0",
+    "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0",
+    "website": "https://github.com/davemorrissey/subsampling-scale-image-view"
   }
 ]

@@ -19,7 +19,7 @@
       android:layout_height="wrap_content"
       android:background="#36000000"
       android:scaleType="centerCrop"
-      app:aspect_ratio="0.618"/>
+      app:aspect_ratio="1.618"/>
 
     <androidx.recyclerview.widget.RecyclerView
       android:id="@+id/colors"
