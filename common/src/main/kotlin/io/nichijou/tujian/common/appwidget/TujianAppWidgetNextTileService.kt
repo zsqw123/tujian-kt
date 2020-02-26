@@ -42,7 +42,7 @@ class TujianAppWidgetNextTileService : TileService(), LifecycleOwner {
 
   override fun onClick() {
     if (isEnable) {
-      TujianAppWidgetWorker.enqueueLoad(context)
+      TujianAppWidgetWorker.enqueueLoad()
     } else {
       applicationContext.toast(R.string.enable_tujian_appwidget_to_home_screen)
     }

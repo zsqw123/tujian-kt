@@ -163,7 +163,6 @@ class AspectRatioImageView @JvmOverloads constructor(
   attrs: AttributeSet? = null,
   defStyleAttr: Int = 0
 ) : PhotoView(context, attrs, defStyleAttr) {
-
   var ratio: Float = DEFAULT_RATIO
 
   init {
@@ -179,13 +178,11 @@ class AspectRatioImageView @JvmOverloads constructor(
     super.onMeasure(widthMeasureSpec, heightMeasureSpec)
     var width = measuredWidth
     var height = measuredHeight
-
     when {
       width > 0 -> height = (width * ratio).toInt()
       height > 0 -> width = (height / ratio).toInt()
       else -> return
     }
-
     setMeasuredDimension(width, height)
   }
 
