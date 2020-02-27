@@ -1,6 +1,8 @@
 package io.nichijou.tujian.ui.settings
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
@@ -8,6 +10,10 @@ import android.view.View
 import android.widget.SeekBar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import com.afollestad.assent.AssentResult
+import com.afollestad.assent.Callback
+import com.afollestad.assent.Permission
+import com.afollestad.assent.askForPermissions
 import io.nichijou.oops.Oops
 import io.nichijou.oops.ext.applyOopsThemeStore
 import io.nichijou.oops.ext.drawableRes
@@ -45,7 +51,7 @@ class SettingsFragment : BaseFragment(), View.OnClickListener, SeekBar.OnSeekBar
 
   companion object {
     fun newInstance() = SettingsFragment()
-    fun switchTheme(activity: MainActivity,darkInt: Int) {
+    fun switchTheme(activity: MainActivity, darkInt: Int) {
       var dark = false
       when (darkInt) {
         0 -> dark = true
@@ -156,6 +162,18 @@ class SettingsFragment : BaseFragment(), View.OnClickListener, SeekBar.OnSeekBar
     }
     view_face_detection.setOnCheckedChangeListener { _, isChecked ->
       Settings.enableFaceDetection = isChecked
+      if (isChecked) askForPermissions(Permission.CAMERA, callback = object : Callback {
+        override fun invoke(result: AssentResult) {
+          val pm = context!!.packageManager
+          if (PackageManager.PERMISSION_GRANTED != pm.checkPermission(Manifest.permission.CAMERA, context!!.packageName)) {
+            if (result.isAllDenied()) {
+              view_face_detection.isChecked = false
+              Settings.enableFaceDetection = false
+              toast("必须允许相机权限进行人脸识别")
+            }
+          }
+        }
+      })
     }
     view_fuck_boo.setOnCheckedChangeListener { _, isChecked ->
       Settings.fuckBoo = isChecked

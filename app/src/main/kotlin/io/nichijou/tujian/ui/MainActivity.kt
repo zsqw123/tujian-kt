@@ -45,6 +45,7 @@ import kotlin.system.exitProcess
 
 
 class MainActivity : SupportActivity(), CoroutineScope by MainScope() {
+  private var mFragments = arrayOfNulls<SupportFragment>(5)
   override fun onCreate(savedInstanceState: Bundle?) {
     Oops.attach(this)
     super.onCreate(savedInstanceState)
@@ -95,7 +96,6 @@ class MainActivity : SupportActivity(), CoroutineScope by MainScope() {
             holder.isUnderLine = false
           }.into(text)
         }
-
         positiveButton(text = "同意并继续") { Settings.feiHua = true }
         negativeButton(text = "仅浏览")
       }.cornerRadius(12f)
@@ -108,11 +108,11 @@ class MainActivity : SupportActivity(), CoroutineScope by MainScope() {
       .setHorizontalDrawerView(slide).setScrimColor(Color.parseColor("#9A000000"))// 侧滑
     swipeConsumer!!.edgeSize = dip(20)
     translucentStatusBar(true)// 状态栏沉浸
-    var mFragments = arrayOfNulls<SupportFragment>(5)
     if (findFragment(TodayFragment::class.java) == null) {
       mFragments = arrayOf(TodayFragment.newInstance(),
         ArchiveFragment.newInstance(), UploadFragment.newInstance(),
         SettingsFragment.newInstance(), AboutFragment.newInstance())
+      nowFragment = mFragments[0]!!
       loadMultipleRootFragment(R.id.container, 0, mFragments[0], mFragments[1], mFragments[2], mFragments[3], mFragments[4])
     } else {
       mFragments[0] = findFragment(TodayFragment::class.java)
@@ -245,7 +245,8 @@ class MainActivity : SupportActivity(), CoroutineScope by MainScope() {
   private var isExit = false
   override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
     if (keyCode == KeyEvent.KEYCODE_BACK || swipeConsumer != null) {
-      if (swipeConsumer!!.isOpened) {
+      if (nowFragment != mFragments[0]) swipeConsumer!!.smoothLeftOpen()
+      else if (swipeConsumer!!.isOpened) {
         swipeConsumer!!.smoothClose()
       } else {
         // 双击退出
