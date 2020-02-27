@@ -78,11 +78,6 @@ class MainActivity : SupportActivity(), CoroutineScope by MainScope() {
         Permission.READ_EXTERNAL_STORAGE,
         Permission.WRITE_EXTERNAL_STORAGE) {}
     }
-    if (savedInstanceState == null) {
-      val newFragment = BooFragment.newInstance(Oops.immed().isDark, isIntro = true, enableFace = enableFaceDetection, enableFuckBoo = enableFuckBoo)
-      newFragment.setOnExitedListener { resetScreenSaverTimer() }
-      if (!enableFuckBoo) addFragmentToActivity(newFragment, tag = getString(R.string.boo_tag))
-    }
     bindLifecycle()
     if (!Settings.feiHua) {
       MaterialDialog(this).title(text = "隐私政策提示").icon(R.mipmap.ic_launcher).show {
@@ -100,7 +95,7 @@ class MainActivity : SupportActivity(), CoroutineScope by MainScope() {
         negativeButton(text = "仅浏览")
       }.cornerRadius(12f)
     }
-
+    //swipe and fragment
     val point = Point()
     windowManager.defaultDisplay.getRealSize(point)
     slide.layoutParams = FrameLayout.LayoutParams(point.x * 3 / 4, matchParent)
@@ -121,7 +116,6 @@ class MainActivity : SupportActivity(), CoroutineScope by MainScope() {
       mFragments[3] = findFragment(SettingsFragment::class.java)
       mFragments[4] = findFragment(AboutFragment::class.java)
     }
-
     fun showHideListener(fragment: SupportFragment) {
       showHideFragment(fragment, nowFragment)
       nowFragment = fragment
@@ -132,6 +126,12 @@ class MainActivity : SupportActivity(), CoroutineScope by MainScope() {
     slide_upload.setOnClickListener { showHideListener(mFragments[2]!!) }
     slide_settings.setOnClickListener { showHideListener(mFragments[3]!!) }
     slide_info.setOnClickListener { showHideListener(mFragments[4]!!) }
+    //boo fragment
+    if (savedInstanceState == null && !enableFuckBoo) {
+      val newFragment = BooFragment.newInstance(Oops.immed().isDark, isIntro = true, enableFace = enableFaceDetection, enableFuckBoo = enableFuckBoo)
+      newFragment.setOnExitedListener { resetScreenSaverTimer() }
+      addFragmentToActivity(newFragment, tag = getString(R.string.boo_tag))
+    }
   }
 
   // 点击关屏保
@@ -245,19 +245,17 @@ class MainActivity : SupportActivity(), CoroutineScope by MainScope() {
   private var isExit = false
   override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
     if (keyCode == KeyEvent.KEYCODE_BACK || swipeConsumer != null) {
-      if (nowFragment != mFragments[0]) swipeConsumer!!.smoothLeftOpen()
-      else if (swipeConsumer!!.isOpened) {
+      if (swipeConsumer!!.isOpened) {
         swipeConsumer!!.smoothClose()
+      } else if (nowFragment != mFragments[0]) {
+        swipeConsumer!!.smoothLeftOpen()
+      } else if (!isExit) {// 双击退出
+        isExit = true
+        longToast("再按一次退出图鉴日图")
+        Handler().postDelayed({ isExit = false }, 2000)
       } else {
-        // 双击退出
-        if (!isExit) {
-          isExit = true
-          longToast("再按一次退出图鉴日图")
-          Handler().postDelayed({ isExit = false }, 2000)
-        } else {
-          finish()
-          exitProcess(0)
-        }
+        finish()
+        exitProcess(0)
       }
     }
     return false

@@ -66,13 +66,13 @@ class SplashActivity : AppCompatActivity() {
           androidContext(appContext)
           modules(normalModule, commonModule)
         }
+        val okHttpClient: OkHttpClient by inject()
+        App.initFresco(okHttpClient)
+        ShortcutsController.updateShortcuts(App.context!!)
+        Fragmentation.builder().debug(BuildConfig.DEBUG).install()
       } catch (e: Exception) {
-        Log.e("restartApp", "KoinException")
+        Log.e("restartApp", "Exception")
       }
-      val okHttpClient: OkHttpClient by inject()
-      App.initFresco(okHttpClient)
-      ShortcutsController.updateShortcuts(App.context!!)
-      Fragmentation.builder().debug(BuildConfig.DEBUG).install()
       delay(2500L)
       startActivity<MainActivity>()
       finish()
