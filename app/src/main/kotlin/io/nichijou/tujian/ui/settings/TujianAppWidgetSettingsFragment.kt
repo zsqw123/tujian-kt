@@ -68,12 +68,6 @@ class TujianAppWidgetSettingsFragment : BaseFragment(), CompoundButton.OnChecked
       val drawableRes = if (it) R.drawable.ic_twotone_notifications_active else R.drawable.ic_twotone_notifications_off
       icon_enable_notification?.setImageDrawable(target().drawableRes(drawableRes))
     })
-    TujianAppWidgetConfig.asLiveData(TujianAppWidgetConfig::autoTextColor).observe(viewLifecycleOwner, Observer {
-      view_auto_text_color?.isChecked = it
-      val drawableRes = if (it) R.drawable.ic_twotone_invert_colors else R.drawable.ic_twotone_invert_colors_off
-      icon_auto_text_color?.setImageDrawable(target().drawableRes(drawableRes))
-    })
-    view_auto_text_color.setOnCheckedChangeListener(this)
     view_requires_battery_not_low.setOnCheckedChangeListener(this)
     view_requires_charging.setOnCheckedChangeListener(this)
     view_requires_device_idle.setOnCheckedChangeListener(this)
@@ -85,9 +79,6 @@ class TujianAppWidgetSettingsFragment : BaseFragment(), CompoundButton.OnChecked
       val blurValue = TujianAppWidgetConfig.blurValue
       val pixelValue = TujianAppWidgetConfig.pixelValue
       val interval = (TujianAppWidgetConfig.interval - MINUTES_15).toInt()
-      val hitokotoTextSize = TujianAppWidgetConfig.hitokotoTextSize
-      val sourceTextSize = TujianAppWidgetConfig.sourceTextSize
-      val lines = TujianAppWidgetConfig.hitokotoLines
       withContext(Dispatchers.Main) {
         0.animateTo(blurValue) {
           view_blur_value?.progress = it
@@ -98,23 +89,11 @@ class TujianAppWidgetSettingsFragment : BaseFragment(), CompoundButton.OnChecked
         0.animateTo(interval) {
           view_interval?.progress = it
         }
-        0.animateTo(hitokotoTextSize) {
-          view_hitokoto_text_size?.progress = it
-        }
-        0.animateTo(lines) {
-          view_hitokoto_lines?.progress = it
-        }
-        0.animateTo(sourceTextSize) {
-          view_source_text_size?.progress = it
-        }
       }
     }
     view_blur_value.setOnSeekBarChangeListener(this)
     view_pixel_value.setOnSeekBarChangeListener(this)
     view_interval.setOnSeekBarChangeListener(this)
-    view_hitokoto_text_size.setOnSeekBarChangeListener(this)
-    view_source_text_size.setOnSeekBarChangeListener(this)
-    view_hitokoto_lines.setOnSeekBarChangeListener(this)
   }
 
   override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {

@@ -11,6 +11,7 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.util.TypedValue.*
+import android.view.View
 import android.widget.RemoteViews
 import com.facebook.common.executors.CallerThreadExecutor
 import com.facebook.common.references.CloseableReference
@@ -155,6 +156,7 @@ class BingAppWidgetProvider : AppWidgetProvider() {
                 remoteViews.setOnClickPendingIntent(R.id.copyright, copyPendingIntent)
                 remoteViews.setTextViewText(R.id.copyright, "\t\t\t\t${bing.copyright} - ${bing.date}")
                 remoteViews.setTextColor(R.id.copyright, textColor)
+                remoteViews.setViewVisibility(R.id.text_load, View.GONE)
                 remoteViews.setTextViewTextSize(R.id.hitokoto, COMPLEX_UNIT_SP, (BingAppWidgetConfig.textSize / 100).toFloat())
                 var lines = BingAppWidgetConfig.textLines
                 when {
