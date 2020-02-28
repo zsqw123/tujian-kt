@@ -63,7 +63,7 @@ class AppWidgetSettingsFragment : BaseFragment() {
     }
     view_pager?.animate()?.alpha(1f)?.setDuration(120)?.start()
     lifecycleScope.launchWhenResumed {
-      view_pager?.currentItem = 1
+      view_pager?.currentItem = 0
     }
   }
 }

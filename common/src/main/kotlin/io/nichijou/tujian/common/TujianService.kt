@@ -21,7 +21,7 @@ interface TujianService {
   suspend fun list(@Query("sort") tid: String, @Query("page") page: Int, @Query("size") size: Int): Response<ListResp>
 
   @GET(C.API_RANDOM)
-  suspend fun random(@Query("op") tid: String = if (Random.nextBoolean()) "pc" else "mobile"): Response<Picture>
+  suspend fun random(@Query("op") tid: String = if (Random.nextBoolean()) "pc" else "mobile"): Response<List<Picture>>
 
   @GET
   suspend fun hitokoto(@Url url: String = C.API_HITOKOTO.split(",")[Random.nextInt(C.API_HITOKOTO.split(",").size)]): Response<Hitokoto>

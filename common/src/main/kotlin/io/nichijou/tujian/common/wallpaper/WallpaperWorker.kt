@@ -62,12 +62,7 @@ class WallpaperWorker(context: Context, workerParams: WorkerParameters) : Corout
         }
       }
     }
-    val pid = inputData.getString("pid")
-    if (pid.isNullOrBlank()) {
       picture()
-    } else {
-      picture(pid)
-    }
     return Result.success()
   }
 
@@ -85,51 +80,13 @@ class WallpaperWorker(context: Context, workerParams: WorkerParameters) : Corout
     }
   }
 
-  private suspend fun picture() {
-    var categories: List<Category>? = tujianStore.categoriesAsync()
-    if (categories.isNullOrEmpty()) {
-      categories = getCategories()
-    }
-    val cid = WallpaperConfig.categoryId
-    if (cid.isBlank()) {
-      getRandomPicture()
-    } else {
-      val find = categories?.find { c -> c.tid == cid }
-      if (find == null) {
-        applicationContext.toast(R.string.wallpaper_can_not_match_category_id)
-        getRandomPicture()
-      } else {
-        getCategoryPicture(find)
-      }
-    }
-  }
-
-  private suspend fun getCategoryPicture(find: Category) {
-    val response = tujianService.list(find.tid, Random.nextInt(30) + 1, 1)
-    val body = response.body()
-    if (response.isSuccessful && body != null) {
-      val picture = body.data[0]
-      picture.from = Picture.FROM_WALLPAPER
-      tujianStore.insertPicture(picture)
-      setWallpaper(picture)
-    }
-  }
-
-  private suspend fun getCategories(): List<Category>? {
-    val response = tujianService.category()
-    val data = response.body()?.data
-    return if (response.isSuccessful && !data.isNullOrEmpty()) {
-      tujianStore.insertCategory(data)
-      data
-    } else {
-      applicationContext.toast(R.string.get_tujian_category_error)
-      null
-    }
-  }
+  private suspend fun picture() = getRandomPicture()
 
   private suspend fun getRandomPicture() {
+    println("0111")
     val response = tujianService.random()
-    val picture = response.body()
+    println("111")
+    val picture = response.body()?.get(0)
     if (response.isSuccessful && picture != null) {
       picture.from = Picture.FROM_WALLPAPER
       tujianStore.insertPicture(picture)

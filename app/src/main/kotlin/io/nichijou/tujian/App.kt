@@ -13,6 +13,7 @@ import com.bumptech.glide.annotation.GlideModule
 import com.bumptech.glide.integration.okhttp3.OkHttpUrlLoader
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.module.AppGlideModule
+import com.chibatching.kotpref.Kotpref
 import com.facebook.cache.disk.DiskCacheConfig
 import com.facebook.common.disk.NoOpDiskTrimmableRegistry
 import com.facebook.common.internal.Supplier
@@ -37,6 +38,7 @@ class App : Application() {
   override fun onCreate() {
     super.onCreate()
     context = applicationContext
+    Kotpref.init(applicationContext)
     glideOkHttpClient = ProgressManager.getInstance().with(OkHttpClient.Builder())
       .build()
   }

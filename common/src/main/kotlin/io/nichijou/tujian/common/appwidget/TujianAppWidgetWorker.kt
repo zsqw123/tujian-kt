@@ -3,16 +3,29 @@ package io.nichijou.tujian.common.appwidget
 import android.content.Context
 import android.os.Build
 import androidx.work.*
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import io.nichijou.tujian.common.C
 import io.nichijou.tujian.common.TujianService
 import io.nichijou.tujian.common.db.TujianStore
 import io.nichijou.tujian.common.entity.Category
 import io.nichijou.tujian.common.entity.Picture
 import io.nichijou.tujian.common.R
+import io.nichijou.tujian.common.entity.SplashResp
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.jetbrains.anko.toast
 import org.koin.core.KoinComponent
 import org.koin.core.inject
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.http.GET
+import retrofit2.http.Query
+import retrofit2.http.Url
+import java.lang.Exception
 import java.util.concurrent.TimeUnit
 import kotlin.random.Random
 
@@ -31,60 +44,17 @@ class TujianAppWidgetWorker(context: Context, workerParams: WorkerParameters) : 
       stopLoad()
       return Result.success()
     }
-    var categories: List<Category>? = tujianStore.categoriesAsync()
-    if (categories.isNullOrEmpty()) {
-      categories = getCategories()
-    }
-    val hiRep = tujianService.hitokoto()
-    val hitokoto = hiRep.body()
-    if (hiRep.isSuccessful && hitokoto != null) {
-      tujianStore.insertHitokoto(hitokoto)
-    }
-    val cid = TujianAppWidgetConfig.categoryId
-    if (cid.isBlank()) {
-      getRandomPicture()
-    } else {
-      val find = categories?.find { c -> c.tid == cid }
-      if (find == null) {
-        applicationContext.toast(R.string.appwidget_can_not_match_category_id)
-        getRandomPicture()
-      } else {
-        getCategoryPicture(find)
-      }
-    }
+    getRandomPicture()
     return Result.success()
-  }
-
-  private suspend fun getCategoryPicture(find: Category) {
-    val response = tujianService.list(find.tid, Random.nextInt(30) + 1, 1)
-    val body = response.body()
-    if (response.isSuccessful && body != null) {
-      val picture = body.data[0]
-      picture.from = Picture.FROM_APPWIDGET
-      tujianStore.insertPicture(picture)
-      TujianAppWidgetProvider.updateWidgetsNew(applicationContext)
-    }
   }
 
   private suspend fun getRandomPicture() {
     val response = tujianService.random()
-    val picture = response.body()
-    if (response.isSuccessful && picture != null) {
-      picture.from = Picture.FROM_APPWIDGET
+    if (response.isSuccessful) {
+      val picture = response.body()?.get(0)
+      picture!!.from = Picture.FROM_APPWIDGET
       tujianStore.insertPicture(picture)
       TujianAppWidgetProvider.updateWidgetsNew(applicationContext)
-    }
-  }
-
-  private suspend fun getCategories(): List<Category>? {
-    val response = tujianService.category()
-    val data = response.body()?.data
-    return if (response.isSuccessful && !data.isNullOrEmpty()) {
-      tujianStore.insertCategory(data)
-      data
-    } else {
-      applicationContext.toast(R.string.get_tujian_category_error)
-      null
     }
   }
 
@@ -113,3 +83,8 @@ class TujianAppWidgetWorker(context: Context, workerParams: WorkerParameters) : 
     }
   }
 }
+//
+//interface RandomService {
+//  @GET
+//  suspend fun random(@Url url: String = C.API_RANDOM): Response<List<Picture>>
+//}

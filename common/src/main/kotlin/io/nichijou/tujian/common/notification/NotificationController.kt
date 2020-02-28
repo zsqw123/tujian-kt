@@ -196,7 +196,7 @@ class NotificationController : BroadcastReceiver() {
       notificationManager.notify(NOTIFICATION_ID_HITOKOTO, summaryNotification)
     }
 
-    fun notifyTujianAppWidgetUpdated(context: Context, picture: Picture, hitokoto: Hitokoto) = GlobalScope.launch {
+    fun notifyTujianAppWidgetUpdated(context: Context, picture: Picture) = GlobalScope.launch {
       if (!TujianAppWidgetConfig.notification) return@launch
       val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager?
         ?: return@launch
@@ -237,10 +237,6 @@ class NotificationController : BroadcastReceiver() {
           val downloadPendingIntent = PendingIntent.getBroadcast(context, 0, downloadIntent, PendingIntent.FLAG_UPDATE_CURRENT)
           val downloadAction = NotificationCompat.Action.Builder(R.drawable.ic_round_save_alt, context.getString(R.string.download), downloadPendingIntent).build()
           notifyBuilder.addAction(downloadAction)
-          val copyHitokotoIntent = Intent(context, NotificationController::class.java).setAction(ACTION_TUJIAN_COPY_HITOKOTO).putExtra("hitokoto", hitokoto)
-          val copyHitokotoPendingIntent = PendingIntent.getBroadcast(context, 0, copyHitokotoIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-          val copyHitokotoAction = NotificationCompat.Action.Builder(R.drawable.ic_round_subtitles, context.getString(R.string.copy_hitokoto), copyHitokotoPendingIntent).build()
-          notifyBuilder.addAction(copyHitokotoAction)
           val summaryNotification = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_TUJIAN)
             .setContentTitle(context.getString(R.string.tujian_appwidget_updated))
             .setContentText(context.getString(R.string.following_switched_tujian_appwidget))

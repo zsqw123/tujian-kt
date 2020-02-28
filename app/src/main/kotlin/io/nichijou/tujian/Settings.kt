@@ -11,7 +11,7 @@ import org.jetbrains.anko.configuration
 object Settings : KotprefModel() {
   var screenSaverInterval: Long by longPref(8 * 1000)// 8秒
   var enableFaceDetection: Boolean by booleanPref(false)
-  var fuckBoo: Boolean by booleanPref(false)
+  var fuckBoo: Boolean by booleanPref(true)
   var topBarRadius: Int by intPref(1600)
   var topBarElevation: Int by intPref(1200)
   var cardRadius: Int by intPref(400)

@@ -37,7 +37,6 @@ class SplashActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     val appContext = App.context!!
     Oops.init(this)
-    Kotpref.init(appContext)
     val isDark: Boolean = isDark()
     val imgID: Int = if (isDark) R.mipmap.splash_night else R.mipmap.splash
     frameLayout {
@@ -84,7 +83,7 @@ class SplashActivity : AppCompatActivity() {
     // load Splash
     val retrofit = Retrofit.Builder().baseUrl("https://v2.api.dailypics.cn/")
       .addConverterFactory(MoshiConverterFactory.create(Moshi.Builder()
-        .add(BingUrlAdapter()).add(KotlinJsonAdapterFactory()).build())).build()
+        .add(KotlinJsonAdapterFactory()).build())).build()
     val splahService = retrofit.create(SplahService::class.java)
     GlobalScope.launch {
       val call = splahService.splash()

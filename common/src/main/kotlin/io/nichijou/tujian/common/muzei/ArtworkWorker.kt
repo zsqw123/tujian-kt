@@ -72,7 +72,7 @@ class ArtworkWorker(context: Context, workerParams: WorkerParameters) : Coroutin
 
   private suspend fun getRandomPicture() {
     val response = tujianService.random()
-    val picture = response.body()
+    val picture = response.body()?.get(0)
     if (response.isSuccessful && picture != null) {
       picture.from = Picture.FROM_MUZEI
       tujianStore.insertPicture(picture)
