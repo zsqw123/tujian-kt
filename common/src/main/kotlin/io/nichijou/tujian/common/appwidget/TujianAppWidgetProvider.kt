@@ -100,9 +100,7 @@ class TujianAppWidgetProvider : AppWidgetProvider() {
         widgetWidth = widgetWidth.coerceAtMost(displayMetrics.widthPixels).coerceAtLeast(minWidgetSize)
         var widgetHeight = applyDimension(COMPLEX_UNIT_DIP, extras.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT).toFloat(), displayMetrics).toInt()
         widgetHeight = widgetHeight.coerceAtMost(displayMetrics.heightPixels).coerceAtLeast(minWidgetSize)
-        val uri = Uri.parse(
-          if (picture.nativePath == picture.local)
-            picture.local else getNewUrl(picture))
+        val uri = Uri.parse(getNewUrl(picture))
         var glideBitmap: Bitmap?
         Glide.with(context).asBitmap().load(uri).into(object : CustomTarget<Bitmap>(widgetWidth, widgetHeight) {
           override fun onLoadCleared(placeholder: Drawable?) {}

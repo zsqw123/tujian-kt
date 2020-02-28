@@ -16,6 +16,7 @@ import io.nichijou.oops.widget.MaterialCardView
 import io.nichijou.tujian.StyleViewModel
 import io.nichijou.tujian.common.entity.Bing
 import io.nichijou.tujian.common.entity.Picture
+import io.nichijou.tujian.common.entity.getNewUrl
 import io.nichijou.tujian.common.ext.*
 import io.nichijou.tujian.common.fresco.getPaletteSwatches
 import io.nichijou.tujian.common.fresco.load
@@ -73,11 +74,11 @@ class Card(context: Context, attrs: AttributeSet) : MaterialCardView(context, at
   }
 
   fun setDataPicture(item: Picture, cacheColors: WeakHashMap<String, List<Palette.Swatch>>) {
-    val cColors = cacheColors[item.local]
+    val cColors = cacheColors[getNewUrl(item)]
     if (cColors.isNullOrEmpty()) {
       colors.makeGone()
       if (cColors == null) {
-        item.local.getPaletteSwatches { s, c ->
+        getNewUrl(item)?.getPaletteSwatches { s, c ->
           bindColors(c)
           cacheColors[s] = c
         }
@@ -89,7 +90,7 @@ class Card(context: Context, attrs: AttributeSet) : MaterialCardView(context, at
     desc.text = create(item)
     if (drawee != null) {
       drawee.aspectRatio = item.width.toFloat() / item.height.toFloat()
-      drawee.load(item.local, progressDrawable = ProgressBarDrawable().apply {
+      drawee.load(getNewUrl(item), progressDrawable = ProgressBarDrawable().apply {
         barWidth = context.dp2px(8f).toInt()
         setPadding(0)
         color = randomColor()

@@ -42,7 +42,7 @@ class ListAdapter(
     if (colors.isNullOrEmpty()) {
       holder.itemView.colors?.makeGone()
       if (colors == null) {
-        picture?.local?.getPaletteSwatches { s, c ->
+        getNewUrl(picture)?.getPaletteSwatches { s, c ->
           bindColors(holder, c)
           cacheColors[s] = c
         }

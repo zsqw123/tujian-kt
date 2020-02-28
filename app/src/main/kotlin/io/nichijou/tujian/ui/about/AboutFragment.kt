@@ -16,6 +16,7 @@ import io.nichijou.oops.Oops
 import io.nichijou.oops.ext.setMarginTopPlusStatusBarHeight
 import io.nichijou.tujian.R
 import io.nichijou.tujian.base.BaseFragment
+import io.nichijou.tujian.common.entity.getNewUrl
 import io.nichijou.tujian.common.ext.addNew
 import io.nichijou.tujian.common.ext.dp2px
 import io.nichijou.tujian.common.ext.openUrl
@@ -60,8 +61,8 @@ class AboutFragment : BaseFragment() {
     toolbar.setNavigationOnClickListener { MainActivity.swipeConsumer!!.smoothLeftOpen()}
     aboutViewModel.lastPicture.observe(viewLifecycleOwner, Observer {
       if (it != null) {
-        banner?.load(it.local, postprocessor = GaussianBlurPostprocessor(target(), 1f))
-        ImageRequest.fromUri(it.local)?.getPalette { p ->
+        banner?.load(getNewUrl(it), postprocessor = GaussianBlurPostprocessor(target(), 1f))
+        ImageRequest.fromUri(getNewUrl(it))?.getPalette { p ->
           if (p != null) {
             val dominant = p.dominantSwatch?.rgb ?: p.darkVibrantSwatch?.rgb
             ?: p.darkMutedSwatch?.rgb ?: 0

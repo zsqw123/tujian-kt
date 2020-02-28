@@ -21,6 +21,7 @@ import io.nichijou.tujian.common.TujianService
 import io.nichijou.tujian.common.db.TujianStore
 import io.nichijou.tujian.common.entity.Category
 import io.nichijou.tujian.common.entity.Picture
+import io.nichijou.tujian.common.entity.getNewUrl
 import io.nichijou.tujian.common.notification.NotificationController
 import jp.wasabeef.fresco.processors.BlurPostprocessor
 import jp.wasabeef.fresco.processors.CombinePostProcessors
@@ -137,7 +138,7 @@ class WallpaperWorker(context: Context, workerParams: WorkerParameters) : Corout
   }
 
   private suspend fun setWallpaper(picture: Picture) = withContext(Main) {
-    val uri = Uri.parse(picture.local) ?: return@withContext
+    val uri = Uri.parse(getNewUrl(picture)) ?: return@withContext
     val builder = ImageRequestBuilder.newBuilderWithSource(uri)
       .setRotationOptions(RotationOptions.autoRotate())
       .setRequestPriority(Priority.HIGH)
