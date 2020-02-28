@@ -38,7 +38,7 @@ class AppWidgetSettingsFragment : BaseFragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     top_bar.setMarginTopPlusStatusBarHeight()
-    setupDrawerWithToolbar(toolbar)
+    setupBackToolbar(toolbar)
     mainViewModel.enableScreenSaver.postValue(true)
     view_pager.adapter = adapter
     view_pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {

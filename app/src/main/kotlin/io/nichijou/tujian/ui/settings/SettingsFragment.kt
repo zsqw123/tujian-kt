@@ -33,6 +33,7 @@ import kotlinx.android.synthetic.main.fragment_settings.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import me.yokeyword.fragmentation.ISupportFragment
 import org.jetbrains.anko.configuration
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.support.v4.selector
@@ -43,9 +44,9 @@ class SettingsFragment : BaseFragment(), View.OnClickListener, SeekBar.OnSeekBar
 
   override fun onClick(v: View?) {
     when (v?.id) {
-      R.id.view_wallpaper_settings -> replaceFragment(WallpaperSettingsFragment.newInstance(), true)
-      R.id.view_appwidget_settings -> replaceFragment(AppWidgetSettingsFragment.newInstance(), true)
-      R.id.view_muzei_settings -> replaceFragment(MuzeiSettingsFragment.newInstance(), true)
+      R.id.view_wallpaper_settings -> addFragmentToActivity(WallpaperSettingsFragment.newInstance())
+      R.id.view_appwidget_settings -> addFragmentToActivity(AppWidgetSettingsFragment.newInstance())
+      R.id.view_muzei_settings -> addFragmentToActivity(MuzeiSettingsFragment.newInstance())
     }
   }
 

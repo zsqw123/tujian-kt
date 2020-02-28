@@ -35,7 +35,7 @@ class WallpaperSettingsFragment : BaseFragment(), CompoundButton.OnCheckedChange
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    setupDrawerWithToolbar(toolbar)
+    setupBackToolbar(toolbar)
     top_bar.setMarginTopPlusStatusBarHeight()
     menu_wrapper.setPaddingTopPlusStatusBarHeight()
     initView()

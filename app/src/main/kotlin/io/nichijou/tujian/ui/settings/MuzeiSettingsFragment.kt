@@ -11,8 +11,8 @@ import io.nichijou.tujian.R
 import io.nichijou.tujian.base.BaseFragment
 import io.nichijou.tujian.common.ext.asLiveData
 import io.nichijou.tujian.common.ext.setMarginTopPlusStatusBarHeight
-import io.nichijou.tujian.ext.target
 import io.nichijou.tujian.common.muzei.MuzeiConfig
+import io.nichijou.tujian.ext.target
 import kotlinx.android.synthetic.main.fragment_settings_muzei.*
 import kotlinx.coroutines.launch
 
@@ -30,7 +30,7 @@ class MuzeiSettingsFragment : BaseFragment(), CompoundButton.OnCheckedChangeList
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    setupDrawerWithToolbar(toolbar)
+    setupBackToolbar(toolbar)
     top_bar.setMarginTopPlusStatusBarHeight()
     menu_wrapper.setPaddingTopPlusStatusBarHeight()
     initView()

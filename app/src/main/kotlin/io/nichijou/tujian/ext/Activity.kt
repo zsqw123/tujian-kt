@@ -3,12 +3,8 @@ package io.nichijou.tujian.ext
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.billy.android.swipe.SmartSwipeWrapper
-import com.billy.android.swipe.SwipeConsumer
-import com.billy.android.swipe.listener.SwipeListener
+import androidx.fragment.app.FragmentTransaction
 import io.nichijou.tujian.R
-import io.nichijou.tujian.ui.MainActivity
-import io.nichijou.tujian.ui.today.TodayFragment
 import java.util.*
 
 
@@ -17,7 +13,7 @@ fun AppCompatActivity.replaceFragmentInActivity(
   @IdRes wrapperIdRes: Int = R.id.container
 ) {
   val transaction = supportFragmentManager.beginTransaction()
-  transaction.replace(wrapperIdRes,targetFragment).commitAllowingStateLoss()
+  transaction.replace(wrapperIdRes, targetFragment).commitAllowingStateLoss()
 }
 
 fun AppCompatActivity.addFragmentToActivity(
@@ -27,6 +23,7 @@ fun AppCompatActivity.addFragmentToActivity(
   hideBefore: Boolean = false
 ) {
   val transaction = supportFragmentManager.beginTransaction()
+  transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
   if (hideBefore) {
     supportFragmentManager.fragments.forEach {
       if (!it.isHidden) {

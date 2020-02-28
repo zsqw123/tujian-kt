@@ -48,10 +48,16 @@ abstract class BaseFragment : SupportFragment(), FragmentBackHandler {
   }
 
   protected fun setupDrawerWithToolbar(toolbar: Toolbar) {
+    MainActivity.swipeConsumer!!.enableHorizontal()
     target().setSupportActionBar(toolbar)
     toolbar.setNavigationOnClickListener {
       MainActivity.swipeConsumer!!.open(true, SwipeConsumer.DIRECTION_LEFT)
     }
   }
 
+  protected fun setupBackToolbar(toolbar: Toolbar) {
+    MainActivity.swipeConsumer!!.disableAllDirections()
+    target().setSupportActionBar(toolbar)
+    toolbar.setNavigationOnClickListener { pop() }
+  }
 }
