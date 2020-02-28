@@ -71,7 +71,7 @@ class ListFragment : BaseFragment() {
       val images = a.currentList ?: emptyList<Picture>()
       val list = arrayListOf<Picture>()
       list.addAll(images)
-      PhotoItem(list, pos).show(childFragmentManager, "dialog")
+      PhotoItem.newInstance(list, pos).show(childFragmentManager, "dialog")
     }
   }
 

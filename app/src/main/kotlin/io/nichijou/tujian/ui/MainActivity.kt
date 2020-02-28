@@ -4,8 +4,6 @@ import android.graphics.Color
 import android.graphics.Point
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.os.Handler
-import android.view.KeyEvent
 import android.view.MotionEvent
 import android.widget.FrameLayout
 import androidx.annotation.ColorInt
@@ -39,9 +37,11 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import me.yokeyword.fragmentation.SupportActivity
 import me.yokeyword.fragmentation.SupportFragment
-import org.jetbrains.anko.*
+import org.jetbrains.anko.dip
+import org.jetbrains.anko.isSelectable
+import org.jetbrains.anko.matchParent
+import org.jetbrains.anko.textColor
 import org.koin.android.ext.android.inject
-import kotlin.system.exitProcess
 
 
 class MainActivity : SupportActivity(), CoroutineScope by MainScope() {

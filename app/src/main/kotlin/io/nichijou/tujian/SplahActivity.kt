@@ -68,7 +68,11 @@ class SplashActivity : AppCompatActivity() {
         }
         val okHttpClient: OkHttpClient by inject()
         App.initFresco(okHttpClient)
-        ShortcutsController.updateShortcuts(App.context!!)
+        try {
+          ShortcutsController.updateShortcuts(App.context!!)
+        } catch (e: java.lang.Exception) {
+          Log.e("no shortcut", e.message ?: "")
+        }
         Fragmentation.builder().debug(BuildConfig.DEBUG).install()
       } catch (e: Exception) {
         Log.e("restartApp", "Exception")

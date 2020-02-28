@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.*
 import android.widget.ImageView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
@@ -64,7 +65,9 @@ class Viewpager2Adapter(private val data: ArrayList<Picture>, val parentView: Vi
   override fun getItemCount() = data.size
 }
 
-class PhotoItem(val list: ArrayList<Picture>, private val nowPos: Int) : DialogFragment() {
+class PhotoItem : DialogFragment() {
+  private val list = requireArguments().getParcelableArrayList<Picture>("list")
+  private val nowPos=requireArguments().getInt("pos")
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
     return inflater.inflate(R.layout.photo_item_viewpager_layout, container, false)
   }
@@ -80,7 +83,7 @@ class PhotoItem(val list: ArrayList<Picture>, private val nowPos: Int) : DialogF
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     photo_item_viewpager_layout.background = ColorDrawable(Color.TRANSPARENT)
-    photo_item_viewpager.adapter = Viewpager2Adapter(list, view)
+    photo_item_viewpager.adapter = Viewpager2Adapter(list!!, view)
     photo_item_viewpager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
       override fun onPageSelected(position: Int) {
         super.onPageSelected(position)
@@ -92,8 +95,13 @@ class PhotoItem(val list: ArrayList<Picture>, private val nowPos: Int) : DialogF
         }.into(photo_item_desc)
       }
     })
-//    photo_item_viewpager.layoutParams = FrameLayout.LayoutParams(matchParent, wrapContent)
     photo_item_viewpager.currentItem = nowPos
+  }
+
+  companion object {
+    fun newInstance(list: ArrayList<Picture>, nowPos: Int) = PhotoItem().apply {
+      arguments = bundleOf("list" to list, "pos" to nowPos)
+    }
   }
 }
 
