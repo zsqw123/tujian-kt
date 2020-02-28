@@ -43,9 +43,9 @@ class SettingsFragment : BaseFragment(), View.OnClickListener, SeekBar.OnSeekBar
 
   override fun onClick(v: View?) {
     when (v?.id) {
-      R.id.view_wallpaper_settings -> addFragmentToActivity(WallpaperSettingsFragment.newInstance(), hideBefore = true)
-      R.id.view_appwidget_settings -> addFragmentToActivity(AppWidgetSettingsFragment.newInstance(), hideBefore = true)
-      R.id.view_muzei_settings -> addFragmentToActivity(MuzeiSettingsFragment.newInstance(), hideBefore = true)
+      R.id.view_wallpaper_settings -> replaceFragment(WallpaperSettingsFragment.newInstance(), true)
+      R.id.view_appwidget_settings -> replaceFragment(AppWidgetSettingsFragment.newInstance(), true)
+      R.id.view_muzei_settings -> replaceFragment(MuzeiSettingsFragment.newInstance(), true)
     }
   }
 

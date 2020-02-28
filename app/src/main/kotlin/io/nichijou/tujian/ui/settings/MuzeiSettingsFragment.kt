@@ -23,6 +23,11 @@ class MuzeiSettingsFragment : BaseFragment(), CompoundButton.OnCheckedChangeList
 
   override fun getFragmentViewId(): Int = R.layout.fragment_settings_muzei
 
+  override fun onBackPressedSupport(): Boolean {
+    pop()
+    return true
+  }
+
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     setupDrawerWithToolbar(toolbar)

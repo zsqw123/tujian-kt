@@ -45,7 +45,6 @@ import kotlin.system.exitProcess
 
 
 class MainActivity : SupportActivity(), CoroutineScope by MainScope() {
-  private var mFragments = arrayOfNulls<SupportFragment>(5)
   override fun onCreate(savedInstanceState: Bundle?) {
     Oops.attach(this)
     super.onCreate(savedInstanceState)
@@ -242,24 +241,24 @@ class MainActivity : SupportActivity(), CoroutineScope by MainScope() {
     } ?: startScreenSaverTimer()
   }
 
-  private var isExit = false
-  override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-    if (keyCode == KeyEvent.KEYCODE_BACK || swipeConsumer != null) {
-      if (swipeConsumer!!.isOpened) {
-        swipeConsumer!!.smoothClose()
-      } else if (nowFragment != mFragments[0]) {
-        swipeConsumer!!.smoothLeftOpen()
-      } else if (!isExit) {// 双击退出
-        isExit = true
-        longToast("再按一次退出图鉴日图")
-        Handler().postDelayed({ isExit = false }, 2000)
-      } else {
-        finish()
-        exitProcess(0)
-      }
-    }
-    return false
-  }
+//  private var isExit = false
+//  override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+//    if (keyCode == KeyEvent.KEYCODE_BACK || swipeConsumer != null) {
+//      if (swipeConsumer!!.isOpened) {
+//        swipeConsumer!!.smoothClose()
+//      } else if (nowFragment != mFragments[0]) {
+//        swipeConsumer!!.smoothLeftOpen()
+//      } else if (!isExit) {// 双击退出
+//        isExit = true
+//        longToast("再按一次退出图鉴日图")
+//        Handler().postDelayed({ isExit = false }, 2000)
+//      } else {
+//        finish()
+//        exitProcess(0)
+//      }
+//    }
+//    return false
+//  }
 
   override fun onDestroy() {
     cancel()
@@ -269,6 +268,7 @@ class MainActivity : SupportActivity(), CoroutineScope by MainScope() {
   companion object {
     var swipeConsumer: DrawerConsumer? = null
     var nowFragment: SupportFragment = TodayFragment.newInstance()
+    var mFragments = arrayOfNulls<SupportFragment>(5)
   }
 }
 

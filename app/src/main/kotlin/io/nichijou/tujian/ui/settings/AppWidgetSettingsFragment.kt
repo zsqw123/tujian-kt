@@ -22,6 +22,11 @@ class AppWidgetSettingsFragment : BaseFragment() {
 
   override fun getFragmentViewId(): Int = R.layout.fragment_settings_appwidget
 
+  override fun onBackPressedSupport(): Boolean {
+    pop()
+    return true
+  }
+
   private val adapter by lazy(LazyThreadSafetyMode.NONE) {
     val fragments = arrayOf<Fragment>(TujianAppWidgetSettingsFragment.newInstance(), BingAppWidgetSettingsFragment.newInstance(), HitokotoAppWidgetSettingsFragment.newInstance())
     object : FragmentStateAdapter(this@AppWidgetSettingsFragment) {

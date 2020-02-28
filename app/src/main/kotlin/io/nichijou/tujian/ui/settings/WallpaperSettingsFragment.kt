@@ -17,6 +17,7 @@ import io.nichijou.tujian.common.ext.toDateStr
 import io.nichijou.tujian.ext.target
 import io.nichijou.tujian.common.wallpaper.WallpaperConfig
 import io.nichijou.tujian.common.wallpaper.WallpaperWorker
+import io.nichijou.tujian.ui.MainActivity
 import kotlinx.android.synthetic.main.fragment_settings_wallpaper.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -38,6 +39,11 @@ class WallpaperSettingsFragment : BaseFragment(), CompoundButton.OnCheckedChange
     top_bar.setMarginTopPlusStatusBarHeight()
     menu_wrapper.setPaddingTopPlusStatusBarHeight()
     initView()
+  }
+
+  override fun onBackPressedSupport(): Boolean {
+    pop()
+    return true
   }
 
   private fun initView() {
