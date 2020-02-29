@@ -20,7 +20,7 @@
   <string name="download_notification_visibility_visible_notify_completed">總是可見</string>
   <string name="download_notification_visibility_visible_notify_only_completion">下載完成時可見</string>
   <string name="download_notification_visibility_hidden">不可見</string>
-  <string name="download_allowed_network_type_wifi">僅WiFi下載</string>
+  <string name="download_allowed_network_type_wifi">僅 Wi-Fi 下載</string>
   <string name="download_allowed_network_type_mobile">僅流量下載</string>
   <string name="download_allowed_network_type_mobile_or_wifi">總是允許下載</string>
   <string name="advance_settings">高階設定</string>
@@ -32,7 +32,7 @@
   <string name="appwidget_settings_desc">微件相關設定</string>
   <string name="screen_saver_interval">屏保間隔</string>
   <string name="screen_saver_interval_desc">螢幕保護下次顯示的間隔</string>
-  <string name="muzei_settings">Muzei設定</string>
+  <string name="muzei_settings">Muzei 設定</string>
   <string name="muzei_settings_desc">Muzei相關設定</string>
 
   <string name="today">今日</string>
@@ -45,7 +45,7 @@
   <string name="enable_switch">桌布切換</string>
   <string name="enable_switch_desc">是否啟用桌布自動切換</string>
   <string name="switch_interval">切換間隔</string>
-  <string name="switch_interval_desc">自動切換的間隔，最低15分鐘</string>
+  <string name="switch_interval_desc">自動切換的間隔，最低 15 分鐘</string>
   <string name="requires_battery_not_low">省電設定</string>
   <string name="requires_battery_not_low_desc">當電量低時停用切換</string>
   <string name="requires_charging">僅充電切換</string>
