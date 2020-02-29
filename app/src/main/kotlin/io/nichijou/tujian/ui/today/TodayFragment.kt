@@ -20,7 +20,6 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
-import com.facebook.imagepipeline.request.ImageRequest
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
@@ -31,7 +30,6 @@ import io.nichijou.tujian.base.BaseFragment
 import io.nichijou.tujian.common.entity.Picture
 import io.nichijou.tujian.common.entity.setWallpaper
 import io.nichijou.tujian.common.ext.*
-import io.nichijou.tujian.common.fresco.getPalette
 import io.nichijou.tujian.ext.target
 import io.nichijou.tujian.getThemeColor
 import io.nichijou.tujian.ui.ColorAdapter
@@ -56,29 +54,29 @@ class TodayFragment : BaseFragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     initView()
-    getAppVersionCode(requireContext())
+//    getAppVersionCode(requireContext())
     initViewModel()
   }
 
   private fun initViewModel() {
     viewModel.getToday().observe(viewLifecycleOwner, Observer(::bind2View))
-    viewModel.msg.observe(viewLifecycleOwner, Observer {
-      if (it != "old") toast(it)
-      else MaterialDialog(requireContext()).title(text = "检测更新").icon(R.mipmap.ic_launcher).show {
-        cancelOnTouchOutside(false)
-        cancelable(false)
-        val mdText = "检测到新版本: ${UpdateTujian.name}  \n更新时间: ${UpdateTujian.time}  \n" +
-          "更新内容: ${UpdateTujian.log}  \n\n[跳转下载](${UpdateTujian.url})"
-        message(text = UpdateTujian.name) {
-          val tv = messageTextView
-          tv.isSelectable = false
-          RichText.fromMarkdown(mdText).linkFix { holder ->
-            holder!!.color = getThemeColor()
-            holder.isUnderLine = false
-          }.into(tv)
-        }
-      }
-    })
+//    viewModel.msg.observe(viewLifecycleOwner, Observer {
+//      if (it != "old") toast(it)
+//      else MaterialDialog(requireContext()).title(text = "检测更新").icon(R.mipmap.ic_launcher).show {
+//        cancelOnTouchOutside(false)
+//        cancelable(false)
+//        val mdText = "检测到新版本: ${UpdateTujian.name}  \n更新时间: ${UpdateTujian.time}  \n" +
+//          "更新内容: ${UpdateTujian.log}  \n\n[跳转下载](${UpdateTujian.url})"
+//        message(text = UpdateTujian.name) {
+//          val tv = messageTextView
+//          tv.isSelectable = false
+//          RichText.fromMarkdown(mdText).linkFix { holder ->
+//            holder!!.color = getThemeColor()
+//            holder.isUnderLine = false
+//          }.into(tv)
+//        }
+//      }
+//    })
   }
 
   private var currentPicture: Picture? = null

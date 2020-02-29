@@ -6,14 +6,10 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.chibatching.kotpref.Kotpref
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import com.tencent.bugly.crashreport.CrashReport
 import io.nichijou.oops.Oops
 import io.nichijou.tujian.common.C
-import io.nichijou.tujian.common.commonModule
-import io.nichijou.tujian.common.entity.BingUrlAdapter
 import io.nichijou.tujian.common.entity.SplashResp
 import io.nichijou.tujian.common.shortcuts.ShortcutsController
 import io.nichijou.tujian.ui.MainActivity
@@ -21,11 +17,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import me.yokeyword.fragmentation.Fragmentation
-import okhttp3.OkHttpClient
 import org.jetbrains.anko.*
-import org.koin.android.ext.android.inject
-import org.koin.android.ext.koin.androidContext
-import org.koin.core.context.startKoin
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -37,7 +29,6 @@ import java.util.*
 class SplashActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    val appContext = App.context!!
     Oops.init(this)
     val isDark: Boolean = isDark()
     val imgID: Int = if (isDark) R.mipmap.splash_night else R.mipmap.splash
@@ -52,13 +43,6 @@ class SplashActivity : AppCompatActivity() {
 
     // Activity init
     GlobalScope.launch {
-      // Bugly
-      @Suppress("ConstantConditionIf")
-      if (!BuildConfig.DEBUG) {
-        if (BuildConfig.API_BUGLY != "null") {
-          CrashReport.initCrashReport(appContext, BuildConfig.API_BUGLY, false)
-        }
-      }
       try {
         try {
           ShortcutsController.updateShortcuts(App.context!!)

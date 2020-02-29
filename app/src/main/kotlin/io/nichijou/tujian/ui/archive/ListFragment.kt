@@ -9,6 +9,7 @@ import io.nichijou.tujian.R
 import io.nichijou.tujian.base.BaseFragment
 import io.nichijou.tujian.common.entity.Picture
 import io.nichijou.tujian.common.ext.sbl
+import io.nichijou.tujian.ext.addFragmentToActivity
 import io.nichijou.tujian.paging.LoadState
 import io.nichijou.tujian.paging.Status
 import jp.wasabeef.recyclerview.animators.LandingAnimator
@@ -71,7 +72,9 @@ class ListFragment : BaseFragment() {
       val images = a.currentList ?: emptyList<Picture>()
       val list = arrayListOf<Picture>()
       list.addAll(images)
-      PhotoItem.newInstance(list, pos).show(childFragmentManager, "dialog")
+      println(list[0].desc)
+      val photoItem = PhotoItem.newInstance(list, pos)
+      addFragmentToActivity(photoItem)
     }
   }
 

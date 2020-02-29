@@ -26,6 +26,8 @@ import com.facebook.imagepipeline.core.ImagePipelineConfig
 import com.facebook.imagepipeline.decoder.ProgressiveJpegConfig
 import com.facebook.imagepipeline.image.ImmutableQualityInfo
 import com.facebook.imagepipeline.image.QualityInfo
+import com.tencent.bugly.Bugly
+import com.tencent.bugly.crashreport.CrashReport
 import io.nichijou.tujian.common.commonModule
 import me.jessyan.progressmanager.ProgressManager
 import okhttp3.OkHttpClient
@@ -41,6 +43,13 @@ class App : Application() {
   override fun onCreate() {
     super.onCreate()
     context = applicationContext
+    // Bugly
+    @Suppress("ConstantConditionIf")
+    if (!BuildConfig.DEBUG) {
+      if (BuildConfig.API_BUGLY != "null") {
+        Bugly.init(applicationContext, BuildConfig.API_BUGLY, false)
+      }
+    }
     Kotpref.init(applicationContext)
     glideOkHttpClient = ProgressManager.getInstance().with(OkHttpClient.Builder())
       .build()

@@ -8,7 +8,7 @@ import android.os.Bundle
 import android.view.*
 import android.widget.ImageView
 import androidx.core.os.bundleOf
-import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.afollestad.materialdialogs.MaterialDialog
@@ -26,13 +26,15 @@ import io.nichijou.tujian.common.ext.ViewHolder
 import io.nichijou.tujian.common.ext.makeGone
 import io.nichijou.tujian.common.ext.makeVisible
 import io.nichijou.tujian.common.ext.shareString
+import io.nichijou.tujian.ext.target
 import io.nichijou.tujian.isDark
 import kotlinx.android.synthetic.main.photo_item_layout.view.*
 import kotlinx.android.synthetic.main.photo_item_viewpager_layout.*
 import kotlinx.android.synthetic.main.photo_item_viewpager_layout.view.*
+import me.yokeyword.fragmentation.SupportFragment
 import org.jetbrains.anko.isSelectable
 
-class Viewpager2Adapter(private val data: ArrayList<Picture>, val parentView: View) :
+class Viewpager2Adapter(private val data: ArrayList<Picture>, val parentView: View, val photoItem: PhotoItem) :
   RecyclerView.Adapter<RecyclerView.ViewHolder>() {
   private var items: ArrayList<Picture> = data
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -56,6 +58,9 @@ class Viewpager2Adapter(private val data: ArrayList<Picture>, val parentView: Vi
       }
     }).into(photoView)
 
+    photoView.setOnClickListener {
+      photoItem.pop()
+    }
     photoView.setOnLongClickListener {
       toolDialog(item.context, items[position])
       return@setOnLongClickListener true
@@ -65,25 +70,26 @@ class Viewpager2Adapter(private val data: ArrayList<Picture>, val parentView: Vi
   override fun getItemCount() = data.size
 }
 
-class PhotoItem : DialogFragment() {
-  private val list = requireArguments().getParcelableArrayList<Picture>("list")
-  private val nowPos = requireArguments().getInt("pos")
+class PhotoItem : SupportFragment() {
+
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    target().window!!.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+//    target().window!!.requestFeature(Window.FEATURE_NO_TITLE)
+    target().window!!.setBackgroundDrawable(ColorDrawable(Color.BLACK))
+    target().window!!.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT)
     return inflater.inflate(R.layout.photo_item_viewpager_layout, container, false)
   }
 
-  override fun onActivityCreated(savedInstanceState: Bundle?) {
-    dialog!!.window!!.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
-    dialog!!.window!!.requestFeature(Window.FEATURE_NO_TITLE)
-    super.onActivityCreated(savedInstanceState)
-    dialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.BLACK))
-    dialog!!.window!!.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT)
+  override fun onBackPressedSupport(): Boolean {
+    pop()
+    return true
   }
-
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
+    val list = requireArguments().getParcelableArrayList<Picture>("list")
+    val nowPos = requireArguments().getInt("pos")
     photo_item_viewpager_layout.background = ColorDrawable(Color.TRANSPARENT)
-    photo_item_viewpager.adapter = Viewpager2Adapter(list!!, view)
+    photo_item_viewpager.adapter = Viewpager2Adapter(list!!, view, this)
     photo_item_viewpager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
       override fun onPageSelected(position: Int) {
         super.onPageSelected(position)
