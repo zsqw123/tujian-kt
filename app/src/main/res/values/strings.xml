@@ -20,7 +20,7 @@
   <string name="download_notification_visibility_visible_notify_completed">总是可见</string>
   <string name="download_notification_visibility_visible_notify_only_completion">下载完成时可见</string>
   <string name="download_notification_visibility_hidden">不可见</string>
-  <string name="download_allowed_network_type_wifi">仅WiFi下载</string>
+  <string name="download_allowed_network_type_wifi">仅 WiFi 下载</string>
   <string name="download_allowed_network_type_mobile">仅流量下载</string>
   <string name="download_allowed_network_type_mobile_or_wifi">总是允许下载</string>
   <string name="advance_settings">高级设置</string>
@@ -32,8 +32,8 @@
   <string name="appwidget_settings_desc">微件相关设置</string>
   <string name="screen_saver_interval">屏保间隔</string>
   <string name="screen_saver_interval_desc">屏幕保护下次显示的间隔</string>
-  <string name="muzei_settings">Muzei设置</string>
-  <string name="muzei_settings_desc">Muzei相关设置</string>
+  <string name="muzei_settings">Muzei 设置</string>
+  <string name="muzei_settings_desc">Muzei 相关设置</string>
 
   <string name="today">今日</string>
   <string name="bing">必应</string>
