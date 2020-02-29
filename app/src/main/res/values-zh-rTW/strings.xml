@@ -1,6 +1,6 @@
 <resources>
   <string name="app_name">圖鑑日圖</string>
-  <string name="app_name_pinyin">tújiàn</string>
+  <string name="app_name_pinyin">ㄊㄨˊㄐㄧㄢˋ</string>
   <string name="bing_wallpaper">必應桌布</string>
   <string name="apply_theme_color">已應用主題色：#%1$s</string>
   <string name="start_download">開始下載</string>
@@ -33,7 +33,7 @@
   <string name="screen_saver_interval">屏保間隔</string>
   <string name="screen_saver_interval_desc">螢幕保護下次顯示的間隔</string>
   <string name="muzei_settings">Muzei 設定</string>
-  <string name="muzei_settings_desc">Muzei相關設定</string>
+  <string name="muzei_settings_desc">Muzei 相關設定</string>
 
   <string name="today">今日</string>
   <string name="bing">必應</string>
