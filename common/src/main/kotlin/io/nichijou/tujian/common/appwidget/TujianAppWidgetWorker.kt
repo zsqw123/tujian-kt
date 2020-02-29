@@ -83,8 +83,3 @@ class TujianAppWidgetWorker(context: Context, workerParams: WorkerParameters) : 
     }
   }
 }
-//
-//interface RandomService {
-//  @GET
-//  suspend fun random(@Url url: String = C.API_RANDOM): Response<List<Picture>>
-//}

@@ -1,11 +1,16 @@
 package io.nichijou.tujian.ui.about
 
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.facebook.imagepipeline.request.ImageRequest
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
@@ -29,6 +34,7 @@ import io.nichijou.tujian.ext.suffixRandom
 import io.nichijou.tujian.ext.target
 import io.nichijou.tujian.ui.MainActivity
 import io.nichijou.tujian.ui.MainViewModel
+import io.nichijou.tujian.ui.doPalettes
 import io.nichijou.utils.isColorDark
 import kotlinx.android.synthetic.main.fragment_about.*
 import kotlinx.android.synthetic.main.item_osl.view.*
@@ -53,23 +59,35 @@ class AboutFragment : BaseFragment() {
   override fun getFragmentViewId(): Int = R.layout.fragment_about
   private val mainViewModel by activityViewModels<MainViewModel>()
   private val aboutViewModel by viewModel<AboutViewModel>()
+  private var dominant = 0
+
+  override fun onHiddenChanged(hidden: Boolean) {
+    super.onHiddenChanged(hidden)
+    if (!hidden) {
+      addFragment(BooFragment.newInstance(dominant.isColorDark(), isIntro = false, enableFace = false, enableFuckBoo = true, enableBackground = false, creatureNum = 6), R.id.boo_wrapper)
+      Oops.immed().collapsingToolbarDominantColorSet(getString(R.string.tag_about_collapsingtoolbarlayout), dominant)
+    }
+  }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     mainViewModel.enableScreenSaver.postValue(false)
     toolbar.setMarginTopPlusStatusBarHeight()
-    toolbar.setNavigationOnClickListener { MainActivity.swipeConsumer!!.smoothLeftOpen()}
+    toolbar.setNavigationOnClickListener { MainActivity.swipeConsumer!!.smoothLeftOpen() }
     aboutViewModel.lastPicture.observe(viewLifecycleOwner, Observer {
       if (it != null) {
-        banner?.load(getNewUrl(it), postprocessor = GaussianBlurPostprocessor(target(), 1f))
-        ImageRequest.fromUri(getNewUrl(it))?.getPalette { p ->
-          if (p != null) {
-            val dominant = p.dominantSwatch?.rgb ?: p.darkVibrantSwatch?.rgb
-            ?: p.darkMutedSwatch?.rgb ?: 0
-            addFragment(BooFragment.newInstance(dominant.isColorDark(), isIntro = false, enableFace = false, enableFuckBoo = true, enableBackground = false, creatureNum = 6), R.id.boo_wrapper)
-            Oops.immed().collapsingToolbarDominantColorSet(getString(R.string.tag_about_collapsingtoolbarlayout), dominant)
+        Glide.with(requireContext()).asBitmap().load(getNewUrl(it) + "!w1080").into(object : CustomTarget<Bitmap>() {
+          override fun onLoadCleared(placeholder: Drawable?) {}
+          override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+            resource.doPalettes { p ->
+              if (p != null) {
+                dominant = p.dominantSwatch?.rgb ?: p.darkVibrantSwatch?.rgb
+                  ?: p.darkMutedSwatch?.rgb ?: 0
+                banner.setImageBitmap(resource)
+              }
+            }
           }
-        }
+        })
       }
     })
     osl_recycler_view.layoutManager = LinearLayoutManager(target(), RecyclerView.VERTICAL, false)

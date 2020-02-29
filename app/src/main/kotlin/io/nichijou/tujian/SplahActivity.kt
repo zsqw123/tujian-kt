@@ -31,6 +31,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Url
+import java.text.SimpleDateFormat
+import java.util.*
 
 class SplashActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,15 +60,6 @@ class SplashActivity : AppCompatActivity() {
         }
       }
       try {
-        startKoin {
-          if (BuildConfig.DEBUG) {
-            printLogger()
-          }
-          androidContext(appContext)
-          modules(normalModule, commonModule)
-        }
-        val okHttpClient: OkHttpClient by inject()
-        App.initFresco(okHttpClient)
         try {
           ShortcutsController.updateShortcuts(App.context!!)
         } catch (e: java.lang.Exception) {
@@ -93,9 +86,11 @@ class SplashActivity : AppCompatActivity() {
         if (url == null) {
           toast("获取启动图失败")
         } else {
-          runOnUiThread {
-            val view = findViewById<ImageView>(R.id.splash)
+          val start = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA).parse(body.start)
+          val end = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA).parse(body.end)
+          if (Date() in start..end) runOnUiThread {
             try {
+              val view = findViewById<ImageView>(R.id.splash)
               Glide.with(this@SplashActivity).load(url).placeholder(imgID)
                 .transition(DrawableTransitionOptions.withCrossFade(300)).into(view)
             } catch (e: Exception) {

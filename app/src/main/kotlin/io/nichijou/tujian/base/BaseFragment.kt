@@ -25,9 +25,12 @@ abstract class BaseFragment : SupportFragment(), FragmentBackHandler {
   override fun onBackPressed(): Boolean = false
   override fun onBackPressedSupport(): Boolean {
     if (MainActivity.swipeConsumer != null) {
+      MainActivity.swipeConsumer!!.enableHorizontal()
       if (MainActivity.swipeConsumer!!.isOpened) {
+        println("12")
         MainActivity.swipeConsumer!!.smoothClose()
       } else if (MainActivity.nowFragment != MainActivity.mFragments[0]) {
+        println("13")
         MainActivity.swipeConsumer!!.smoothLeftOpen()
       } else if (!isExit) {// 双击退出
         isExit = true

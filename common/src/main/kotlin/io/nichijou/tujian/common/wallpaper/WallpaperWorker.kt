@@ -83,9 +83,7 @@ class WallpaperWorker(context: Context, workerParams: WorkerParameters) : Corout
   private suspend fun picture() = getRandomPicture()
 
   private suspend fun getRandomPicture() {
-    println("0111")
     val response = tujianService.random()
-    println("111")
     val picture = response.body()?.get(0)
     if (response.isSuccessful && picture != null) {
       picture.from = Picture.FROM_WALLPAPER

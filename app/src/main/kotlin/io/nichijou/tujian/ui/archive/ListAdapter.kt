@@ -38,11 +38,11 @@ class ListAdapter(
 
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val picture = getItem(position)
-    val colors = cacheColors[getNewUrl(picture)]
+    val colors = cacheColors[getNewUrl(picture, 360)]
     if (colors.isNullOrEmpty()) {
       holder.itemView.colors?.makeGone()
       if (colors == null) {
-        getNewUrl(picture)?.getPaletteSwatches { s, c ->
+        getNewUrl(picture, 360)?.getPaletteSwatches { s, c ->
           bindColors(holder, c)
           cacheColors[s] = c
         }
@@ -70,7 +70,7 @@ class ListAdapter(
       if (picture == null) return
       itemView.title.text = picture.title
       itemView.date.text = picture.date
-      val newUrl = getNewUrl(picture) + "!w360"
+      val newUrl = getNewUrl(picture, 360)
       if (position == 0) {
         itemView.list_item_thumbnail.ratio = 1.0F
       } else {
@@ -83,6 +83,8 @@ class ListAdapter(
 }
 
 // tujian v2 API
-fun getNewUrl(picture: Picture?): String? {
-  return if (picture?.nativePath == picture?.local) picture?.local else C.API_SS + picture?.nativePath
+fun getNewUrl(picture: Picture?, level: Int = 0): String? {
+  // 360 480 720 1080
+  val levelText = if (level != 0) "!w$level" else ""
+  return if (picture?.nativePath == picture?.local) picture?.local else C.API_SS + picture?.nativePath + levelText
 }

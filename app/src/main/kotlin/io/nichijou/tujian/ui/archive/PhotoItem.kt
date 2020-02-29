@@ -45,7 +45,7 @@ class Viewpager2Adapter(private val data: ArrayList<Picture>, val parentView: Vi
     val photoView = item.photo_item
     photoView.enable()
     photoView.scaleType = ImageView.ScaleType.CENTER_CROP
-    val pic1080: String = getNewUrl(items[position]) + "!w1080"
+    val pic1080: String = getNewUrl(items[position], 1080)!!
 
     Glide.with(item.context).load(pic1080).listener(object : RequestListener<Drawable> {
       override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean) = false
@@ -67,7 +67,7 @@ class Viewpager2Adapter(private val data: ArrayList<Picture>, val parentView: Vi
 
 class PhotoItem : DialogFragment() {
   private val list = requireArguments().getParcelableArrayList<Picture>("list")
-  private val nowPos=requireArguments().getInt("pos")
+  private val nowPos = requireArguments().getInt("pos")
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
     return inflater.inflate(R.layout.photo_item_viewpager_layout, container, false)
   }

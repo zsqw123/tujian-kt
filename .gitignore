@@ -12,3 +12,4 @@
 /captures
 .externalNativeBuild
 .cxx
+/common/src/main/kotlin/io/nichijou/tujian/common/C.kt

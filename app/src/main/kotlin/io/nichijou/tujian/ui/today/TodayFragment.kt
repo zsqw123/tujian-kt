@@ -37,6 +37,7 @@ import io.nichijou.tujian.getThemeColor
 import io.nichijou.tujian.ui.ColorAdapter
 import io.nichijou.tujian.ui.MainViewModel
 import io.nichijou.tujian.ui.archive.getNewUrl
+import io.nichijou.tujian.ui.doPalettes
 import jp.wasabeef.recyclerview.animators.LandingAnimator
 import kotlinx.android.synthetic.main.fragment_today.*
 import org.jetbrains.anko.isSelectable
@@ -131,18 +132,23 @@ class TodayFragment : BaseFragment() {
     }
   }
 
-  private val colorCaches by lazy(LazyThreadSafetyMode.NONE) { hashMapOf<String, Palette>() }
+  private val colorCaches: MutableMap<String, Palette> = mutableMapOf()
 
   private fun palette() {
-    getNewUrl(currentPicture)?.let { url ->
+    getNewUrl(currentPicture, 360)?.let { url ->
       val palette = colorCaches[url]
       if (palette == null) {
-        ImageRequest.fromUri(url)?.getPalette {
-          if (it != null && it.swatches.size > 2) {
-            applyPalette(it)
-            colorCaches[url] = it
+        Glide.with(requireContext()).asBitmap().load(url).into(object : CustomTarget<Bitmap>() {
+          override fun onLoadCleared(placeholder: Drawable?) {}
+          override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+            resource.doPalettes { p ->
+              if (p != null && p.swatches.size > 2) {
+                applyPalette(p)
+                colorCaches[url] = p
+              }
+            }
           }
-        }
+        })
       } else {
         applyPalette(palette)
       }

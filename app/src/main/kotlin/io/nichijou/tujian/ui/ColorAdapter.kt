@@ -1,5 +1,6 @@
 package io.nichijou.tujian.ui
 
+import android.graphics.Bitmap
 import android.view.View
 import android.view.ViewGroup
 import androidx.palette.graphics.Palette
@@ -50,3 +51,17 @@ class ColorAdapter(private val colors: List<Palette.Swatch>, private val width: 
     }
   }
 }
+
+fun Bitmap.doPalettes(method: (p: Palette?) -> Unit) {
+  Palette.from(this).generate { palette ->
+    method(palette)
+  }
+}
+//    val s = palette?.dominantSwatch //独特的一种
+//    val s1 = palette?.vibrantSwatch //获取到充满活力的这种色调
+//    val s2 = palette?.darkVibrantSwatch //获取充满活力的黑
+//    val s3 = palette?.lightVibrantSwatch //获取充满活力的亮
+//    val s4 = palette?.mutedSwatch //获取柔和的色调
+//    val s5 = palette?.darkMutedSwatch //获取柔和的黑
+//    val s6 = palette?.lightMutedSwatch //获取柔和的亮
+
