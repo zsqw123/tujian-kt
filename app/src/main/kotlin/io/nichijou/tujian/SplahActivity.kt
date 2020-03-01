@@ -48,7 +48,7 @@ class SplashActivity : AppCompatActivity() {
       try {
         // Bugly
         @Suppress("ConstantConditionIf")
-        if (!BuildConfig.DEBUG) {
+        if (BuildConfig.FLAVOR != "googlePlay" && !BuildConfig.DEBUG) {
           if (BuildConfig.API_BUGLY != "null") {
             Beta.upgradeDialogLayoutId = R.layout.update_dialog
             Bugly.init(applicationContext, BuildConfig.API_BUGLY, false)

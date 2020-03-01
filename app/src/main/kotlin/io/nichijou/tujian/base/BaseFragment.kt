@@ -3,10 +3,7 @@ package io.nichijou.tujian.base
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
-import android.view.KeyEvent
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.appcompat.widget.Toolbar
 import com.billy.android.swipe.SwipeConsumer
 import io.nichijou.tujian.ext.FragmentBackHandler
@@ -46,6 +43,11 @@ abstract class BaseFragment : SupportFragment(), FragmentBackHandler {
     view.setOnTouchListener { _, _ -> true }
     view.setBackgroundColor(if (isDark()) Color.BLACK else Color.WHITE)
     return view
+  }
+
+  override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    super.onCreateOptionsMenu(menu, inflater)
+    menu.clear()
   }
 
   protected fun setupDrawerWithToolbar(toolbar: Toolbar) {

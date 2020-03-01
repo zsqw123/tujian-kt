@@ -12,6 +12,7 @@ import io.nichijou.tujian.common.entity.Category
 import io.nichijou.tujian.common.entity.Picture
 import io.nichijou.tujian.common.BuildConfig
 import io.nichijou.tujian.common.R
+import io.nichijou.tujian.common.entity.getNewUrl
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.anko.toast
@@ -86,8 +87,8 @@ class ArtworkWorker(context: Context, workerParams: WorkerParameters) : Coroutin
         Artwork().apply {
           token = picture.pid
           title = picture.title
-          persistentUri = Uri.parse(picture.local)
-          webUri = Uri.parse(picture.link)
+          persistentUri = Uri.parse(getNewUrl(picture))
+          webUri = Uri.parse(getNewUrl(picture))
           byline = "${picture.date} via ${picture.user}"
         }
       )
