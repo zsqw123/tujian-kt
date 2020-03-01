@@ -5,6 +5,7 @@
   <string name="apply_theme_color">已应用主题色：#%1$s</string>
   <string name="start_download">开始下载</string>
   <string name="download">下载</string>
+  <string name="update">更新</string>
   <string name="please_open_download_manager">您需要打开文件下载功能</string>
   <string name="go">前往</string>
   <string name="cacel">取消</string>
@@ -34,6 +35,7 @@
   <string name="screen_saver_interval_desc">屏幕保护下次显示的间隔</string>
   <string name="muzei_settings">Muzei 设置</string>
   <string name="muzei_settings_desc">Muzei 相关设置</string>
+  <string name="update_title">图鉴入土</string>
 
   <string name="today">今日</string>
   <string name="bing">必应</string>

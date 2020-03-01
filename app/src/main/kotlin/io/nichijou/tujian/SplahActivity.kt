@@ -9,6 +9,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.tencent.bugly.Bugly
+import com.tencent.bugly.beta.Beta
 import io.nichijou.oops.Oops
 import io.nichijou.tujian.common.C
 import io.nichijou.tujian.common.entity.SplashResp
@@ -49,6 +50,7 @@ class SplashActivity : AppCompatActivity() {
         @Suppress("ConstantConditionIf")
         if (!BuildConfig.DEBUG) {
           if (BuildConfig.API_BUGLY != "null") {
+            Beta.upgradeDialogLayoutId = R.layout.update_dialog
             Bugly.init(applicationContext, BuildConfig.API_BUGLY, false)
           }
         }
