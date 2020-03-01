@@ -1,5 +1,6 @@
 package io.nichijou.tujian.ui.archive
 
+import android.graphics.Color
 import android.graphics.Point
 import android.os.Bundle
 import android.view.*
@@ -17,6 +18,7 @@ import io.nichijou.tujian.common.entity.Category
 import io.nichijou.tujian.common.ext.postApply
 import io.nichijou.tujian.ext.addFragmentToActivity
 import io.nichijou.tujian.ext.target
+import io.nichijou.tujian.isDark
 import io.nichijou.tujian.ui.MainActivity
 import io.nichijou.tujian.ui.MainViewModel
 import io.nichijou.tujian.ui.bing.BingFragment
@@ -39,8 +41,10 @@ class ArchiveFragment : BaseFragment() {
     val view = inflater.inflate(getFragmentViewId(), container, false)
     view.setOnTouchListener { _, _ -> true }
     setHasOptionsMenu(true)
+    view.setBackgroundColor(if (isDark()) Color.BLACK else Color.WHITE)
     return view
   }
+
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
     menu.clear()
     inflater.inflate(R.menu.menu_archive, menu)

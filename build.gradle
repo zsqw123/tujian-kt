@@ -32,7 +32,6 @@ buildscript {
   repositories {
     maven { url 'https://maven.aliyun.com/repository/google' }
     maven { url 'https://maven.aliyun.com/repository/jcenter' }
-    maven { url 'https://maven.fabric.io/public' }
     maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
     maven { url 'https://jitpack.io' }
     maven { url 'https://dl.bintray.com/iota9star/nichijou' }
@@ -75,7 +74,6 @@ allprojects {
   repositories {
     maven { url 'https://maven.aliyun.com/repository/google' }
     maven { url 'https://maven.aliyun.com/repository/jcenter' }
-    maven { url 'https://maven.fabric.io/public' }
     maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
     maven { url 'https://jitpack.io' }
     maven { url 'https://dl.bintray.com/iota9star/nichijou' }

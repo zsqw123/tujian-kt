@@ -5,14 +5,11 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.*
 import androidx.appcompat.widget.Toolbar
-import com.billy.android.swipe.SwipeConsumer
 import io.nichijou.tujian.ext.FragmentBackHandler
-import io.nichijou.tujian.ext.handleBackPress
 import io.nichijou.tujian.ext.target
 import io.nichijou.tujian.isDark
 import io.nichijou.tujian.ui.MainActivity
 import me.yokeyword.fragmentation.SupportFragment
-import org.jetbrains.anko.longToast
 import org.jetbrains.anko.support.v4.longToast
 import kotlin.system.exitProcess
 
