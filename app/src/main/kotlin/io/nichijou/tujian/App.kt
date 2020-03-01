@@ -43,13 +43,6 @@ class App : Application() {
   override fun onCreate() {
     super.onCreate()
     context = applicationContext
-    // Bugly
-    @Suppress("ConstantConditionIf")
-    if (!BuildConfig.DEBUG) {
-      if (BuildConfig.API_BUGLY != "null") {
-        Bugly.init(applicationContext, BuildConfig.API_BUGLY, false)
-      }
-    }
     Kotpref.init(applicationContext)
     glideOkHttpClient = ProgressManager.getInstance().with(OkHttpClient.Builder())
       .build()

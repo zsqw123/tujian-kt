@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.RecyclerView
+import com.bm.library.PhotoView
 import com.bumptech.glide.Glide
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
@@ -26,7 +27,7 @@ import java.util.*
 
 class ListAdapter(
   private val draweeClicked: (
-    view: View,
+    view: PhotoView,
     adapter: PagedListAdapter<Picture, ViewHolder>,
     pos: Int
   ) -> Unit
@@ -51,7 +52,7 @@ class ListAdapter(
       bindColors(holder, colors)
     }
     holder.itemView.list_item_thumbnail.setOnClickListener {
-      draweeClicked.invoke(it, this, position)
+      draweeClicked.invoke(it.list_item_thumbnail, this, position)
     }
     holder.bind(picture, position)
   }

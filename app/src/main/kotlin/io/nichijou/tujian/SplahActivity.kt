@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import com.tencent.bugly.Bugly
 import io.nichijou.oops.Oops
 import io.nichijou.tujian.common.C
 import io.nichijou.tujian.common.entity.SplashResp
@@ -44,6 +45,13 @@ class SplashActivity : AppCompatActivity() {
     // Activity init
     GlobalScope.launch {
       try {
+        // Bugly
+        @Suppress("ConstantConditionIf")
+        if (!BuildConfig.DEBUG) {
+          if (BuildConfig.API_BUGLY != "null") {
+            Bugly.init(applicationContext, BuildConfig.API_BUGLY, false)
+          }
+        }
         try {
           ShortcutsController.updateShortcuts(App.context!!)
         } catch (e: java.lang.Exception) {

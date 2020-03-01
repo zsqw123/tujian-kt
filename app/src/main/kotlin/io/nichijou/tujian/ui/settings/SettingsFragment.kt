@@ -17,7 +17,6 @@ import com.afollestad.assent.askForPermissions
 import io.nichijou.oops.Oops
 import io.nichijou.oops.ext.applyOopsThemeStore
 import io.nichijou.oops.ext.drawableRes
-import io.nichijou.oops.ext.setLightStatusBarCompat
 import io.nichijou.oops.ext.setPaddingTopPlusStatusBarHeight
 import io.nichijou.tujian.App
 import io.nichijou.tujian.R
@@ -28,12 +27,10 @@ import io.nichijou.tujian.common.ext.dp2px
 import io.nichijou.tujian.common.ext.setMarginTopPlusStatusBarHeight
 import io.nichijou.tujian.ext.addFragmentToActivity
 import io.nichijou.tujian.ext.target
-import io.nichijou.tujian.ui.MainActivity
 import kotlinx.android.synthetic.main.fragment_settings.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import me.yokeyword.fragmentation.ISupportFragment
 import org.jetbrains.anko.configuration
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.support.v4.selector
@@ -44,15 +41,15 @@ class SettingsFragment : BaseFragment(), View.OnClickListener, SeekBar.OnSeekBar
 
   override fun onClick(v: View?) {
     when (v?.id) {
-      R.id.view_wallpaper_settings -> addFragmentToActivity(WallpaperSettingsFragment.newInstance())
-      R.id.view_appwidget_settings -> addFragmentToActivity(AppWidgetSettingsFragment.newInstance())
-      R.id.view_muzei_settings -> addFragmentToActivity(MuzeiSettingsFragment.newInstance())
+      R.id.view_wallpaper_settings -> addFragmentToActivity(WallpaperSettingsFragment.newInstance(), hideBefore = true)
+      R.id.view_appwidget_settings -> addFragmentToActivity(AppWidgetSettingsFragment.newInstance(), hideBefore = true)
+      R.id.view_muzei_settings -> addFragmentToActivity(MuzeiSettingsFragment.newInstance(), hideBefore = true)
     }
   }
 
   companion object {
     fun newInstance() = SettingsFragment()
-    fun switchTheme(activity: MainActivity, darkInt: Int) {
+    fun switchTheme(darkInt: Int) {
       var dark = false
       when (darkInt) {
         0 -> dark = true
@@ -93,13 +90,19 @@ class SettingsFragment : BaseFragment(), View.OnClickListener, SeekBar.OnSeekBar
               swipeRefreshLayoutBackgroundColor = Color.WHITE
             }
           }
-          activity.setLightStatusBarCompat(dark)
         }
       }
     }
   }
 
   override fun getFragmentViewId(): Int = R.layout.fragment_settings
+
+  override fun onHiddenChanged(hidden: Boolean) {
+    super.onHiddenChanged(hidden)
+    if (!hidden) {
+      setupDrawerWithToolbar(toolbar)
+    }
+  }
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)

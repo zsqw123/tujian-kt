@@ -79,11 +79,12 @@ class AboutFragment : BaseFragment() {
         Glide.with(requireContext()).asBitmap().load(getNewUrl(it) + "!w1080").into(object : CustomTarget<Bitmap>() {
           override fun onLoadCleared(placeholder: Drawable?) {}
           override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-            resource.doPalettes { p ->
+            val bitmap: Bitmap = resource
+            banner.setImageBitmap(bitmap)
+            bitmap.doPalettes { p ->
               if (p != null) {
                 dominant = p.dominantSwatch?.rgb ?: p.darkVibrantSwatch?.rgb
                   ?: p.darkMutedSwatch?.rgb ?: 0
-                banner.setImageBitmap(resource)
               }
             }
           }

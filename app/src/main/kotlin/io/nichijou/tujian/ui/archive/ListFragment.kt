@@ -72,7 +72,6 @@ class ListFragment : BaseFragment() {
       val images = a.currentList ?: emptyList<Picture>()
       val list = arrayListOf<Picture>()
       list.addAll(images)
-      println(list[0].desc)
       val photoItem = PhotoItem.newInstance(list, pos)
       addFragmentToActivity(photoItem)
     }

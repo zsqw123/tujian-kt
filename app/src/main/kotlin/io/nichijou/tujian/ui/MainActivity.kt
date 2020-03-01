@@ -25,6 +25,7 @@ import io.nichijou.tujian.Settings
 import io.nichijou.tujian.common.db.TujianStore
 import io.nichijou.tujian.common.ext.asLiveData
 import io.nichijou.tujian.ext.addFragmentToActivity
+import io.nichijou.tujian.ext.target
 import io.nichijou.tujian.isDark
 import io.nichijou.tujian.ui.about.AboutFragment
 import io.nichijou.tujian.ui.archive.ArchiveFragment
@@ -102,6 +103,7 @@ class MainActivity : SupportActivity(), CoroutineScope by MainScope() {
       .setHorizontalDrawerView(slide).setScrimColor(Color.parseColor("#9A000000"))// 侧滑
     swipeConsumer!!.edgeSize = dip(20)
     translucentStatusBar(true)// 状态栏沉浸
+    setLightStatusBarCompat(isDark())
     if (findFragment(TodayFragment::class.java) == null) {
       mFragments = arrayOf(TodayFragment.newInstance(),
         ArchiveFragment.newInstance(), UploadFragment.newInstance(),
@@ -184,7 +186,7 @@ class MainActivity : SupportActivity(), CoroutineScope by MainScope() {
     })
     Settings.asLiveData(Settings::darkModeInt).observe(this, Observer {
       darkMode = it
-      SettingsFragment.switchTheme(this, darkMode)
+      SettingsFragment.switchTheme(darkMode)
     })
     applyOopsThemeStore {
       mediateLiveDataNonNull(

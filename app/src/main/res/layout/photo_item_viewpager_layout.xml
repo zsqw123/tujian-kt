@@ -5,10 +5,17 @@
   android:layout_height="match_parent"
   android:animateLayoutChanges="true">
 
+  <com.bm.library.PhotoView
+    android:id="@+id/photo_item_viewpager_background"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#5F000000" />
+
   <androidx.viewpager2.widget.ViewPager2
     android:id="@+id/photo_item_viewpager"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+    android:layout_height="match_parent"
+    android:background="#5F000000" />
 
   <TextView
     android:id="@+id/photo_item_desc"
@@ -16,15 +23,15 @@
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
     android:background="#9E000000"
-    android:text="5555"
     android:maxLines="9"
-    android:textSize="16sp"
+    android:text="5555"
     android:textColor="#A0FFFFFF"
+    android:textSize="16sp"
     android:textStyle="bold" />
 
   <io.nichijou.oops.widget.ProgressBar
+    android:id="@+id/photo_item_progress"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:id="@+id/photo_item_progress"
-   android:layout_gravity="center"/>
+    android:layout_gravity="center" />
 </FrameLayout>

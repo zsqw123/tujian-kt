@@ -27,10 +27,8 @@ abstract class BaseFragment : SupportFragment(), FragmentBackHandler {
     if (MainActivity.swipeConsumer != null) {
       MainActivity.swipeConsumer!!.enableHorizontal()
       if (MainActivity.swipeConsumer!!.isOpened) {
-        println("12")
         MainActivity.swipeConsumer!!.smoothClose()
       } else if (MainActivity.nowFragment != MainActivity.mFragments[0]) {
-        println("13")
         MainActivity.swipeConsumer!!.smoothLeftOpen()
       } else if (!isExit) {// 双击退出
         isExit = true
@@ -54,7 +52,7 @@ abstract class BaseFragment : SupportFragment(), FragmentBackHandler {
     MainActivity.swipeConsumer!!.enableHorizontal()
     target().setSupportActionBar(toolbar)
     toolbar.setNavigationOnClickListener {
-      MainActivity.swipeConsumer!!.open(true, SwipeConsumer.DIRECTION_LEFT)
+      MainActivity.swipeConsumer!!.smoothLeftOpen()
     }
   }
 

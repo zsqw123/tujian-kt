@@ -5,10 +5,12 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.ImageView
 import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.afollestad.materialdialogs.MaterialDialog
@@ -32,9 +34,10 @@ import kotlinx.android.synthetic.main.photo_item_layout.view.*
 import kotlinx.android.synthetic.main.photo_item_viewpager_layout.*
 import kotlinx.android.synthetic.main.photo_item_viewpager_layout.view.*
 import me.yokeyword.fragmentation.SupportFragment
+import org.jetbrains.anko.image
 import org.jetbrains.anko.isSelectable
 
-class Viewpager2Adapter(private val data: ArrayList<Picture>, val parentView: View, val photoItem: PhotoItem) :
+class Viewpager2Adapter(private val data: ArrayList<Picture>, private val parentView: View, private val photoItem: PhotoItem) :
   RecyclerView.Adapter<RecyclerView.ViewHolder>() {
   private var items: ArrayList<Picture> = data
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -48,18 +51,18 @@ class Viewpager2Adapter(private val data: ArrayList<Picture>, val parentView: Vi
     photoView.enable()
     photoView.scaleType = ImageView.ScaleType.CENTER_CROP
     val pic1080: String = getNewUrl(items[position], 1080)!!
-
+    val progress = parentView.photo_item_progress
+    if (photoView.image != null) progress.makeGone()
     Glide.with(item.context).load(pic1080).listener(object : RequestListener<Drawable> {
       override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean) = false
       override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-        val view = parentView.photo_item_progress
-        view?.makeGone()
+        progress?.makeGone()
         return false
       }
     }).into(photoView)
 
     photoView.setOnClickListener {
-      photoItem.pop()
+      photoItem.onBackPressedSupport()
     }
     photoView.setOnLongClickListener {
       toolDialog(item.context, items[position])
@@ -74,16 +77,15 @@ class PhotoItem : SupportFragment() {
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
     target().window!!.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
-//    target().window!!.requestFeature(Window.FEATURE_NO_TITLE)
-    target().window!!.setBackgroundDrawable(ColorDrawable(Color.BLACK))
-    target().window!!.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT)
     return inflater.inflate(R.layout.photo_item_viewpager_layout, container, false)
   }
 
   override fun onBackPressedSupport(): Boolean {
     pop()
+    target().window!!.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
     return true
   }
+
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     val list = requireArguments().getParcelableArrayList<Picture>("list")
@@ -101,7 +103,7 @@ class PhotoItem : SupportFragment() {
         }.into(photo_item_desc)
       }
     })
-    photo_item_viewpager.currentItem = nowPos
+    photo_item_viewpager.setCurrentItem(nowPos, false)
   }
 
   companion object {
