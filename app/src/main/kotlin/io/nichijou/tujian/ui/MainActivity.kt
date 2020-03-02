@@ -16,6 +16,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.billy.android.swipe.SmartSwipe
 import com.billy.android.swipe.consumer.DrawerConsumer
 import com.billy.android.swipe.consumer.SlidingConsumer
+import com.billy.android.swipe.listener.SwipeListener
 import com.larvalabs.boo.BooFragment
 import com.zzhoujay.richtext.RichText
 import io.nichijou.oops.Oops
@@ -25,7 +26,6 @@ import io.nichijou.tujian.Settings
 import io.nichijou.tujian.common.db.TujianStore
 import io.nichijou.tujian.common.ext.asLiveData
 import io.nichijou.tujian.ext.addFragmentToActivity
-import io.nichijou.tujian.ext.target
 import io.nichijou.tujian.isDark
 import io.nichijou.tujian.ui.about.AboutFragment
 import io.nichijou.tujian.ui.archive.ArchiveFragment
@@ -46,6 +46,7 @@ import org.koin.android.ext.android.inject
 
 
 class MainActivity : SupportActivity(), CoroutineScope by MainScope() {
+  private var firstTime = true
   override fun onCreate(savedInstanceState: Bundle?) {
     Oops.attach(this)
     super.onCreate(savedInstanceState)
@@ -67,16 +68,6 @@ class MainActivity : SupportActivity(), CoroutineScope by MainScope() {
     Oops.bulk {
       statusBarColor = 0
       navBarColor = 0
-    }
-    if (Settings.enableFaceDetection) {
-      askForPermissions(
-        Permission.READ_EXTERNAL_STORAGE,
-        Permission.WRITE_EXTERNAL_STORAGE,
-        Permission.CAMERA) {}
-    } else {
-      askForPermissions(
-        Permission.READ_EXTERNAL_STORAGE,
-        Permission.WRITE_EXTERNAL_STORAGE) {}
     }
     bindLifecycle()
     if (!Settings.feiHua) {
@@ -132,6 +123,23 @@ class MainActivity : SupportActivity(), CoroutineScope by MainScope() {
       val newFragment = BooFragment.newInstance(Oops.immed().isDark, isIntro = true, enableFace = enableFaceDetection, enableFuckBoo = enableFuckBoo)
       newFragment.setOnExitedListener { resetScreenSaverTimer() }
       addFragmentToActivity(newFragment, tag = getString(R.string.boo_tag))
+    }
+  }
+
+  override fun onWindowFocusChanged(hasFocus: Boolean) {
+    super.onWindowFocusChanged(hasFocus)
+    if (hasFocus && firstTime) {
+      if (Settings.enableFaceDetection) {
+        askForPermissions(
+          Permission.READ_EXTERNAL_STORAGE,
+          Permission.WRITE_EXTERNAL_STORAGE,
+          Permission.CAMERA) {}
+      } else {
+        askForPermissions(
+          Permission.READ_EXTERNAL_STORAGE,
+          Permission.WRITE_EXTERNAL_STORAGE) {}
+      }
+      firstTime = false
     }
   }
 
@@ -242,25 +250,6 @@ class MainActivity : SupportActivity(), CoroutineScope by MainScope() {
       start()
     } ?: startScreenSaverTimer()
   }
-
-//  private var isExit = false
-//  override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-//    if (keyCode == KeyEvent.KEYCODE_BACK || swipeConsumer != null) {
-//      if (swipeConsumer!!.isOpened) {
-//        swipeConsumer!!.smoothClose()
-//      } else if (nowFragment != mFragments[0]) {
-//        swipeConsumer!!.smoothLeftOpen()
-//      } else if (!isExit) {// 双击退出
-//        isExit = true
-//        longToast("再按一次退出图鉴日图")
-//        Handler().postDelayed({ isExit = false }, 2000)
-//      } else {
-//        finish()
-//        exitProcess(0)
-//      }
-//    }
-//    return false
-//  }
 
   override fun onDestroy() {
     cancel()

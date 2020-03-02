@@ -19,7 +19,7 @@ class AboutViewModel(application: Application, private val tujianStore: TujianSt
   }
 
   private val team = MutableLiveData<List<Team>>()
-  private val osl = MutableLiveData<List<OSL>>()
+//  private val osl = MutableLiveData<List<OSL>>()
 
   private val moshi by lazy(LazyThreadSafetyMode.NONE) {
     Moshi.Builder()
@@ -38,13 +38,13 @@ class AboutViewModel(application: Application, private val tujianStore: TujianSt
     return team
   }
 
-  fun getOSL(): MutableLiveData<List<OSL>> {
-    viewModelScope.launch(Dispatchers.IO) {
-      val json = getApplication<Application>().readAssetsFileText("osl.json")
-      val type = Types.newParameterizedType(List::class.java, OSL::class.java)
-      val list = moshi.adapter<List<OSL>>(type).fromJson(json) ?: emptyList()
-      osl.postValue(list)
-    }
-    return osl
-  }
+//  fun getOSL(): MutableLiveData<List<OSL>> {
+//    viewModelScope.launch(Dispatchers.IO) {
+//      val json = getApplication<Application>().readAssetsFileText("osl.json")
+//      val type = Types.newParameterizedType(List::class.java, OSL::class.java)
+//      val list = moshi.adapter<List<OSL>>(type).fromJson(json) ?: emptyList()
+//      osl.postValue(list)
+//    }
+//    return osl
+//  }
 }

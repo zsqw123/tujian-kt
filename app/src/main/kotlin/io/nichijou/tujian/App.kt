@@ -26,12 +26,9 @@ import com.facebook.imagepipeline.core.ImagePipelineConfig
 import com.facebook.imagepipeline.decoder.ProgressiveJpegConfig
 import com.facebook.imagepipeline.image.ImmutableQualityInfo
 import com.facebook.imagepipeline.image.QualityInfo
-import com.tencent.bugly.Bugly
-import com.tencent.bugly.crashreport.CrashReport
 import io.nichijou.tujian.common.commonModule
 import me.jessyan.progressmanager.ProgressManager
 import okhttp3.OkHttpClient
-import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import java.io.File
@@ -53,8 +50,7 @@ class App : Application() {
       androidContext(applicationContext)
       modules(normalModule, commonModule)
     }
-    val okHttpClient: OkHttpClient by inject()
-    initFresco(okHttpClient)
+    initFresco()
   }
 
   override fun onLowMemory() {
@@ -71,7 +67,7 @@ class App : Application() {
 
   companion object {
     var context: Context? = null
-    fun initFresco(okHttpClient: OkHttpClient) {
+    fun initFresco() {
       val memoryRegistry = NoOpMemoryTrimmableRegistry.getInstance()
       memoryRegistry.registerMemoryTrimmable {
         val suggestedTrimRatio = it.suggestedTrimRatio

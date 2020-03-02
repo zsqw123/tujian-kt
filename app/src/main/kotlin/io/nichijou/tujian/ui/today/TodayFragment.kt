@@ -16,7 +16,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.palette.graphics.Palette
 import androidx.viewpager2.widget.ViewPager2
-import com.afollestad.materialdialogs.MaterialDialog
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
@@ -54,29 +53,11 @@ class TodayFragment : BaseFragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     initView()
-//    getAppVersionCode(requireContext())
     initViewModel()
   }
 
   private fun initViewModel() {
     viewModel.getToday().observe(viewLifecycleOwner, Observer(::bind2View))
-//    viewModel.msg.observe(viewLifecycleOwner, Observer {
-//      if (it != "old") toast(it)
-//      else MaterialDialog(requireContext()).title(text = "检测更新").icon(R.mipmap.ic_launcher).show {
-//        cancelOnTouchOutside(false)
-//        cancelable(false)
-//        val mdText = "检测到新版本: ${UpdateTujian.name}  \n更新时间: ${UpdateTujian.time}  \n" +
-//          "更新内容: ${UpdateTujian.log}  \n\n[跳转下载](${UpdateTujian.url})"
-//        message(text = UpdateTujian.name) {
-//          val tv = messageTextView
-//          tv.isSelectable = false
-//          RichText.fromMarkdown(mdText).linkFix { holder ->
-//            holder!!.color = getThemeColor()
-//            holder.isUnderLine = false
-//          }.into(tv)
-//        }
-//      }
-//    })
   }
 
   private var currentPicture: Picture? = null
@@ -261,15 +242,5 @@ class TodayFragment : BaseFragment() {
 
   companion object {
     fun newInstance() = TodayFragment()
-  }
-}
-
-class UpdateTujian {
-  companion object {
-    var code: Int = 0
-    var name: String = ""
-    var url: String = ""
-    var log: String = ""
-    var time: String = ""
   }
 }

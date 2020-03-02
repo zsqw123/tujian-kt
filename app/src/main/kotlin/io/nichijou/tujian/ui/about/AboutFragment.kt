@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
-import com.facebook.imagepipeline.request.ImageRequest
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
@@ -22,13 +21,7 @@ import io.nichijou.oops.ext.setMarginTopPlusStatusBarHeight
 import io.nichijou.tujian.R
 import io.nichijou.tujian.base.BaseFragment
 import io.nichijou.tujian.common.entity.getNewUrl
-import io.nichijou.tujian.common.ext.addNew
-import io.nichijou.tujian.common.ext.dp2px
-import io.nichijou.tujian.common.ext.openUrl
-import io.nichijou.tujian.common.ext.with
-import io.nichijou.tujian.common.fresco.GaussianBlurPostprocessor
-import io.nichijou.tujian.common.fresco.getPalette
-import io.nichijou.tujian.common.fresco.load
+import io.nichijou.tujian.common.ext.*
 import io.nichijou.tujian.ext.addFragment
 import io.nichijou.tujian.ext.suffixRandom
 import io.nichijou.tujian.ext.target
@@ -91,21 +84,8 @@ class AboutFragment : BaseFragment() {
         })
       }
     })
-    osl_recycler_view.layoutManager = LinearLayoutManager(target(), RecyclerView.VERTICAL, false)
-    osl_recycler_view.with<OSL>(layoutRes = R.layout.item_osl, viewTypeMatching = { _, _ -> true }) { b, _ ->
-      oslName.text = b.name
-      license.text = b.license
-      license.setOnClickListener { v ->
-        v.context.openUrl(b.licenseUrl)
-      }
-      desc.text = b.desc
-      setOnClickListener { v ->
-        v.context.openUrl(b.website)
-      }
-    }
-    val dp26 = target().dp2px(26f)
-    val dp36 = target().dp2px(36f)
-    val dp45 = target().dp2px(45f)
+    osl_open.setOnClickListener { start(OSLFragment()) }
+    if (requireContext().isNavigationBarEnabled()) osl_open.setPaddingBottomPlusNavBarHeight()
     team_recycler_view.layoutManager = FlexboxLayoutManager(target(), FlexDirection.ROW, FlexWrap.WRAP).apply {
       justifyContent = JustifyContent.SPACE_AROUND
     }
@@ -114,7 +94,7 @@ class AboutFragment : BaseFragment() {
       layoutParams = (layoutParams as FlexboxLayoutManager.LayoutParams).apply {
         flexGrow = 3f
       }
-      leaderAvatar.load(url = b.avatar.suffixRandom(), radius = dp45)
+      Glide.with(context).load(b.avatar.suffixRandom()).into(leaderAvatar)
       leaderName.text = b.name
       leaderJob.text = b.job
       setOnClickListener {
@@ -125,7 +105,7 @@ class AboutFragment : BaseFragment() {
       layoutParams = (layoutParams as FlexboxLayoutManager.LayoutParams).apply {
         flexGrow = 2f
       }
-      coreAvatar.load(url = b.avatar.suffixRandom(), radius = dp36)
+      Glide.with(context).load(b.avatar.suffixRandom()).into(coreAvatar)
       coreName.text = b.name
       coreJob.text = b.job
       setOnClickListener {
@@ -133,7 +113,7 @@ class AboutFragment : BaseFragment() {
         if (url.length > 7) browse(url)
       }
     }.with(layoutRes = R.layout.item_team_member, viewTypeMatching = { b, _ -> b.type == 2 }) { b, _ ->
-      memberAvatar.load(url = b.avatar.suffixRandom(), radius = dp26)
+      Glide.with(context).load(b.avatar.suffixRandom()).into(memberAvatar)
       memberName.text = b.name
       memberJob.text = b.job
       setOnClickListener {
@@ -146,10 +126,10 @@ class AboutFragment : BaseFragment() {
         team_recycler_view.addNew(it)
       }
     })
-    aboutViewModel.getOSL().observe(viewLifecycleOwner, Observer {
-      if (!it.isNullOrEmpty()) {
-        osl_recycler_view.addNew(it)
-      }
-    })
+//    aboutViewModel.getOSL().observe(viewLifecycleOwner, Observer {
+//      if (!it.isNullOrEmpty()) {
+//        osl_recycler_view.addNew(it)
+//      }
+//    })
   }
 }

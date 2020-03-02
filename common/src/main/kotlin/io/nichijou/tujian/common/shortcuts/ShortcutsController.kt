@@ -30,16 +30,18 @@ class ShortcutsController : FragmentActivity() {
     private const val ACTION_NEXT_APPWIDGET = "ACTION_NEXT"
 
     fun updateShortcuts(context: Context) {
-      val shortcutManager = context.getSystemService(ShortcutManager::class.java) ?: return
-      val wsc = createWallpaperShortcuts(context)
-      val asc = createAppWidgetShortcuts(context)
-      shortcutManager.addDynamicShortcuts(arrayListOf(wsc, asc))
-      if (TujianAppWidgetConfig.enable) {
-        shortcutManager.enableShortcuts(listOf(ID_WALLPAPER, ID_APPWIDGET))
-      } else {
-        shortcutManager.enableShortcuts(listOf(ID_WALLPAPER))
-        shortcutManager.disableShortcuts(listOf(ID_APPWIDGET))
-      }
+      if (haveShortcutManger(context)) {
+        val shortcutManager = context.getSystemService(ShortcutManager::class.java)
+        val wsc = createWallpaperShortcuts(context)
+        val asc = createAppWidgetShortcuts(context)
+        shortcutManager.addDynamicShortcuts(arrayListOf(wsc, asc))
+        if (TujianAppWidgetConfig.enable) {
+          shortcutManager.enableShortcuts(listOf(ID_WALLPAPER, ID_APPWIDGET))
+        } else {
+          shortcutManager.enableShortcuts(listOf(ID_WALLPAPER))
+          shortcutManager.disableShortcuts(listOf(ID_APPWIDGET))
+        }
+      } else return
     }
 
     private fun createWallpaperShortcuts(context: Context): ShortcutInfo {
@@ -72,6 +74,10 @@ class ShortcutsController : FragmentActivity() {
         this.action = SHORTCUTS_ACTION
         putExtra(EXTRA_ACTION, action)
       }
+
+    fun haveShortcutManger(context: Context): Boolean {
+      return context.getSystemService(ShortcutManager::class.java) != null
+    }
   }
 
   init {

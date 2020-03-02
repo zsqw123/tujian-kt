@@ -111,7 +111,7 @@
   <string name="fuck_bool_desc">启用屏保时，小精灵数量不能为0</string>
   <string name="creature_num_format">小精灵数量：%1$d</string>
   <string name="team_info">团队信息</string>
-  <string name="osl">开源代码许可</string>
+  <string name="osl">开放源代码许可</string>
   <string name="post">投稿</string>
   <string name="label_title">标题</string>
   <string name="label_desc">描述</string>

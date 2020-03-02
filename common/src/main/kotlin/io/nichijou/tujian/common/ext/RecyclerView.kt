@@ -29,7 +29,7 @@ fun <T> RecyclerView.getList(): MutableList<T> {
 }
 
 fun <T> RecyclerView.notifyItemsChanged() {
-  (this.adapter as? RecyclerAdapter<T>?)?.notifyItemsChanged()
+  (this.adapter as? RecyclerAdapter<*>?)?.notifyItemsChanged()
     ?: throw IllegalStateException("you need use RecyclerView.with() init RecyclerView")
 }
 

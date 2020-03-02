@@ -1,6 +1,7 @@
 package io.nichijou.tujian
 
 import io.nichijou.tujian.ui.about.AboutViewModel
+import io.nichijou.tujian.ui.about.OSLViewModel
 import io.nichijou.tujian.ui.archive.ArchiveViewModel
 import io.nichijou.tujian.ui.archive.ListViewModel
 import io.nichijou.tujian.ui.bing.BingViewModel
@@ -19,4 +20,5 @@ val normalModule = module {
   viewModel { ArchiveViewModel(get(), get()) }
   viewModel { ListViewModel(get(), get()) }
   viewModel { BingViewModel(get(), get()) }
+  viewModel { OSLViewModel(androidApplication()) }
 }

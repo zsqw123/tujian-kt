@@ -13,7 +13,6 @@ android {
     targetSdkVersion rootProject.versions.targetsdk
     versionCode 200229
     versionName "3.0.6"
-    resConfigs "zh"
     def documentsProviderAuthority = "io.nichijou.tujian.localstorage.documents"
     manifestPlaceholders = [documentsProviderAuthority: documentsProviderAuthority]
     buildConfigField("String", "DOCUMENTS_PROVIDER_AUTHORITY", "\"${documentsProviderAuthority}\"")

@@ -10,16 +10,22 @@
   android:paddingEnd="16dp"
   android:paddingBottom="12dp">
 
-  <com.facebook.drawee.view.SimpleDraweeView
-    android:id="@+id/avatar"
+  <com.github.florent37.shapeofview.shapes.CircleView
+    android:id="@+id/avatar_container"
     android:layout_width="52dp"
     android:layout_height="52dp"
-    app:actualImageScaleType="centerCrop"
+    android:elevation="1dp"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:roundAsCircle="true"
-    tools:background="@android:color/darker_gray" />
+    app:layout_constraintTop_toTopOf="parent">
+
+    <ImageView
+      android:id="@+id/avatar"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:scaleType="centerCrop"
+      tools:ignore="ContentDescription" />
+  </com.github.florent37.shapeofview.shapes.CircleView>
 
   <TextView
     android:id="@+id/name"
@@ -33,7 +39,7 @@
     android:textSize="16sp"
     android:textStyle="bold"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toEndOf="@id/avatar"
+    app:layout_constraintStart_toEndOf="@id/avatar_container"
     app:layout_constraintTop_toTopOf="parent"
     tools:text="尽管如此世界依然美丽" />
 
