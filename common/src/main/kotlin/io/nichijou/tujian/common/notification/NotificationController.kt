@@ -66,53 +66,56 @@ class NotificationController : BroadcastReceiver() {
       val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager?
         ?: return@launch
       createWallpaperNotificationChannel(context, notificationManager)
-      val pic = ImageRequest.fromUri(picture.local)?.getFileFromDiskCache() ?: return@launch
-      if (!pic.exists()) return@launch
       val largeIconHeight = context.resources.getDimensionPixelSize(android.R.dimen.notification_large_icon_height)
-      val uri = (pic.toURI(context) ?: return@launch)
-      val imageLoader = ContentUriImageLoader(context.contentResolver, uri)
-      val largeIcon = imageLoader.decode(largeIconHeight) ?: return@launch
-      val bigPicture = imageLoader.decode(400) ?: return@launch
-      val title = picture.title + " via " + picture.user
-      val style = NotificationCompat.BigPictureStyle()
-        .bigLargeIcon(null)
-        .setBigContentTitle(title)
-        .setSummaryText(picture.desc)
-        .bigPicture(bigPicture)
-      val notifyBuilder = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_WALLPAPER)
-        .setAutoCancel(true)
-        .setPriority(NotificationCompat.PRIORITY_MAX)
-        .setGroup(NOTIFICATION_GROUP_WALLPAPER)
-        .setTicker(context.getString(R.string.wallpaper_updated))
-        .setSmallIcon(R.drawable.ic_tujian)
-        .setDefaults(NotificationCompat.DEFAULT_ALL)
-        .setLargeIcon(largeIcon)
-        .setContentTitle(title)
-        .setContentText(picture.desc)
-        .setStyle(style)
-      val nextPendingIntent = PendingIntent.getBroadcast(context, 0, Intent(context, NotificationController::class.java).setAction(ACTION_WALLPAPER_NEXT), PendingIntent.FLAG_UPDATE_CURRENT)
-      val nextAction = NotificationCompat.Action.Builder(R.drawable.ic_round_navigate_next, context.getString(R.string.next), nextPendingIntent).build()
-      notifyBuilder.addAction(nextAction)
-      val copyIntent = Intent(context, NotificationController::class.java).setAction(ACTION_WALLPAPER_COPY).putExtra("picture", picture)
-      val copyPendingIntent = PendingIntent.getBroadcast(context, 0, copyIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-      val copyAction = NotificationCompat.Action.Builder(R.drawable.ic_round_file_copy, context.getString(R.string.copy), copyPendingIntent).build()
-      notifyBuilder.addAction(copyAction)
-      val downloadIntent = Intent(context, NotificationController::class.java).setAction(ACTION_WALLPAPER_DOWNLOAD).putExtra("picture", picture)
-      val downloadPendingIntent = PendingIntent.getBroadcast(context, 0, downloadIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-      val downloadAction = NotificationCompat.Action.Builder(R.drawable.ic_round_save_alt, context.getString(R.string.download), downloadPendingIntent).build()
-      notifyBuilder.addAction(downloadAction)
-      val summaryNotification = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_WALLPAPER)
-        .setContentTitle(context.getString(R.string.wallpaper_updated))
-        .setContentText(context.getString(R.string.following_switched_wallpaper))
-        .setSmallIcon(R.drawable.ic_tujian)
-        .setStyle(NotificationCompat.InboxStyle()
-          .setBigContentTitle(context.getString(R.string.following_switched_wallpaper))
-          .setSummaryText(context.getString(R.string.already_switched_wallpaper)))
-        .setGroup(NOTIFICATION_GROUP_WALLPAPER)
-        .setGroupSummary(true)
-        .build()
-      notificationManager.notify(("${picture.pid}<=>$NOTIFICATION_CHANNEL_WALLPAPER").hashCode(), notifyBuilder.build())
-      notificationManager.notify(NOTIFICATION_ID_WALLPAPER, summaryNotification)
+
+      var glideBitmap: Bitmap?
+      Glide.with(context).asBitmap().load(getNewUrl(picture) + "!w480").into(object : CustomTarget<Bitmap>() {
+        override fun onLoadCleared(placeholder: Drawable?) {}
+        override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+          glideBitmap = resource
+          val title = picture.title + " via " + picture.user
+          val style = NotificationCompat.BigPictureStyle()
+            .bigLargeIcon(null)
+            .setBigContentTitle(title)
+            .setSummaryText(picture.desc)
+            .bigPicture(glideBitmap)
+          val notifyBuilder = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_WALLPAPER)
+            .setAutoCancel(true)
+            .setPriority(NotificationCompat.PRIORITY_MAX)
+            .setGroup(NOTIFICATION_GROUP_WALLPAPER)
+            .setTicker(context.getString(R.string.wallpaper_updated))
+            .setSmallIcon(R.drawable.ic_tujian)
+            .setDefaults(NotificationCompat.DEFAULT_ALL)
+            .setLargeIcon(ThumbnailUtils.extractThumbnail(glideBitmap, largeIconHeight, largeIconHeight))
+            .setContentTitle(title)
+            .setContentText(picture.desc)
+            .setStyle(style)
+          val nextPendingIntent = PendingIntent.getBroadcast(context, 0, Intent(context, NotificationController::class.java).setAction(ACTION_WALLPAPER_NEXT), PendingIntent.FLAG_UPDATE_CURRENT)
+          val nextAction = NotificationCompat.Action.Builder(R.drawable.ic_round_navigate_next, context.getString(R.string.next), nextPendingIntent).build()
+          notifyBuilder.addAction(nextAction)
+          val copyIntent = Intent(context, NotificationController::class.java).setAction(ACTION_WALLPAPER_COPY).putExtra("picture", picture)
+          val copyPendingIntent = PendingIntent.getBroadcast(context, 0, copyIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+          val copyAction = NotificationCompat.Action.Builder(R.drawable.ic_round_file_copy, context.getString(R.string.copy), copyPendingIntent).build()
+          notifyBuilder.addAction(copyAction)
+          val downloadIntent = Intent(context, NotificationController::class.java).setAction(ACTION_WALLPAPER_DOWNLOAD).putExtra("picture", picture)
+          val downloadPendingIntent = PendingIntent.getBroadcast(context, 0, downloadIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+          val downloadAction = NotificationCompat.Action.Builder(R.drawable.ic_round_save_alt, context.getString(R.string.download), downloadPendingIntent).build()
+          notifyBuilder.addAction(downloadAction)
+          val summaryNotification = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_WALLPAPER)
+            .setContentTitle(context.getString(R.string.wallpaper_updated))
+            .setContentText(context.getString(R.string.following_switched_wallpaper))
+            .setSmallIcon(R.drawable.ic_tujian)
+            .setStyle(NotificationCompat.InboxStyle()
+              .setBigContentTitle(context.getString(R.string.following_switched_wallpaper))
+              .setSummaryText(context.getString(R.string.already_switched_wallpaper)))
+            .setGroup(NOTIFICATION_GROUP_WALLPAPER)
+            .setGroupSummary(true)
+            .build()
+          notificationManager.notify(("${picture.pid}<=>$NOTIFICATION_CHANNEL_WALLPAPER").hashCode(), notifyBuilder.build())
+          notificationManager.notify(NOTIFICATION_ID_WALLPAPER, summaryNotification)
+        }
+      })
+
     }
 
     fun notifyBingAppWidgetUpdated(context: Context, bing: Bing) = GlobalScope.launch {

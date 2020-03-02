@@ -3,9 +3,13 @@ package io.nichijou.tujian.common.wallpaper
 import android.app.WallpaperManager
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import androidx.work.*
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import io.nichijou.tujian.common.R
 import com.facebook.common.executors.UiThreadImmediateExecutorService
 import com.facebook.common.references.CloseableReference
@@ -30,6 +34,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.withContext
+import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.toast
 import org.koin.core.KoinComponent
 import org.koin.core.inject
@@ -62,7 +67,7 @@ class WallpaperWorker(context: Context, workerParams: WorkerParameters) : Corout
         }
       }
     }
-      picture()
+    picture()
     return Result.success()
   }
 
@@ -93,40 +98,20 @@ class WallpaperWorker(context: Context, workerParams: WorkerParameters) : Corout
   }
 
   private suspend fun setWallpaper(picture: Picture) = withContext(Main) {
-    val uri = Uri.parse(getNewUrl(picture)) ?: return@withContext
-    val builder = ImageRequestBuilder.newBuilderWithSource(uri)
-      .setRotationOptions(RotationOptions.autoRotate())
-      .setRequestPriority(Priority.HIGH)
-      .setImageDecodeOptions(ImageDecodeOptions.newBuilder().setBitmapConfig(Bitmap.Config.ARGB_8888).build())
-    val blur = WallpaperConfig.blur
-    val pixel = WallpaperConfig.pixel
-    if (blur || pixel) {
-      val processorBuilder = CombinePostProcessors.Builder()
-      if (blur) processorBuilder.add(BlurPostprocessor(applicationContext, WallpaperConfig.blurValue / 10))
-      if (pixel) processorBuilder.add(PixelationFilterPostprocessor(applicationContext, (WallpaperConfig.pixelValue / 10).toFloat()))
-      builder.postprocessor = processorBuilder.build()
-    }
-    val imageRequest = builder.build()
-    val dataSource = Fresco.getImagePipeline().fetchDecodedImage(imageRequest, null)
-    dataSource.subscribe(object : BaseBitmapDataSubscriber() {
-      override fun onFailureImpl(dataSource: DataSource<CloseableReference<CloseableImage>>) {
-        val pid = inputData.getString("pid")
-        if (!pid.isNullOrBlank()) {
-          stopLoad()
-        }
-      }
-
-      override fun onNewResultImpl(bitmap: Bitmap?) {
-        if (bitmap != null) {
-          WallpaperManager.getInstance(applicationContext).setBitmap(bitmap)
-          NotificationController.notifyWallpaperUpdated(applicationContext, picture)
+    val url: String = getNewUrl(picture) ?: return@withContext
+    Glide.with(applicationContext).asBitmap().load(url).into(object : CustomTarget<Bitmap>() {
+      override fun onLoadCleared(placeholder: Drawable?) {}
+      override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+        NotificationController.notifyWallpaperUpdated(applicationContext, picture)
+        doAsync {
+          WallpaperManager.getInstance(applicationContext).setBitmap(resource)
         }
         val pid = inputData.getString("pid")
         if (!pid.isNullOrBlank()) {
           stopLoad()
         }
       }
-    }, UiThreadImmediateExecutorService.getInstance())
+    })
   }
 
   companion object {
