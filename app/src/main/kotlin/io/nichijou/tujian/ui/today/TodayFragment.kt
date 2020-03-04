@@ -101,7 +101,7 @@ class TodayFragment : BaseFragment() {
       name_tag.makeVisible()
       if (it.from != Picture.FROM_BING) {
         when (it.user) {
-          "Galentwww", "Chimon89", "Createlite", "Night" -> name_tag.text = "运营"
+          "Galentwww", "Chimon89", "Createlite", "Night" -> name_tag.text = getString(R.string.tag_yy)
           else -> name_tag.makeGone()
         }
       } else {
@@ -218,7 +218,7 @@ class TodayFragment : BaseFragment() {
             target().shareString(currentPicture?.share())
           }
           1 -> {
-            toast("开始保存...")
+            toast(R.string.start_download)
             val name = currentPicture?.title + currentPicture?.date
             Glide.with(requireContext()).asBitmap().load(getNewUrl(currentPicture)).into(object : CustomTarget<Bitmap>() {
               override fun onLoadCleared(placeholder: Drawable?) {}

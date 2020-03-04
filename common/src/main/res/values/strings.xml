@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="start_download">开始下载</string>
+  <string name="start_download">开始下载…</string>
   <string name="no_permission_for_download">没有获得存储权限，无法下载</string>
   <string name="get_tujian_category_error">获取图鉴分类错误</string>
   <string name="appwidget_can_not_match_category_id">切换微件时指定分类无法匹配，加载随机图片</string>
@@ -17,6 +17,8 @@
 
   <string name="enable_wallpaper_switch">启用壁纸切换</string>
   <string name="next_wallpaper">下一壁纸</string>
+  <string name="start_wallpaper">开始设置壁纸</string>
+  <string name="wallpaper_failed">壁纸设置失败</string>
   <string name="wallpaper_can_not_match_category_id">图鉴切换壁纸指定分类无法匹配，加载随机图片</string>
   <string name="not_supported_wallpaper">不支持壁纸设置，关闭换图功能</string>
   <string name="not_allowed_wallpaper">系统不允许设置壁纸，关闭换图功能</string>

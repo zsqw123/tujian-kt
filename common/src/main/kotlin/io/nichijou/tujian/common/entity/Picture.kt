@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
-import android.os.Looper
 import android.os.Parcelable
 import androidx.core.net.toUri
 import androidx.room.Entity
@@ -17,6 +16,7 @@ import com.bumptech.glide.request.transition.Transition
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import io.nichijou.tujian.common.C
+import io.nichijou.tujian.common.R
 import io.nichijou.tujian.common.ext.saveToAlbum
 import io.nichijou.tujian.common.ext.toClipboard
 import kotlinx.android.parcel.Parcelize
@@ -25,7 +25,6 @@ import org.jetbrains.anko.runOnUiThread
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
 import java.io.File
-import java.util.*
 
 @Entity(tableName = "tb_picture", indices = [Index(value = ["pid", "from"], unique = true)])
 @JsonClass(generateAdapter = true)
@@ -72,7 +71,7 @@ data class Picture(
   }
 
   fun download(context: Context) {
-    context.runOnUiThread { context.toast("开始下载原图...") }
+    context.runOnUiThread { context.toast(R.string.start_download) }
     val name = "Tujian-$title $date"
     Glide.with(context).asBitmap().load(getNewUrl(this@Picture)).into(object : CustomTarget<Bitmap>() {
       override fun onLoadCleared(placeholder: Drawable?) {}
@@ -98,7 +97,7 @@ fun getNewUrl(picture: Picture?): String? {
 
 fun setWallpaper(context: Context, picture: Picture) = context.doAsync {
   uiThread {
-    context.toast("开始设置壁纸")
+    context.toast(R.string.start_wallpaper)
   }
   Glide.with(context).asFile().load(getNewUrl(picture)).into(object : CustomTarget<File>() {
     override fun onLoadCleared(placeholder: Drawable?) {}
@@ -110,7 +109,7 @@ fun setWallpaper(context: Context, picture: Picture) = context.doAsync {
 
     override fun onLoadFailed(errorDrawable: Drawable?) {
       super.onLoadFailed(errorDrawable)
-      uiThread { context.toast("壁纸下载失败") }
+      uiThread { context.toast(R.string.wallpaper_failed) }
     }
   })
 

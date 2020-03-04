@@ -3,7 +3,7 @@
   <string name="app_name_pinyin">tújiàn</string>
   <string name="bing_wallpaper">必应壁纸</string>
   <string name="apply_theme_color">已应用主题色：#%1$s</string>
-  <string name="start_download">开始下载</string>
+  <string name="start_download">开始下载…</string>
   <string name="download">下载</string>
   <string name="update">更新</string>
   <string name="please_open_download_manager">您需要打开文件下载功能</string>
@@ -43,6 +43,8 @@
   <string name="history">历史</string>
   <string name="settings">设置</string>
   <string name="about">关于</string>
+
+  <string name="tag_yy">运营</string>
 
   <string name="enable_switch">壁纸切换</string>
   <string name="enable_switch_desc">是否启用壁纸自动切换</string>
