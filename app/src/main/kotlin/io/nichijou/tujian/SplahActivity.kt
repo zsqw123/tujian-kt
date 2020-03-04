@@ -13,7 +13,6 @@ import com.tencent.bugly.beta.Beta
 import io.nichijou.oops.Oops
 import io.nichijou.tujian.common.C
 import io.nichijou.tujian.common.entity.SplashResp
-import io.nichijou.tujian.common.shortcuts.ShortcutsController
 import io.nichijou.tujian.ui.MainActivity
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -53,11 +52,6 @@ class SplashActivity : AppCompatActivity() {
             Beta.upgradeDialogLayoutId = R.layout.update_dialog
             Bugly.init(applicationContext, BuildConfig.API_BUGLY, false)
           }
-        }
-        try {
-          ShortcutsController.updateShortcuts(App.context!!)
-        } catch (e: java.lang.Exception) {
-          Log.e("no shortcut", e.message ?: "")
         }
         Fragmentation.builder().debug(BuildConfig.DEBUG).install()
       } catch (e: Exception) {

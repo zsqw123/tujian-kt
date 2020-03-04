@@ -21,7 +21,7 @@
     app:elevation="16dp"
     app:fabSize="mini"
     app:layout_anchor="@id/content"
-    app:layout_anchorGravity="end"
+    app:layout_anchorGravity="end|top"
     app:srcCompat="@drawable/ic_twotone_add" />
 
   <FrameLayout
@@ -105,7 +105,7 @@
           android:layout_marginTop="8dp"
           android:layout_marginEnd="16dp"
           android:layout_marginBottom="8dp"
-          android:text="正在加载今日图片..."
+          android:text="@string/loading_today"
           android:textColor="?android:textColorSecondary"
           android:textIsSelectable="true"
           android:textSize="14sp"

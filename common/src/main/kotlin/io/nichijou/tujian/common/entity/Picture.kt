@@ -5,7 +5,9 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Parcelable
+import android.provider.MediaStore
 import androidx.core.net.toUri
 import androidx.room.Entity
 import androidx.room.Index
@@ -99,10 +101,11 @@ fun setWallpaper(context: Context, picture: Picture) = context.doAsync {
   uiThread {
     context.toast(R.string.start_wallpaper)
   }
-  Glide.with(context).asFile().load(getNewUrl(picture)).into(object : CustomTarget<File>() {
+  Glide.with(context).asBitmap().load(getNewUrl(picture)).into(object : CustomTarget<Bitmap>() {
     override fun onLoadCleared(placeholder: Drawable?) {}
-    override fun onResourceReady(resource: File, transition: Transition<in File>?) {
-      val intent = WallpaperManager.getInstance(context).getCropAndSetWallpaperIntent(resource.toUri())
+    override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+      val uri = Uri.parse(MediaStore.Images.Media.insertImage(context.contentResolver, resource, null, null))
+      val intent = WallpaperManager.getInstance(context).getCropAndSetWallpaperIntent(uri)
       intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
       context.startActivity(intent)
     }

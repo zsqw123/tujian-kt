@@ -168,13 +168,16 @@ class SettingsFragment : BaseFragment(), View.OnClickListener, SeekBar.OnSeekBar
       Settings.enableFaceDetection = isChecked
       if (isChecked) askForPermissions(Permission.CAMERA, callback = object : Callback {
         override fun invoke(result: AssentResult) {
-          val pm = context!!.packageManager
-          if (PackageManager.PERMISSION_GRANTED != pm.checkPermission(Manifest.permission.CAMERA, context!!.packageName)) {
-            if (result.isAllDenied()) {
-              view_face_detection.isChecked = false
-              Settings.enableFaceDetection = false
-              toast("必须允许相机权限进行人脸识别")
+          try {
+            if (PackageManager.PERMISSION_GRANTED != requireContext().packageManager.checkPermission(Manifest.permission.CAMERA, requireContext().packageName)) {
+              if (result.isAllDenied()) {
+                view_face_detection.isChecked = false
+                Settings.enableFaceDetection = false
+                toast("必须允许相机权限进行人脸识别")
+              }
             }
+          } catch (e: Exception) {
+            e.printStackTrace()
           }
         }
       })

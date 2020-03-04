@@ -6,8 +6,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
@@ -21,7 +19,10 @@ import io.nichijou.oops.ext.setMarginTopPlusStatusBarHeight
 import io.nichijou.tujian.R
 import io.nichijou.tujian.base.BaseFragment
 import io.nichijou.tujian.common.entity.getNewUrl
-import io.nichijou.tujian.common.ext.*
+import io.nichijou.tujian.common.ext.addNew
+import io.nichijou.tujian.common.ext.isNavigationBarEnabled
+import io.nichijou.tujian.common.ext.setPaddingBottomPlusNavBarHeight
+import io.nichijou.tujian.common.ext.with
 import io.nichijou.tujian.ext.addFragment
 import io.nichijou.tujian.ext.suffixRandom
 import io.nichijou.tujian.ext.target
@@ -30,10 +31,8 @@ import io.nichijou.tujian.ui.MainViewModel
 import io.nichijou.tujian.ui.doPalettes
 import io.nichijou.utils.isColorDark
 import kotlinx.android.synthetic.main.fragment_about.*
-import kotlinx.android.synthetic.main.item_osl.view.*
 import org.jetbrains.anko.support.v4.browse
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import kotlinx.android.synthetic.main.item_osl.view.name as oslName
 import kotlinx.android.synthetic.main.item_team_core.view.avatar as coreAvatar
 import kotlinx.android.synthetic.main.item_team_core.view.job as coreJob
 import kotlinx.android.synthetic.main.item_team_core.view.name as coreName
@@ -118,7 +117,11 @@ class AboutFragment : BaseFragment() {
       memberJob.text = b.job
       setOnClickListener {
         val url = b.url
-        if (url.length > 7) browse(url)
+        try {
+          if (url.length > 7) browse(url)
+        } catch (e: Exception) {
+          e.printStackTrace()
+        }
       }
     }
     aboutViewModel.getTeam().observe(viewLifecycleOwner, Observer {

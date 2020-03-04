@@ -29,34 +29,6 @@
         android:taskAffinity=""
         android:theme="@style/Theme.Transparent" />
 
-      <activity
-        android:name="io.nichijou.tujian.common.link.LinkController"
-        android:excludeFromRecents="true"
-        android:exported="true"
-        android:taskAffinity=""
-        android:theme="@style/Theme.Transparent">
-        <intent-filter>
-          <action android:name="android.intent.action.VIEW" />
-
-          <category android:name="android.intent.category.DEFAULT" />
-          <category android:name="android.intent.category.BROWSABLE" />
-
-          <data
-            android:host="www.dailypics.cn"
-            android:scheme="https" />
-        </intent-filter>
-        <intent-filter>
-          <action android:name="android.intent.action.VIEW" />
-
-          <category android:name="android.intent.category.BROWSABLE" />
-          <category android:name="android.intent.category.DEFAULT" />
-
-          <data
-            android:host="launch"
-            android:scheme="tujian" />
-        </intent-filter>
-      </activity>
-
       <receiver
         android:name="io.nichijou.tujian.common.appwidget.TujianAppWidgetProvider"
         android:label="@string/tujian">

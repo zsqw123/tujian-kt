@@ -56,6 +56,13 @@ class TodayFragment : BaseFragment() {
     initViewModel()
   }
 
+  override fun onHiddenChanged(hidden: Boolean) {
+    super.onHiddenChanged(hidden)
+    if (!hidden && fab != null) {
+      fab.requestLayout()
+    }
+  }
+
   private fun initViewModel() {
     viewModel.getToday().observe(viewLifecycleOwner, Observer(::bind2View))
   }

@@ -16,7 +16,6 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.billy.android.swipe.SmartSwipe
 import com.billy.android.swipe.consumer.DrawerConsumer
 import com.billy.android.swipe.consumer.SlidingConsumer
-import com.billy.android.swipe.listener.SwipeListener
 import com.larvalabs.boo.BooFragment
 import com.zzhoujay.richtext.RichText
 import io.nichijou.oops.Oops
@@ -43,6 +42,7 @@ import org.jetbrains.anko.isSelectable
 import org.jetbrains.anko.matchParent
 import org.jetbrains.anko.textColor
 import org.koin.android.ext.android.inject
+import java.lang.Exception
 
 
 class MainActivity : SupportActivity(), CoroutineScope by MainScope() {
@@ -128,18 +128,22 @@ class MainActivity : SupportActivity(), CoroutineScope by MainScope() {
 
   override fun onWindowFocusChanged(hasFocus: Boolean) {
     super.onWindowFocusChanged(hasFocus)
-    if (hasFocus && firstTime) {
-      if (Settings.enableFaceDetection) {
-        askForPermissions(
-          Permission.READ_EXTERNAL_STORAGE,
-          Permission.WRITE_EXTERNAL_STORAGE,
-          Permission.CAMERA) {}
-      } else {
-        askForPermissions(
-          Permission.READ_EXTERNAL_STORAGE,
-          Permission.WRITE_EXTERNAL_STORAGE) {}
+    try {
+      if (hasFocus && firstTime) {
+        if (Settings.enableFaceDetection) {
+          askForPermissions(
+            Permission.READ_EXTERNAL_STORAGE,
+            Permission.WRITE_EXTERNAL_STORAGE,
+            Permission.CAMERA) {}
+        } else {
+          askForPermissions(
+            Permission.READ_EXTERNAL_STORAGE,
+            Permission.WRITE_EXTERNAL_STORAGE) {}
+        }
+        firstTime = false
       }
-      firstTime = false
+    } catch (e: Exception) {
+      e.printStackTrace()
     }
   }
 

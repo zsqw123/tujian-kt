@@ -1,6 +1,5 @@
 package io.nichijou.tujian.ui.search
 
-import android.graphics.Color
 import android.graphics.Point
 import android.os.Bundle
 import android.view.View
@@ -11,7 +10,6 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import io.nichijou.oops.Oops
 import io.nichijou.tujian.R
 import io.nichijou.tujian.base.BaseFragment
 import io.nichijou.tujian.base.TopBarOnScrollListener
@@ -82,7 +80,7 @@ class SearchFragment : BaseFragment() {
 
   private fun initView() {
     setupDrawerWithToolbar(toolbar)
-    top_bar.setMarginTopPlusStatusBarHeight()// 加上一个状态栏高度的margin
+    top_bar.setMarginTopPlusStatusBarHeight()
     mainViewModel.enableScreenSaver.postValue(true)
     recycler_view.addOnScrollListener(TopBarOnScrollListener(top_bar))
     recycler_view.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
