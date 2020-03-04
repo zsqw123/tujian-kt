@@ -5,6 +5,7 @@ import android.database.Cursor
 import android.database.MatrixCursor
 import android.graphics.Point
 import android.os.CancellationSignal
+import android.os.Environment
 import android.os.Handler
 import android.os.ParcelFileDescriptor
 import android.provider.DocumentsContract.Document
@@ -12,14 +13,13 @@ import android.provider.DocumentsContract.Root
 import android.provider.DocumentsProvider
 import android.webkit.MimeTypeMap
 import io.nichijou.tujian.R
-import io.nichijou.tujian.common.ext.basePath
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
 import java.util.*
 
 class TujianDocumentsProvider : DocumentsProvider() {
-  private val baseDir by lazy { File(context?.basePath()) }
+  private val baseDir by lazy { context?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)!! }
 
   override fun onCreate(): Boolean {
     if (!baseDir.exists()) {
@@ -30,15 +30,16 @@ class TujianDocumentsProvider : DocumentsProvider() {
 
   override fun queryRoots(projection: Array<String>?): Cursor {
     val result = MatrixCursor(projection ?: DEFAULT_ROOT_PROJECTION)
-    val row = result.newRow()
-    row.add(Root.COLUMN_ROOT_ID, baseDir.absolutePath)
-    row.add(Root.COLUMN_SUMMARY, context?.getString(R.string.provider_root_summary))
-    row.add(Root.COLUMN_FLAGS, Root.FLAG_SUPPORTS_CREATE or Root.FLAG_SUPPORTS_RECENTS or Root.FLAG_SUPPORTS_SEARCH)
-    row.add(Root.COLUMN_TITLE, context?.getString(R.string.app_name))
-    row.add(Root.COLUMN_DOCUMENT_ID, getDocIdForFile(baseDir))
-    row.add(Root.COLUMN_MIME_TYPES, getChildMimeTypes())
-    row.add(Root.COLUMN_AVAILABLE_BYTES, baseDir.freeSpace)
-    row.add(Root.COLUMN_ICON, R.mipmap.ic_launcher)
+    result.newRow().apply {
+      add(Root.COLUMN_ROOT_ID, baseDir.absolutePath)
+      add(Root.COLUMN_SUMMARY, context?.getString(R.string.provider_root_summary))
+      add(Root.COLUMN_FLAGS, Root.FLAG_SUPPORTS_CREATE or Root.FLAG_SUPPORTS_RECENTS or Root.FLAG_SUPPORTS_SEARCH)
+      add(Root.COLUMN_TITLE, context?.getString(R.string.app_name))
+      add(Root.COLUMN_DOCUMENT_ID, getDocIdForFile(baseDir))
+      add(Root.COLUMN_MIME_TYPES, getChildMimeTypes())
+      add(Root.COLUMN_AVAILABLE_BYTES, baseDir.freeSpace)
+      add(Root.COLUMN_ICON, R.mipmap.ic_launcher)
+    }
     return result
   }
 
@@ -51,7 +52,7 @@ class TujianDocumentsProvider : DocumentsProvider() {
     while (!pending.isEmpty()) {
       val file = pending.removeFirst()
       if (file.isDirectory) {
-        Collections.addAll(pending, *file.listFiles())
+        Collections.addAll(pending, *file.listFiles()!!)
       } else {
         lastModifiedFiles.add(file)
       }
@@ -71,7 +72,7 @@ class TujianDocumentsProvider : DocumentsProvider() {
     while (!pending.isEmpty() && result.count < MAX_SEARCH_RESULTS) {
       val file = pending.removeFirst()
       if (file.isDirectory) {
-        Collections.addAll(pending, *file.listFiles())
+        Collections.addAll(pending, *file.listFiles()!!)
       } else {
         if (file.name.toLowerCase(Locale.getDefault()).contains(query)) {
           includeFile(result, null, file)
@@ -96,7 +97,7 @@ class TujianDocumentsProvider : DocumentsProvider() {
   override fun queryChildDocuments(parentDocumentId: String, projection: Array<String>?, sortOrder: String): Cursor {
     val result = MatrixCursor(projection ?: DEFAULT_DOCUMENT_PROJECTION)
     val parent = getFileForDocId(parentDocumentId)
-    for (file in parent.listFiles()) {
+    for (file in parent.listFiles()!!) {
       includeFile(result, null, file)
     }
     return result

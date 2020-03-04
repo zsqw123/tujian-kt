@@ -38,9 +38,11 @@
     <activity
       android:name=".ui.MainActivity"
       android:theme="@style/AppTheme" />
+
     <provider
       android:name="io.nichijou.tujian.provider.TujianDocumentsProvider"
       android:authorities="${documentsProviderAuthority}"
+      android:enabled="true"
       android:exported="true"
       android:grantUriPermissions="true"
       android:permission="android.permission.MANAGE_DOCUMENTS">

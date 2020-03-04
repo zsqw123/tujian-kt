@@ -142,10 +142,11 @@ fun Context.getRadiusByCenterPoint(point: Point): Float {
   return max(max(r1, r2), max(r3, r4)).toFloat()
 }
 
-//保存bitmap
+// 保存bitmap
 fun Bitmap.saveToAlbum(context: Context, fileName: String) {
   val bitmap: Bitmap = this
   context.doAsync {
+    bitmap.addToTujianProvider(context, fileName)
     @Suppress("DEPRECATION")
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
       //系统相册目录
@@ -203,6 +204,23 @@ fun Bitmap.saveToAlbum(context: Context, fileName: String) {
   }
 }
 
+// 添加图片到tujianProviders
+fun Bitmap.addToTujianProvider(context: Context, fileName: String, folderName: String = "") {
+  val bitmap: Bitmap = this
+  context.doAsync {
+    val tujianPicProviderRoot = context.getExternalFilesDir(DIRECTORY_PICTURES)
+    val picFile =if (folderName != "") File(tujianPicProviderRoot, "$fileName.jpg")
+    else File(tujianPicProviderRoot, "$fileName.jpg")
+    if (!picFile.exists()) {
+      picFile.parentFile!!.mkdirs()
+      picFile.createNewFile()
+    }
+    val fos = FileOutputStream(picFile)
+    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos)
+  }
+}
+
+// 宽高比imageView
 class AspectRatioImageView @JvmOverloads constructor(
   context: Context,
   attrs: AttributeSet? = null,
