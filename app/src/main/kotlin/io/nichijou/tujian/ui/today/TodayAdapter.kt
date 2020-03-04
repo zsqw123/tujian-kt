@@ -15,7 +15,6 @@ class TodayAdapter(private val items: List<Picture>) : RecyclerView.Adapter<Toda
   }
 
   override fun getItemCount(): Int = items.size
-
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val path = getNewUrl(items[position], 1080)
     holder.itemView.actual_view.setOnLongClickListener {

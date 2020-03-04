@@ -40,6 +40,7 @@ import kotlinx.android.synthetic.main.fragment_today.*
 import org.jetbrains.anko.isSelectable
 import org.jetbrains.anko.support.v4.toast
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.set
@@ -95,10 +96,14 @@ class TodayFragment : BaseFragment() {
     currentPicture?.let {
       toolbar.title = it.title
       desc.isSelectable = false
-      RichText.fromMarkdown(it.desc.replace("\n", "  \n")).linkFix { holder ->
-        holder!!.color = getThemeColor()
-        holder.isUnderLine = false
-      }.noImage(true).into(desc)
+      try {
+        RichText.fromMarkdown(it.desc.replace("\n", "  \n")).linkFix { holder ->
+          holder!!.color = getThemeColor()
+          holder.isUnderLine = false
+        }.noImage(true).into(desc)
+      } catch (e: Exception) {
+        e.printStackTrace()
+      }
       val dat = if (it.from == Picture.FROM_BING) it.date else it.date.substring(5)
       val user = " via ${it.user}"
       val result = dat + user

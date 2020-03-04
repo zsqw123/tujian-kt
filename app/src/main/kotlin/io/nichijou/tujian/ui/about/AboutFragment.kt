@@ -18,7 +18,6 @@ import io.nichijou.oops.Oops
 import io.nichijou.oops.ext.setMarginTopPlusStatusBarHeight
 import io.nichijou.tujian.R
 import io.nichijou.tujian.base.BaseFragment
-import io.nichijou.tujian.common.entity.getNewUrl
 import io.nichijou.tujian.common.ext.addNew
 import io.nichijou.tujian.common.ext.isNavigationBarEnabled
 import io.nichijou.tujian.common.ext.setPaddingBottomPlusNavBarHeight
@@ -28,6 +27,7 @@ import io.nichijou.tujian.ext.suffixRandom
 import io.nichijou.tujian.ext.target
 import io.nichijou.tujian.ui.MainActivity
 import io.nichijou.tujian.ui.MainViewModel
+import io.nichijou.tujian.ui.archive.getNewUrl
 import io.nichijou.tujian.ui.doPalettes
 import io.nichijou.utils.isColorDark
 import kotlinx.android.synthetic.main.fragment_about.*
@@ -68,7 +68,7 @@ class AboutFragment : BaseFragment() {
     toolbar.setNavigationOnClickListener { MainActivity.swipeConsumer!!.smoothLeftOpen() }
     aboutViewModel.lastPicture.observe(viewLifecycleOwner, Observer {
       if (it != null) {
-        Glide.with(requireContext()).asBitmap().load(getNewUrl(it) + "!w1080").into(object : CustomTarget<Bitmap>() {
+        Glide.with(requireContext()).asBitmap().load(getNewUrl(it, 1080)).into(object : CustomTarget<Bitmap>() {
           override fun onLoadCleared(placeholder: Drawable?) {}
           override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
             val bitmap: Bitmap = resource

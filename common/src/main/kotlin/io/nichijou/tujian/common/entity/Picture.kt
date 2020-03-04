@@ -8,7 +8,6 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Parcelable
 import android.provider.MediaStore
-import androidx.core.net.toUri
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
@@ -26,7 +25,6 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.runOnUiThread
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
-import java.io.File
 
 @Entity(tableName = "tb_picture", indices = [Index(value = ["pid", "from"], unique = true)])
 @JsonClass(generateAdapter = true)
