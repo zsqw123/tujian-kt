@@ -21,6 +21,7 @@ import io.nichijou.tujian.common.ext.saveToAlbum
 import io.nichijou.tujian.common.ext.toClipboard
 import kotlinx.android.parcel.Parcelize
 import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.runOnUiThread
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
 import java.io.File
@@ -67,24 +68,18 @@ data class Picture(
 
   fun copy(context: Context) {
     context.toClipboard(share())
-    Looper.prepare()
-    context.toast("$title via $user")
-    Looper.loop()
+    context.runOnUiThread { context.toast("$title via $user") }
   }
 
   fun download(context: Context) {
-    Looper.prepare()
-    context.toast("开始下载原图...")
-    Looper.loop()
+    context.runOnUiThread { context.toast("开始下载原图...") }
     val name = "Tujian-$title $date"
-    doAsync {
-      Glide.with(context).asBitmap().load(getNewUrl(this@Picture)).into(object : CustomTarget<Bitmap>() {
-        override fun onLoadCleared(placeholder: Drawable?) {}
-        override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-          resource.saveToAlbum(context, name)
-        }
-      })
-    }
+    Glide.with(context).asBitmap().load(getNewUrl(this@Picture)).into(object : CustomTarget<Bitmap>() {
+      override fun onLoadCleared(placeholder: Drawable?) {}
+      override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+        resource.saveToAlbum(context, name)
+      }
+    })
   }
 
   companion object {

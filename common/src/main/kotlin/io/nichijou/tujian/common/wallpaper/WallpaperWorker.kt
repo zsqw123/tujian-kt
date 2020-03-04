@@ -107,11 +107,7 @@ class WallpaperWorker(context: Context, workerParams: WorkerParameters) : Corout
       override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
         NotificationController.notifyWallpaperUpdated(applicationContext, picture)
         doAsync {
-          val uri = Uri.parse(MediaStore.Images.Media.insertImage(applicationContext.contentResolver, resource, null, null))
-          val intent = WallpaperManager.getInstance(applicationContext).getCropAndSetWallpaperIntent(uri)
-          intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-          applicationContext.startActivity(intent)
-//          WallpaperManager.getInstance(applicationContext).setBitmap(resource)
+          WallpaperManager.getInstance(applicationContext).setBitmap(resource)
         }
         val pid = inputData.getString("pid")
         if (!pid.isNullOrBlank()) {

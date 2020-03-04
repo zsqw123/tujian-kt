@@ -144,8 +144,8 @@ fun Context.getRadiusByCenterPoint(point: Point): Float {
 
 //保存bitmap
 fun Bitmap.saveToAlbum(context: Context, fileName: String) {
-  val bitmap: Bitmap = this@saveToAlbum
-  doAsync {
+  val bitmap: Bitmap = this
+  context.doAsync {
     @Suppress("DEPRECATION")
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
       //系统相册目录
@@ -201,7 +201,6 @@ fun Bitmap.saveToAlbum(context: Context, fileName: String) {
       uiThread { context.toast("图片保存成功") }
     }
   }
-
 }
 
 class AspectRatioImageView @JvmOverloads constructor(
