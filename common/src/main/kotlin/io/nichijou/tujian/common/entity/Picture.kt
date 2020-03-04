@@ -2,39 +2,28 @@ package io.nichijou.tujian.common.entity
 
 import android.app.WallpaperManager
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
-import android.net.Uri
+import android.os.Looper
 import android.os.Parcelable
+import androidx.core.net.toUri
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
-import com.facebook.common.executors.UiThreadImmediateExecutorService
-import com.facebook.common.references.CloseableReference
-import com.facebook.datasource.DataSource
-import com.facebook.drawee.backends.pipeline.Fresco
-import com.facebook.imagepipeline.common.ImageDecodeOptions
-import com.facebook.imagepipeline.common.Priority
-import com.facebook.imagepipeline.common.RotationOptions
-import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber
-import com.facebook.imagepipeline.image.CloseableImage
-import com.facebook.imagepipeline.request.ImageRequestBuilder
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import io.nichijou.tujian.common.C
 import io.nichijou.tujian.common.ext.saveToAlbum
 import io.nichijou.tujian.common.ext.toClipboard
-import io.nichijou.tujian.common.wallpaper.WallpaperConfig
-import jp.wasabeef.fresco.processors.BlurPostprocessor
-import jp.wasabeef.fresco.processors.CombinePostProcessors
-import jp.wasabeef.fresco.processors.gpu.PixelationFilterPostprocessor
 import kotlinx.android.parcel.Parcelize
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
+import java.io.File
 import java.util.*
 
 @Entity(tableName = "tb_picture", indices = [Index(value = ["pid", "from"], unique = true)])
@@ -78,12 +67,16 @@ data class Picture(
 
   fun copy(context: Context) {
     context.toClipboard(share())
+    Looper.prepare()
     context.toast("$title via $user")
+    Looper.loop()
   }
 
   fun download(context: Context) {
+    Looper.prepare()
     context.toast("开始下载原图...")
-    val name = "Tujian-" + title + Date()
+    Looper.loop()
+    val name = "Tujian-$title $date"
     doAsync {
       Glide.with(context).asBitmap().load(getNewUrl(this@Picture)).into(object : CustomTarget<Bitmap>() {
         override fun onLoadCleared(placeholder: Drawable?) {}
@@ -109,42 +102,29 @@ fun getNewUrl(picture: Picture?): String? {
 }
 
 fun setWallpaper(context: Context, picture: Picture) = context.doAsync {
-  val local = getNewUrl(picture)
-  val uri = Uri.parse(local)
-  val builder = ImageRequestBuilder.newBuilderWithSource(uri)
-    .setRotationOptions(RotationOptions.autoRotate())
-    .setRequestPriority(Priority.HIGH)
-    .setImageDecodeOptions(ImageDecodeOptions.newBuilder().setBitmapConfig(Bitmap.Config.ARGB_8888).build())
-  val blur = WallpaperConfig.blur
-  val pixel = WallpaperConfig.pixel
-  if (blur || pixel) {
-    val processorBuilder = CombinePostProcessors.Builder()
-    if (blur) processorBuilder.add(BlurPostprocessor(context, WallpaperConfig.blurValue))
-    if (pixel) processorBuilder.add(PixelationFilterPostprocessor(context, WallpaperConfig.pixelValue.toFloat()))
-    builder.postprocessor = processorBuilder.build()
-  }
   uiThread {
     context.toast("开始设置壁纸")
   }
-  val imageRequest = builder.build()
-  val dataSource = Fresco.getImagePipeline().fetchDecodedImage(imageRequest, null)
-  dataSource.subscribe(object : BaseBitmapDataSubscriber() {
-    override fun onFailureImpl(dataSource: DataSource<CloseableReference<CloseableImage>>) {
-      uiThread {
-        context.toast("壁纸设置失败")
-      }
+  Glide.with(context).asFile().load(getNewUrl(picture)).into(object : CustomTarget<File>() {
+    override fun onLoadCleared(placeholder: Drawable?) {}
+    override fun onResourceReady(resource: File, transition: Transition<in File>?) {
+      val intent = WallpaperManager.getInstance(context).getCropAndSetWallpaperIntent(resource.toUri())
+      intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+      context.startActivity(intent)
     }
 
-    override fun onNewResultImpl(bitmap: Bitmap?) {
-      if (bitmap != null) {
-        doAsync {
-          val bitmap0: Bitmap = bitmap
-          WallpaperManager.getInstance(context).setBitmap(bitmap0)
-          uiThread {
-            context.toast("壁纸设置成功")
-          }
-        }
-      }
+    override fun onLoadFailed(errorDrawable: Drawable?) {
+      super.onLoadFailed(errorDrawable)
+      uiThread { context.toast("壁纸下载失败") }
     }
-  }, UiThreadImmediateExecutorService.getInstance())
+  })
+
+//  val blur = WallpaperConfig.blur
+//  val pixel = WallpaperConfig.pixel
+//  if (blur || pixel) {
+//    val processorBuilder = CombinePostProcessors.Builder()
+//    if (blur) processorBuilder.add(BlurPostprocessor(context, WallpaperConfig.blurValue))
+//    if (pixel) processorBuilder.add(PixelationFilterPostprocessor(context, WallpaperConfig.pixelValue.toFloat()))
+//    builder.postprocessor = processorBuilder.build()
+//  }
 }

@@ -2,22 +2,27 @@ package io.nichijou.tujian.common.ext
 
 import android.content.ContentValues
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Point
+import android.net.Uri
+import android.os.Build
+import android.os.Environment
+import android.os.Environment.DIRECTORY_PICTURES
 import android.provider.MediaStore
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ListAdapter
-import androidx.appcompat.widget.AppCompatImageView
-import androidx.core.view.drawToBitmap
 import androidx.core.view.setMargins
 import com.bm.library.PhotoView
 import com.google.android.material.snackbar.Snackbar
 import io.nichijou.tujian.common.R
-import org.jetbrains.anko.*
-import java.io.OutputStream
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.toast
+import org.jetbrains.anko.uiThread
+import java.io.*
 import kotlin.math.hypot
 import kotlin.math.max
 
@@ -139,23 +144,64 @@ fun Context.getRadiusByCenterPoint(point: Point): Float {
 
 //保存bitmap
 fun Bitmap.saveToAlbum(context: Context, fileName: String) {
-  val contentValues = ContentValues()
-  contentValues.put(MediaStore.Images.Media.TITLE, fileName)
-  contentValues.put(MediaStore.Images.Media.DISPLAY_NAME, fileName)
-  contentValues.put(MediaStore.Images.Media.DESCRIPTION, fileName)
-  contentValues.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
-//  contentValues.put(MediaStore.Images.Media.IS_PENDING, 1)
-  val uri = context.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
-  val outputStream: OutputStream? = context.contentResolver.openOutputStream(uri!!)
-  try {
-    this.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
-    outputStream!!.close()
-    context.toast("已保存到相册")
-  } catch (e: Exception) {
-    e.printStackTrace()
-    return
+  val bitmap: Bitmap = this@saveToAlbum
+  doAsync {
+    @Suppress("DEPRECATION")
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+      //系统相册目录
+      val galleryPath = File(Environment.getExternalStorageDirectory().absolutePath + File.separator +
+        DIRECTORY_PICTURES + File.separator + "图鉴日图")
+      var file: File? = null
+      var fos: FileOutputStream? = null
+      try {
+        file = File(galleryPath, "$fileName.jpg")
+        if (!file.exists()) {
+          file.parentFile!!.mkdirs()
+          file.createNewFile()
+        }
+        fos = FileOutputStream(file)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos)
+      } catch (e: Exception) {
+        e.printStackTrace()
+      } finally {
+        fos?.close()
+      }
+      val values = ContentValues().apply {
+        put(MediaStore.Images.Media.DATA, file!!.absolutePath)
+        put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+        put(MediaStore.Images.Media.DESCRIPTION, "保存自: 图鉴日图")
+      }
+      val uri: Uri? = context.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+      val intent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE)
+      intent.data = uri
+      context.sendBroadcast(intent)
+      uiThread { context.toast("图片保存成功") }
+    } else { //Android Q把文件插入到系统图库
+      val contentValues = ContentValues().apply {
+        put(MediaStore.Images.Media.TITLE, fileName)
+        put(MediaStore.Images.Media.DISPLAY_NAME, "$fileName.jpg")
+        put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+        put(MediaStore.Images.Media.IS_PENDING, 1)
+        put(MediaStore.Images.Media.RELATIVE_PATH, "$DIRECTORY_PICTURES/图鉴日图")
+      }
+
+      val resolver = context.contentResolver
+      val collection = MediaStore.Images.Media
+        .getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
+      val item = resolver.insert(collection, contentValues)
+
+      resolver.openFileDescriptor(item!!, "w", null).use { pfd ->
+        val out = FileOutputStream(pfd!!.fileDescriptor)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
+      }
+
+      contentValues.clear()
+      contentValues.put(MediaStore.Images.Media.IS_PENDING, 0)
+      resolver.update(item, contentValues, null, null)
+      uiThread { context.toast("图片保存成功") }
+    }
   }
-  return
+
 }
 
 class AspectRatioImageView @JvmOverloads constructor(

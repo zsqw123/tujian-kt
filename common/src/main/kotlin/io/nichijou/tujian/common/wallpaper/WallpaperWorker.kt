@@ -2,10 +2,13 @@ package io.nichijou.tujian.common.wallpaper
 
 import android.app.WallpaperManager
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
+import android.provider.MediaStore
+import androidx.core.content.FileProvider
 import androidx.work.*
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
@@ -104,7 +107,11 @@ class WallpaperWorker(context: Context, workerParams: WorkerParameters) : Corout
       override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
         NotificationController.notifyWallpaperUpdated(applicationContext, picture)
         doAsync {
-          WallpaperManager.getInstance(applicationContext).setBitmap(resource)
+          val uri = Uri.parse(MediaStore.Images.Media.insertImage(applicationContext.contentResolver, resource, null, null))
+          val intent = WallpaperManager.getInstance(applicationContext).getCropAndSetWallpaperIntent(uri)
+          intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+          applicationContext.startActivity(intent)
+//          WallpaperManager.getInstance(applicationContext).setBitmap(resource)
         }
         val pid = inputData.getString("pid")
         if (!pid.isNullOrBlank()) {

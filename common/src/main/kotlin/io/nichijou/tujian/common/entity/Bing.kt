@@ -1,27 +1,21 @@
 package io.nichijou.tujian.common.entity
 
-import android.app.DownloadManager
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
-import android.net.Uri
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import com.afollestad.assent.Permission
-import com.afollestad.assent.isAllGranted
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.squareup.moshi.*
-import io.nichijou.tujian.common.R
-import io.nichijou.tujian.common.ext.basePath
 import io.nichijou.tujian.common.ext.saveToAlbum
 import io.nichijou.tujian.common.ext.toClipboard
 import kotlinx.android.parcel.Parcelize
+import org.jetbrains.anko.runOnUiThread
 import org.jetbrains.anko.toast
-import java.io.File
 import java.util.*
 
 @Entity(tableName = "tb_bing", indices = [Index(value = ["url", "date"], unique = true)])
@@ -42,11 +36,11 @@ data class Bing(
 
   fun copy(context: Context) {
     context.toClipboard(share())
-    context.toast(copyright)
+    context.runOnUiThread { context.toast(copyright) }
   }
 
   fun download(context: Context) {
-    context.toast("开始下载原图...")
+    context.runOnUiThread { context.toast("开始下载原图...") }
     val name = "TujianBing-" + copyright + Date()
     Glide.with(context).asBitmap().load(url).into(object : CustomTarget<Bitmap>() {
       override fun onLoadCleared(placeholder: Drawable?) {}

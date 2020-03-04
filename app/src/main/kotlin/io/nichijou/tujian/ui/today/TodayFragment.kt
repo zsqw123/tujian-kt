@@ -219,7 +219,7 @@ class TodayFragment : BaseFragment() {
           }
           1 -> {
             toast("开始保存...")
-            val name = currentPicture?.title + Date()
+            val name = currentPicture?.title + currentPicture?.date
             Glide.with(requireContext()).asBitmap().load(getNewUrl(currentPicture)).into(object : CustomTarget<Bitmap>() {
               override fun onLoadCleared(placeholder: Drawable?) {}
               override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
