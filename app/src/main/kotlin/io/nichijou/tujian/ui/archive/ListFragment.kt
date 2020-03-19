@@ -5,6 +5,7 @@ import android.view.View
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.google.android.gms.ads.formats.UnifiedNativeAd
 import io.nichijou.tujian.R
 import io.nichijou.tujian.base.BaseFragment
 import io.nichijou.tujian.common.entity.Picture
@@ -20,7 +21,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class ListFragment : BaseFragment() {
   companion object {
     private const val CATEGORY_ID = "category_id"
-    fun newInstance(cid: String) = ListFragment().apply {
+    fun newInstance(cid: String, nativeAd: UnifiedNativeAd?) = ListFragment().apply {
       arguments = bundleOf(CATEGORY_ID to cid)
     }
   }

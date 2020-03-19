@@ -48,15 +48,15 @@ class TodayItemView(context: Context) : FrameLayout(context), SubsamplingScaleIm
       s *= this.minScale// 手动将图片填满屏幕，再将图片置为 SCALE_TYPE_START
       animateScaleAndCenter(s, viewToSourceCoord(0f, 0f))?.withOnAnimationEventListener(object : SubsamplingScaleImageView.OnAnimationEventListener {
         override fun onInterruptedByUser() {
-          setMinimumScaleType(SubsamplingScaleImageView.SCALE_TYPE_START)
+          setMinimumScaleType(SubsamplingScaleImageView.SCALE_TYPE_CENTER_CROP)
         }
 
         override fun onInterruptedByNewAnim() {
-          setMinimumScaleType(SubsamplingScaleImageView.SCALE_TYPE_START)
+          setMinimumScaleType(SubsamplingScaleImageView.SCALE_TYPE_CENTER_CROP)
         }
 
         override fun onComplete() {
-          setMinimumScaleType(SubsamplingScaleImageView.SCALE_TYPE_START)
+          setMinimumScaleType(SubsamplingScaleImageView.SCALE_TYPE_CENTER_CROP)
         }
 
       })?.start()

@@ -10,8 +10,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.billy.android.swipe.SwipeConsumer
+import com.google.android.gms.ads.AdLoader
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.formats.UnifiedNativeAd
 import com.google.android.material.tabs.TabLayoutMediator
 import io.nichijou.oops.ext.setPaddingTopPlusStatusBarHeight
+import io.nichijou.tujian.BuildConfig
 import io.nichijou.tujian.R
 import io.nichijou.tujian.base.BaseFragment
 import io.nichijou.tujian.common.entity.Category
@@ -43,6 +47,17 @@ class ArchiveFragment : BaseFragment() {
     setHasOptionsMenu(true)
     view.setBackgroundColor(if (isDark()) Color.BLACK else Color.WHITE)
     return view
+  }
+
+  private var nativeAd: UnifiedNativeAd? = null
+  override fun onHiddenChanged(hidden: Boolean) {
+    super.onHiddenChanged(hidden)
+    val builder = if (BuildConfig.DEBUG) {
+      AdLoader.Builder(requireContext(), "ca-app-pub-3940256099942544/2247696110")
+    } else {
+      AdLoader.Builder(requireContext(), getString(R.string.yua_nshen_taigu_angao))
+    }
+    builder.forUnifiedNativeAd { hh -> nativeAd = hh }.build().loadAds(AdRequest.Builder().build(), 5)
   }
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -86,7 +101,7 @@ class ArchiveFragment : BaseFragment() {
       return
     }
     val fragments: MutableList<Fragment> =
-      categories.map { ListFragment.newInstance(it.tid) }.toMutableList()
+      categories.map { ListFragment.newInstance(it.tid, nativeAd) }.toMutableList()
     fragments.add(BingFragment.newInstance())
     view_pager.adapter = object : FragmentStateAdapter(this) {
       override fun createFragment(position: Int): Fragment = fragments[position]

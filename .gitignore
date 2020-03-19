@@ -13,3 +13,5 @@
 .externalNativeBuild
 .cxx
 /common/src/main/kotlin/io/nichijou/tujian/common/C.kt
+/common/src/main/res/values/gms.xml
+/app/src/main/res/layout/list_item_ad.xml

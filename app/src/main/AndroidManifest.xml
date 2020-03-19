@@ -50,6 +50,9 @@
         <action android:name="android.content.action.DOCUMENTS_PROVIDER" />
       </intent-filter>
     </provider>
+    <meta-data
+      android:name="com.google.android.gms.ads.APPLICATION_ID"
+      android:value="@string/gua_ner_ga_ozhi" />
   </application>
 
 </manifest>

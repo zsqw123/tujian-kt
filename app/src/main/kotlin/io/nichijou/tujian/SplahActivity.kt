@@ -6,6 +6,7 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.google.android.gms.ads.MobileAds
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.tencent.bugly.Bugly
@@ -30,7 +31,6 @@ import java.util.*
 class SplashActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    Oops.init(this)
     val isDark: Boolean = isDark()
     val imgID: Int = if (isDark) R.mipmap.splash_night else R.mipmap.splash
     frameLayout {
@@ -57,6 +57,7 @@ class SplashActivity : AppCompatActivity() {
       } catch (e: Exception) {
         Log.e("restartApp", "Exception")
       }
+      MobileAds.initialize(applicationContext){}
       delay(2500L)
       startActivity<MainActivity>()
       finish()

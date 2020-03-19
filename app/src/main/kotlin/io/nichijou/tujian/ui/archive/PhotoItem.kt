@@ -1,6 +1,7 @@
 package io.nichijou.tujian.ui.archive
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
@@ -19,7 +20,11 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.target.Target
+import com.bumptech.glide.request.transition.Transition
+import com.davemorrissey.labs.subscaleview.ImageSource
+import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
 import com.zzhoujay.richtext.RichText
 import io.nichijou.tujian.R
 import io.nichijou.tujian.common.entity.Picture
@@ -48,18 +53,18 @@ class Viewpager2Adapter(private val data: ArrayList<Picture>, private val parent
   override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
     val item = holder.itemView
     val photoView = item.photo_item
-    photoView.enable()
-    photoView.scaleType = ImageView.ScaleType.CENTER_CROP
+    photoView.setMinimumScaleType(SubsamplingScaleImageView.SCALE_TYPE_CENTER_CROP)
     val pic1080: String = getNewUrl(items[position], 1080)!!
     val progress = parentView.photo_item_progress
-    if (photoView.image != null) progress.makeGone()
-    Glide.with(item.context).load(pic1080).listener(object : RequestListener<Drawable> {
-      override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean) = false
-      override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+    if (photoView.hasImage()) progress.makeGone()
+    Glide.with(item.context).asBitmap().load(pic1080).into(object : CustomTarget<Bitmap>() {
+      override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
         progress?.makeGone()
-        return false
+        photoView.setImage(ImageSource.bitmap(resource))
       }
-    }).into(photoView)
+
+      override fun onLoadCleared(placeholder: Drawable?) {}
+    })
 
     photoView.setOnClickListener {
       photoItem.onBackPressedSupport()

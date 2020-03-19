@@ -28,6 +28,7 @@ import com.facebook.imagepipeline.core.ImagePipelineConfig
 import com.facebook.imagepipeline.decoder.ProgressiveJpegConfig
 import com.facebook.imagepipeline.image.ImmutableQualityInfo
 import com.facebook.imagepipeline.image.QualityInfo
+import io.nichijou.oops.Oops
 import io.nichijou.tujian.common.commonModule
 import io.nichijou.tujian.common.shortcuts.ShortcutsController
 import me.jessyan.progressmanager.ProgressManager
@@ -54,6 +55,7 @@ class App : Application() {
       modules(normalModule, commonModule)
     }
     initFresco()
+    Oops.init(this)
     try {
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1)
         ShortcutsController.updateShortcuts(applicationContext)

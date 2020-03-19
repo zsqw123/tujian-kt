@@ -35,7 +35,8 @@ class ListAdapter(
 
   private val cacheColors = WeakHashMap<String, List<Palette.Swatch>>()
 
-  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_picture, parent, false))
+  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
+    ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_picture, parent, false))
 
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val picture = getItem(position)
