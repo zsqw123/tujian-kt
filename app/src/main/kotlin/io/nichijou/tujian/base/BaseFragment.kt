@@ -9,6 +9,7 @@ import io.nichijou.tujian.ext.FragmentBackHandler
 import io.nichijou.tujian.ext.target
 import io.nichijou.tujian.isDark
 import io.nichijou.tujian.ui.MainActivity
+import me.yokeyword.fragmentation.SupportActivity
 import me.yokeyword.fragmentation.SupportFragment
 import org.jetbrains.anko.support.v4.longToast
 import kotlin.system.exitProcess
@@ -23,7 +24,7 @@ abstract class BaseFragment : SupportFragment(), FragmentBackHandler {
       if (MainActivity.swipeConsumer!!.isOpened) {
         MainActivity.swipeConsumer!!.smoothClose()
       } else if (MainActivity.nowFragment != MainActivity.mFragments[0]) {
-        MainActivity.swipeConsumer!!.smoothLeftOpen()
+        MainActivity.showHideListener(target() as SupportActivity, MainActivity.mFragments[0]!!)
       } else if (!isExit) {// 双击退出
         isExit = true
         longToast("再按一次退出图鉴日图")

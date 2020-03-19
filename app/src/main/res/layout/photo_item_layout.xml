@@ -6,10 +6,6 @@
   android:layout_marginTop="0dp"
   android:layout_marginBottom="0dp">
 
-  <!--  <com.bm.library.PhotoView-->
-  <!--    android:id="@+id/photo_item"-->
-  <!--    android:layout_width="match_parent"-->
-  <!--    android:layout_height="match_parent" />-->
   <com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
     android:id="@+id/photo_item"
     android:layout_width="match_parent"

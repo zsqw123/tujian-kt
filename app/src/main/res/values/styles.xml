@@ -8,6 +8,7 @@
     <item name="android:windowTranslucentStatus">false</item>
     <item name="android:windowTranslucentNavigation">true</item>
     <item name="android:statusBarColor">@android:color/transparent</item>
+<!--    <item name="android:fitsSystemWindows">true</item>-->
     <item name="md_color_title">#000000</item>
     <item name="md_color_content">#1E1C1D</item>
     <item name="md_color_button_text">#DD14B0</item>
@@ -20,6 +21,7 @@
     <item name="colorSecondary">@android:color/transparent</item>
     <item name="android:windowTranslucentStatus">false</item>
     <item name="android:windowTranslucentNavigation">true</item>
+<!--    <item name="android:fitsSystemWindows">true</item>-->
     <item name="android:statusBarColor">@android:color/transparent</item>
     <item name="md_color_title">#FFFFFF</item>
     <item name="md_color_content">#E1E3E2</item>

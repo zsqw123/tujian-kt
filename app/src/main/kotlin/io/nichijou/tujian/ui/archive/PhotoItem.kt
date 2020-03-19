@@ -10,18 +10,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.ImageView
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItems
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
 import com.davemorrissey.labs.subscaleview.ImageSource
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
@@ -39,7 +34,6 @@ import kotlinx.android.synthetic.main.photo_item_layout.view.*
 import kotlinx.android.synthetic.main.photo_item_viewpager_layout.*
 import kotlinx.android.synthetic.main.photo_item_viewpager_layout.view.*
 import me.yokeyword.fragmentation.SupportFragment
-import org.jetbrains.anko.image
 import org.jetbrains.anko.isSelectable
 
 class Viewpager2Adapter(private val data: ArrayList<Picture>, private val parentView: View, private val photoItem: PhotoItem) :

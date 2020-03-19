@@ -1,5 +1,6 @@
 package io.nichijou.tujian.ui
 
+import android.content.Context
 import android.graphics.Color
 import android.graphics.Point
 import android.os.Bundle
@@ -7,6 +8,7 @@ import android.os.CountDownTimer
 import android.view.MotionEvent
 import android.widget.FrameLayout
 import androidx.annotation.ColorInt
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -42,7 +44,6 @@ import org.jetbrains.anko.isSelectable
 import org.jetbrains.anko.matchParent
 import org.jetbrains.anko.textColor
 import org.koin.android.ext.android.inject
-import java.lang.Exception
 
 
 class MainActivity : SupportActivity(), CoroutineScope by MainScope() {
@@ -93,8 +94,8 @@ class MainActivity : SupportActivity(), CoroutineScope by MainScope() {
     swipeConsumer = SmartSwipe.wrap(this).addConsumer(SlidingConsumer())
       .setHorizontalDrawerView(slide).setScrimColor(Color.parseColor("#9A000000"))// 侧滑
     swipeConsumer!!.edgeSize = dip(20)
-    translucentStatusBar(true)// 状态栏沉浸
-    setLightStatusBarCompat(isDark())
+//    translucentStatusBar(true)// 状态栏沉浸
+//    setLightStatusBarCompat(isDark())
     if (findFragment(TodayFragment::class.java) == null) {
       mFragments = arrayOf(TodayFragment.newInstance(),
         ArchiveFragment.newInstance(), UploadFragment.newInstance(),
@@ -108,16 +109,11 @@ class MainActivity : SupportActivity(), CoroutineScope by MainScope() {
       mFragments[3] = findFragment(SettingsFragment::class.java)
       mFragments[4] = findFragment(AboutFragment::class.java)
     }
-    fun showHideListener(fragment: SupportFragment) {
-      showHideFragment(fragment, nowFragment)
-      nowFragment = fragment
-      swipeConsumer!!.smoothClose()
-    }
-    slide_today.setOnClickListener { showHideListener(mFragments[0]!!) }
-    slide_save.setOnClickListener { showHideListener(mFragments[1]!!) }
-    slide_upload.setOnClickListener { showHideListener(mFragments[2]!!) }
-    slide_settings.setOnClickListener { showHideListener(mFragments[3]!!) }
-    slide_info.setOnClickListener { showHideListener(mFragments[4]!!) }
+    slide_today.setOnClickListener { showHideListener(this, mFragments[0]!!) }
+    slide_save.setOnClickListener { showHideListener(this, mFragments[1]!!) }
+    slide_upload.setOnClickListener { showHideListener(this, mFragments[2]!!) }
+    slide_settings.setOnClickListener { showHideListener(this, mFragments[3]!!) }
+    slide_info.setOnClickListener { showHideListener(this, mFragments[4]!!) }
     //boo fragment
     if (savedInstanceState == null && !enableFuckBoo) {
       val newFragment = BooFragment.newInstance(Oops.immed().isDark, isIntro = true, enableFace = enableFaceDetection, enableFuckBoo = enableFuckBoo)
@@ -264,6 +260,12 @@ class MainActivity : SupportActivity(), CoroutineScope by MainScope() {
     var swipeConsumer: DrawerConsumer? = null
     var nowFragment: SupportFragment = TodayFragment.newInstance()
     var mFragments = arrayOfNulls<SupportFragment>(5)
+
+    fun showHideListener(mainActivity: SupportActivity, fragment: SupportFragment) {
+      mainActivity.showHideFragment(fragment, nowFragment)
+      nowFragment = fragment
+      swipeConsumer!!.smoothClose()
+    }
   }
 }
 
