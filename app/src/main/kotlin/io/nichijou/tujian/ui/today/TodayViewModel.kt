@@ -32,25 +32,6 @@ class TodayViewModel(application: Application, private val tujianService: Tujian
     viewModelScope.launch(IO) {
       val tujianResp = tujianService.today()
       val bingResp = tujianService.bing()
-//      val updateResp = tujianService.update()
-//      if (updateResp.isSuccessful) {
-//        val body = updateResp.body()
-//        val code = body?.code
-//        if (code == null) {
-//          msg.postValue("检查更新失败")
-//        } else {
-//          if (getAppVersionCode(App.context!!) < code) {
-//            UpdateTujian.code = code
-//            UpdateTujian.log = body.log
-//            UpdateTujian.name = body.name
-//            UpdateTujian.time = body.time
-//            UpdateTujian.url = body.url
-//            msg.postValue("old")
-//          } else if (getAppVersionCode(App.context!!) > code) {
-//            msg.postValue("客户端版本过新！请帮助开发者开发")
-//          }
-//        }
-//      }
       val pictures = mutableListOf<Picture>()
       if (tujianResp.isSuccessful) {
         val list = tujianResp.body()

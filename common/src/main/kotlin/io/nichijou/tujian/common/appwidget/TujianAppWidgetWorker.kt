@@ -12,10 +12,8 @@ import io.nichijou.tujian.common.entity.Category
 import io.nichijou.tujian.common.entity.Picture
 import io.nichijou.tujian.common.R
 import io.nichijou.tujian.common.entity.SplashResp
-import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import org.jetbrains.anko.toast
 import org.koin.core.KoinComponent
 import org.koin.core.inject
@@ -34,18 +32,17 @@ class TujianAppWidgetWorker(context: Context, workerParams: WorkerParameters) : 
   private val tujianService by inject<TujianService>()
   private val tujianStore by inject<TujianStore>()
 
-  override val coroutineContext: CoroutineDispatcher
-    get() = IO
-
   override suspend fun doWork(): Result {
-    if (!TujianAppWidgetProvider.hasAppWidgetEnabled(applicationContext)) {
-      applicationContext.toast(R.string.enable_tujian_appwidget_to_home_screen)
-      TujianAppWidgetConfig.enable = false
-      stopLoad()
-      return Result.success()
+    return withContext(IO){
+      if (!TujianAppWidgetProvider.hasAppWidgetEnabled(applicationContext)) {
+        applicationContext.toast(R.string.enable_tujian_appwidget_to_home_screen)
+        TujianAppWidgetConfig.enable = false
+        stopLoad()
+        return@withContext Result.success()
+      }
+      getRandomPicture()
+      return@withContext Result.success()
     }
-    getRandomPicture()
-    return Result.success()
   }
 
   private suspend fun getRandomPicture() {
