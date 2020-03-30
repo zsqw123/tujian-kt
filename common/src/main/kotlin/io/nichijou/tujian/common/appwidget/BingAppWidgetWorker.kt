@@ -7,7 +7,9 @@ import io.nichijou.tujian.common.TujianService
 import io.nichijou.tujian.common.db.TujianStore
 import io.nichijou.tujian.common.R
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.withContext
 import org.jetbrains.anko.toast
 import org.koin.core.KoinComponent
 import org.koin.core.inject
@@ -18,23 +20,23 @@ class BingAppWidgetWorker(context: Context, workerParams: WorkerParameters) : Co
   private val tujianService by inject<TujianService>()
   private val tujianStore by inject<TujianStore>()
 
-  override val coroutineContext: CoroutineDispatcher
-    get() = IO
-
   override suspend fun doWork(): Result {
-    if (!BingAppWidgetProvider.hasAppWidgetEnabled(applicationContext)) {
-      applicationContext.toast(R.string.enable_bing_appwidget_to_home_screen)
-      BingAppWidgetConfig.enable = false
-      stopLoad()
-      return Result.success()
+    return withContext(IO){
+      if (!BingAppWidgetProvider.hasAppWidgetEnabled(applicationContext)) {
+        applicationContext.toast(R.string.enable_bing_appwidget_to_home_screen)
+        BingAppWidgetConfig.enable = false
+        stopLoad()
+        return@withContext Result.success()
+      }
+      val response = tujianService.bing()
+      val body = response.body()
+      if (response.isSuccessful && body != null && !body.data.isNullOrEmpty()) {
+        tujianStore.insertBing(body.data[0])
+        BingAppWidgetProvider.updateWidgetsNew(applicationContext)
+      }
+      return@withContext Result.success()
     }
-    val response = tujianService.bing()
-    val body = response.body()
-    if (response.isSuccessful && body != null && !body.data.isNullOrEmpty()) {
-      tujianStore.insertBing(body.data[0])
-      BingAppWidgetProvider.updateWidgetsNew(applicationContext)
-    }
-    return Result.success()
+
   }
 
   companion object {
